@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFramework47Mvc", "Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkHttpModule", "Examples\NetFrameworkHttpModule\NetFrameworkHttpModule.csproj", "{5706FC61-48C8-453A-B14B-640649D1867A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.WebApi", "RockLib.HealthChecks.WebApi\RockLib.HealthChecks.WebApi.csproj", "{F15F51A3-5159-4FE6-99C2-010CE5765EAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,10 @@ Global
 		{5706FC61-48C8-453A-B14B-640649D1867A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5706FC61-48C8-453A-B14B-640649D1867A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5706FC61-48C8-453A-B14B-640649D1867A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

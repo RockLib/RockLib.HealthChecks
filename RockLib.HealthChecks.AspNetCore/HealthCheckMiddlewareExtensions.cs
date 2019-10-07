@@ -19,7 +19,7 @@ namespace RockLib.HealthChecks.AspNetCore
         /// <param name="route">The route of the health endpoint.</param>
         /// <param name="indent">Whether to indent the JSON output.</param>
         /// <returns>The application builder.</returns>
-        public static IApplicationBuilder UseRockLibHealthCheck(this IApplicationBuilder builder,
+        public static IApplicationBuilder UseRockLibHealthChecks(this IApplicationBuilder builder,
             IHealthCheckRunner healthCheckRunner = null, string route = "health", bool indent = false)
         {
             healthCheckRunner = healthCheckRunner ?? HealthCheck.Runner;
