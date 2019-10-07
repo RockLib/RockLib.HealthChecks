@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net35;net40;net45;net451;net462;netstandard2.0</TargetFrameworks>
+    <PackageId>RockLib.HealthChecks</PackageId>
+    <PackageVersion>1.0.0-alpha01</PackageVersion>
+    <Authors>Andy Ladd, Brian Friesen, Justin Moss</Authors>
+    <Description>An implementation of the draft health check RFC located at https://inadarei.github.io/rfc-healthcheck/.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/RockLib/RockLib.HealthChecks</PackageProjectUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <Copyright>Copyright 2019 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
+    <PackageTags>rocklib health checks</PackageTags>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.HealthChecks.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='net35' Or '$(TargetFramework)'=='net40' Or '$(TargetFramework)'=='net45'">
+    <Reference Include="System.Configuration" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="RockLib.Immutable" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'!='net35' And '$(TargetFramework)'!='net40' And '$(TargetFramework)'!='net45'">
+    <PackageReference Include="RockLib.Configuration" Version="2.4.1" />
+    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.1" />
+    
+    <Compile Remove="Configuration\LateBoundConfigurationElement.cs" />
+    <Compile Remove="Configuration\HealthCheckConfiguration.cs" />
+    <Compile Remove="Configuration\RockLibHealthChecksSection.cs" />
+    <Compile Remove="Configuration\RockLibSettingsSection.cs" />
+  </ItemGroup>
+
+</Project>
