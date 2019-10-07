@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RockLib.HealthChecks\RockLib.HealthChecks.csproj" />
+    <PackageReference Include="RockLib.HealthChecks" Version="1.0.0-alpha01" />
   </ItemGroup>
 
   <ItemGroup>
