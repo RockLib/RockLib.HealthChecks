@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.System" Version="2.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RockLib.HealthChecks.AspNetCore.ResponseWriter\RockLib.HealthChecks.AspNetCore.ResponseWriter.csproj" />
+    <ProjectReference Include="..\..\RockLib.HealthChecks\RockLib.HealthChecks.csproj" />
+  </ItemGroup>
+
+</Project>

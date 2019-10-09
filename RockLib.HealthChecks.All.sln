@@ -29,9 +29,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkHttpModule", "E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.WebApi", "RockLib.HealthChecks.WebApi\RockLib.HealthChecks.WebApi.csproj", "{F15F51A3-5159-4FE6-99C2-010CE5765EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.AspNetCore.ResponseWriter", "RockLib.HealthChecks.AspNetCore.ResponseWriter\RockLib.HealthChecks.AspNetCore.ResponseWriter.csproj", "{84643E2D-F162-42B2-AF96-B2D8B9844C8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.AspNetCore.ResponseWriter", "RockLib.HealthChecks.AspNetCore.ResponseWriter\RockLib.HealthChecks.AspNetCore.ResponseWriter.csproj", "{84643E2D-F162-42B2-AF96-B2D8B9844C8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkWebApi", "Examples\NetFrameworkWebApi\NetFrameworkWebApi.csproj", "{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCoreResponseWriter", "Examples\NetCoreResponseWriter\NetCoreResponseWriter.csproj", "{5C605777-0F04-454F-8A93-615146EE6EB2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C605777-0F04-454F-8A93-615146EE6EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C605777-0F04-454F-8A93-615146EE6EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C605777-0F04-454F-8A93-615146EE6EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C605777-0F04-454F-8A93-615146EE6EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -108,6 +114,7 @@ Global
 		{0343D7F9-B9E6-404C-9E35-4BB7FF28028D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{5706FC61-48C8-453A-B14B-640649D1867A} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721} = {077997E9-BD03-4F84-8B84-9047B35C1004}
+		{5C605777-0F04-454F-8A93-615146EE6EB2} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}

@@ -40,8 +40,8 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
                     ComponentName = GetComponentName(x.Key),
                     MeasurementName = GetMeasurementName(x.Key),
                     Status = MapStatus(entry.Status),
-                    Output = entry.Exception?.ToString(),
-                    ["description"] = entry.Description,
+                    Output = entry.Description,
+                    ["exception"] = entry.Exception?.ToString(),
                     ["duration"] = entry.Duration
                 };
 
