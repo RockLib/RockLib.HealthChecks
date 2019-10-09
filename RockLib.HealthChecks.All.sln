@@ -27,7 +27,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFramework47Mvc", "Exampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkHttpModule", "Examples\NetFrameworkHttpModule\NetFrameworkHttpModule.csproj", "{5706FC61-48C8-453A-B14B-640649D1867A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.WebApi", "RockLib.HealthChecks.WebApi\RockLib.HealthChecks.WebApi.csproj", "{F15F51A3-5159-4FE6-99C2-010CE5765EAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.WebApi", "RockLib.HealthChecks.WebApi\RockLib.HealthChecks.WebApi.csproj", "{F15F51A3-5159-4FE6-99C2-010CE5765EAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.AspNetCore.ResponseWriter", "RockLib.HealthChecks.AspNetCore.ResponseWriter\RockLib.HealthChecks.AspNetCore.ResponseWriter.csproj", "{84643E2D-F162-42B2-AF96-B2D8B9844C8A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkWebApi", "Examples\NetFrameworkWebApi\NetFrameworkWebApi.csproj", "{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}"
 EndProject
@@ -85,6 +87,10 @@ Global
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Release|Any CPU.ActiveCfg = Release|Any CPU
