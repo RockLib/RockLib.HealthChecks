@@ -9,18 +9,18 @@ namespace RockLib.HealthChecks.AspNetCore
     public static class HealthCheckMiddlewareExtensions
     {
         /// <summary>
-        /// Adds custom HealthCheck middleware to your application. Make sure this is before any authorization or authentication.
+        /// Adds a terminal <see cref="HealthCheckMiddleware"/> to the application.
         /// </summary>
         /// <param name="builder">The application builder.</param>
         /// <param name="healthCheckRunner">
         /// The <see cref="IHealthCheckRunner"/> to use. If <see langword="null"/> or not provided,
-        /// the value of the <see cref="HealthCheck.Runner"/> is used.
+        /// the value of the <see cref="HealthCheck.Runner"/> property is used.
         /// </param>
         /// <param name="route">The route of the health endpoint.</param>
         /// <param name="indent">Whether to indent the JSON output.</param>
         /// <returns>The application builder.</returns>
         public static IApplicationBuilder UseRockLibHealthChecks(this IApplicationBuilder builder,
-            IHealthCheckRunner healthCheckRunner = null, string route = "health", bool indent = false)
+            IHealthCheckRunner healthCheckRunner = null, string route = "/health", bool indent = false)
         {
             healthCheckRunner = healthCheckRunner ?? HealthCheck.Runner;
             route = $"/{route.Trim('/')}";
