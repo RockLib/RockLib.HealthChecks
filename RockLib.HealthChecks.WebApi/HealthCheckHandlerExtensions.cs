@@ -30,7 +30,7 @@ namespace RockLib.HealthChecks.WebApi
                 throw new ArgumentNullException(nameof(route));
 
             healthCheckRunner = healthCheckRunner ?? HealthCheck.Runner;
-            route = $"/{route.Trim('/')}";
+            route = route.Trim('/');
 
             var routeIndex = Interlocked.Increment(ref _routeIndex);
             var routeName = routeIndex < 1 ? "HealthApi" : $"HealthApi-{routeIndex}";

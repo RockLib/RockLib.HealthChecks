@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkHttpModule", "E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.WebApi", "RockLib.HealthChecks.WebApi\RockLib.HealthChecks.WebApi.csproj", "{F15F51A3-5159-4FE6-99C2-010CE5765EAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetFrameworkWebApi", "Examples\NetFrameworkWebApi\NetFrameworkWebApi.csproj", "{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F15F51A3-5159-4FE6-99C2-010CE5765EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +101,7 @@ Global
 		{24060615-E490-4029-893F-659C824B3AF4} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{0343D7F9-B9E6-404C-9E35-4BB7FF28028D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{5706FC61-48C8-453A-B14B-640649D1867A} = {077997E9-BD03-4F84-8B84-9047B35C1004}
+		{79D4AFC8-8732-4FF8-BE73-4B54E0E46721} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}
