@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net45</TargetFrameworks>
     <PackageId>RockLib.HealthChecks.WebApi</PackageId>
-    <PackageVersion>1.0.0-alpha00</PackageVersion>
+    <PackageVersion>1.0.0-alpha01</PackageVersion>
     <Authors>Josh Cherry, Brian Friesen, Justin Moss</Authors>
     <Description>A simple set of .NET Core Middleware extensions for adding Health Checks to your web application.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
