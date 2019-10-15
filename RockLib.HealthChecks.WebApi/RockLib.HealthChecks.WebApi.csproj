@@ -26,7 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-    <PackageReference Include="RockLib.HealthChecks" Version="1.0.0-alpha02" />
+    <PackageReference Include="RockLib.HealthChecks" Version="1.0.0-alpha03" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
   </ItemGroup>
 
