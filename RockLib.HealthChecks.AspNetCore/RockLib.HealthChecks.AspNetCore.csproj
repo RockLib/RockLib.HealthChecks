@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
-    <PackageId>RockLib.HealthChecks.Middleware</PackageId>
+    <PackageId>RockLib.HealthChecks.AspNetCore</PackageId>
     <PackageVersion>1.0.0-alpha01</PackageVersion>
     <Authors>Andy Ladd, Brian Friesen, Justin Moss</Authors>
     <Description>A simple set of .NET Core Middleware extensions for adding Health Checks to your web application.</Description>
@@ -11,13 +11,13 @@
     <PackageProjectUrl>https://github.com/RockLib/RockLib.HealthChecks</PackageProjectUrl>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Copyright>Copyright 2019 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
-    <PackageTags>rocklib health checks middleware</PackageTags>
+    <PackageTags>rocklib health checks aspnetcore middleware</PackageTags>
     <Version>1.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.HealthChecks.Middleware.xml</DocumentationFile>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.HealthChecks.AspNetCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
