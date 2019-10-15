@@ -1,9 +1,13 @@
 ﻿using RockLib.Immutable;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 #if NET35 || NET40 || NET45
+using IReadOnlyListOfIHealthCheckRunner = System.Collections.Generic.IList<RockLib.HealthChecks.IHealthCheckRunner>;
 using RockLib.HealthChecks.Configuration;
 using System.Configuration;
 #else
+using IReadOnlyListOfIHealthCheckRunner = System.Collections.Generic.IReadOnlyList<RockLib.HealthChecks.IHealthCheckRunner>;
 using RockLib.Configuration;
 using RockLib.Configuration.ObjectFactory;
 #endif
@@ -12,58 +16,67 @@ namespace RockLib.HealthChecks
 {
 #if NET35 || NET40 || NET45
     /// <summary>
-    /// A static class that contains a <see cref="Runner"/> property of type <see cref="IHealthCheckRunner"/>.
-    /// By default, the runner is created from the 'rockLib.healthChecks' configuration section of type
-    /// <see cref="RockLibHealthChecksSection"/> from the <see cref="ConfigurationManager"/> static class.
+    /// A static class that defines a collection of <see cref="IHealthCheckRunner"/> objects to be used
+    /// by an application. By default, the runners are created from the 'rockLib.healthChecks' configuration
+    /// section of type <see cref="RockLibHealthChecksSection"/> from the <see cref="ConfigurationManager"/>
+    /// static class.
     /// </summary>
 #else
     /// <summary>
-    /// A static class that contains a <see cref="Runner"/> property of type <see cref="IHealthCheckRunner"/>.
-    /// By default, the runner is created from the 'RockLib.HealthChecks' / 'RockLib_HealthChecks' composite
-    /// configuration section from the <see cref="Config"/> static class.
+    /// A static class that defines a collection of <see cref="IHealthCheckRunner"/> objects to be used
+    /// by an application. By default, the runners are created from the 'RockLib.HealthChecks' / 'RockLib_HealthChecks'
+    /// composite configuration section from the <see cref="Config"/> static class.
     /// </summary>
 #endif
     public static class HealthCheck
     {
-        private static readonly Semimutable<IHealthCheckRunner> _runner = new Semimutable<IHealthCheckRunner>(GetDefaultRunner);
+        private static readonly Semimutable<IReadOnlyListOfIHealthCheckRunner> _runners = new Semimutable<IReadOnlyListOfIHealthCheckRunner>(GetDefaultRunners);
 
         /// <summary>
-        /// Gets or sets the <see cref="IHealthCheckRunner"/>. Note that this property cannot be set
-        /// after it has been accessed.
+        /// Gets or sets a collection of <see cref="IHealthCheckRunner"/> objects to be used by an
+        /// application. Note that this property cannot be set after it has been accessed.
         /// </summary>
-        public static IHealthCheckRunner Runner
+        public static IReadOnlyListOfIHealthCheckRunner Runners
         {
-            get => _runner.Value;
-            set => _runner.Value = value ?? throw new ArgumentNullException(nameof(value));
+            get => _runners.Value;
+            set => _runners.Value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         /// <summary>
-        /// Sets the <see cref="Runner"/> property to the value returned by the function. Note
-        /// that this method cannot be called after the <see cref="Runner"/> property has been
+        /// Sets the <see cref="Runners"/> property to the value returned by the function. Note
+        /// that this method cannot be called after the <see cref="Runners"/> property has been
         /// accessed.
         /// </summary>
-        /// <param name="getRunner">
-        /// A function that returns the <see cref="IHealthCheckRunner"/> to be the value of
-        /// the <see cref="Runner"/> property.
+        /// <param name="getRunners">
+        /// A function that returns the collection of <see cref="IHealthCheckRunner"/> objects
+        /// to be the value of the <see cref="Runners"/> property.
         /// </param>
-        public static void SetRunner(Func<IHealthCheckRunner> getRunner) =>
-            _runner.SetValue(getRunner ?? throw new ArgumentNullException(nameof(getRunner)));
+        public static void SetRunners(Func<IReadOnlyListOfIHealthCheckRunner> getRunners) =>
+            _runners.SetValue(getRunners ?? throw new ArgumentNullException(nameof(getRunners)));
 
         /// <summary>
-        /// Resets the runner to its default value, to be loaded from configuration. Note that
-        /// this method cannot be called after the <see cref="Runner"/> property has been accessed.
+        /// Gets the <see cref="IHealthCheckRunner"/> from the <see cref="Runners"/> property by name.
+        /// Returns null if a runner cannot be found.
         /// </summary>
-        public static void ResetRunner() => _runner.ResetValue();
+        /// <param name="name">
+        /// The name of the <see cref="IHealthCheckRunner"/> to retrieve, or <see langword="null"/> to
+        /// retrieve the unnamed or "default" runner.
+        /// </param>
+        /// <returns></returns>
+        public static IHealthCheckRunner GetRunner(string name = null) =>
+            Runners.FirstOrDefault(r => GetName(r.Name).Equals(GetName(name), StringComparison.OrdinalIgnoreCase));
 
-        private static IHealthCheckRunner GetDefaultRunner()
+        private static string GetName(string name) => string.IsNullOrEmpty(name) ? "default" : name;
+
+        private static IReadOnlyListOfIHealthCheckRunner GetDefaultRunners()
         {
 #if NET35 || NET40 || NET45
             var healtchChecksSection = (RockLibHealthChecksSection)ConfigurationManager.GetSection("rockLib.healthChecks");
-            return healtchChecksSection.CreateRunner();
+            return healtchChecksSection.CreateRunners();
 #else
             var section = Config.Root.GetCompositeSection("RockLib.HealthChecks", "RockLib_HealthChecks");
-            return section.CreateReloadingProxy<IHealthCheckRunner>(
-                    new DefaultTypes { { typeof(IHealthCheckRunner), typeof(HealthCheckRunner) } });
+            return section.CreateReloadingProxy<IReadOnlyListOfIHealthCheckRunner>(
+                new DefaultTypes { { typeof(IHealthCheckRunner), typeof(HealthCheckRunner) } });
 #endif
         }
     }

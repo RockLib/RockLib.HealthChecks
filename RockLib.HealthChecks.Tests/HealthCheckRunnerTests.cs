@@ -14,25 +14,27 @@ namespace RockLib.HealthChecks.Tests
         public void Constructor_SetsProperties()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
-            var responseCustomizer = new Mock<IHealthResponseCustomizer>().Object;
+            var name = "test-name";
+            var description = "fake";
+            var serviceId = "2.4.6";
             var version = "1.2.3";
             var releaseId = "4.5.6";
-            var serviceId = "2.4.6";
-            var description = "fake";
+            var responseCustomizer = new Mock<IHealthResponseCustomizer>().Object;
             var contentType = "application/fake+json";
             var passStatusCode = 299;
             var warnStatusCode = 399;
             var failStatusCode = 599;
 
-            var runner = new HealthCheckRunner(healthChecks, description, serviceId, version, releaseId,
+            var runner = new HealthCheckRunner(healthChecks, name, description, serviceId, version, releaseId,
                 responseCustomizer, contentType, passStatusCode, warnStatusCode, failStatusCode);
 
             runner.HealthChecks.Should().BeEquivalentTo(healthChecks);
-            runner.ResponseCustomizer.Should().BeSameAs(responseCustomizer);
+            runner.Name.Should().Be(name);
+            runner.Description.Should().Be(description);
+            runner.ServiceId.Should().Be(serviceId);
             runner.Version.Should().Be(version);
             runner.ReleaseId.Should().Be(releaseId);
-            runner.ServiceId.Should().Be(serviceId);
-            runner.Description.Should().Be(description);
+            runner.ResponseCustomizer.Should().BeSameAs(responseCustomizer);
             runner.ContentType.Should().Be(contentType);
             runner.PassStatusCode.Should().Be(passStatusCode);
             runner.WarnStatusCode.Should().Be(warnStatusCode);

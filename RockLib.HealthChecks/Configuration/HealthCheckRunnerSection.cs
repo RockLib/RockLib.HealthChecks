@@ -6,8 +6,14 @@ namespace RockLib.HealthChecks.Configuration
     /// Defines a configuration section that contains the information necessary to create an
     /// instance of <see cref="HealthCheckRunner"/>.
     /// </summary>
-    public sealed class RockLibSettingsSection : ConfigurationElement
+    public sealed class HealthCheckRunnerSection : ConfigurationElement
     {
+        /// <summary>
+        /// Gets the name of the service.
+        /// </summary>
+        [ConfigurationProperty("name", IsRequired = false)]
+        public string Name => NoEmptyString((string)this["name"]);
+
         /// <summary>
         /// Gets the public version of the service.
         /// </summary>

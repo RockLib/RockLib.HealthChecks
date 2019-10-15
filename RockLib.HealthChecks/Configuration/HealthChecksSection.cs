@@ -4,7 +4,7 @@ using System.Configuration;
 namespace RockLib.HealthChecks.Configuration
 {
     /// <summary>
-    /// Defines a configuration section that defines a collection of <see cref="IHealthCheck"/> objects.
+    /// Defines a configuration element collection with elements that define a <see cref="IHealthCheck"/> object.
     /// </summary>
     [ConfigurationCollection(typeof(LateBoundConfigurationElement<IHealthCheck>), AddItemName = "healthCheck")]
     public sealed class HealthChecksSection : ConfigurationElementCollection

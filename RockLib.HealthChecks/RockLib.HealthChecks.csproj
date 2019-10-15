@@ -34,10 +34,11 @@
     <PackageReference Include="RockLib.Configuration" Version="2.4.1" />
     <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.1" />
     
+    <Compile Remove="Configuration\HealthCheckRunnerSection.cs" />
+    <Compile Remove="Configuration\HealthCheckRunnersSection.cs" />
+    <Compile Remove="Configuration\HealthChecksSection.cs" />
     <Compile Remove="Configuration\LateBoundConfigurationElement.cs" />
-    <Compile Remove="Configuration\HealthCheckConfiguration.cs" />
     <Compile Remove="Configuration\RockLibHealthChecksSection.cs" />
-    <Compile Remove="Configuration\RockLibSettingsSection.cs" />
   </ItemGroup>
 
 </Project>

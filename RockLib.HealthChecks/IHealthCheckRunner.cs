@@ -11,6 +11,11 @@ namespace RockLib.HealthChecks
     public interface IHealthCheckRunner
     {
         /// <summary>
+        /// Gets the optional name of the runner.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Gets the human-friendly description of the service.
         /// </summary>
         string Description { get; }

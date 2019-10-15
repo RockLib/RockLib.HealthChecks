@@ -28,6 +28,7 @@ namespace RockLib.HealthChecks
         /// The collection of <see cref="IHealthCheck"/> objects to be checked by this runner. Must not have
         /// a null value.
         /// </param>
+        /// <param name="name">The name of the runner (optional).</param>
         /// <param name="description">The human-friendly description of the service.</param>
         /// <param name="serviceId">The unique identifier of the service, in the application scope.</param>
         /// <param name="version">The public version of the service.</param>
@@ -52,7 +53,7 @@ namespace RockLib.HealthChecks
         /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
         /// "HealthStatus.Fail"/>. Must have a value in the 400-599 range.
         /// </param>
-        public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks = null,
+        public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks = null, string name = null,
             string description = null, string serviceId = null, string version = null, string releaseId = null,
             IHealthResponseCustomizer responseCustomizer = null, string contentType = DefaultContentType,
             int passStatusCode = DefaultPassStatusCode, int warnStatusCode = DefaultWarnStatusCode, int failStatusCode = DefaultFailStatusCode)
@@ -67,6 +68,7 @@ namespace RockLib.HealthChecks
                 throw new ArgumentOutOfRangeException(nameof(failStatusCode), "Must be in the range of 400-599.");
 
             HealthChecks = (healthChecks ?? Enumerable.Empty<IHealthCheck>()) as IReadOnlyListOfIHealthCheck ?? healthChecks.ToList();
+            Name = name;
             Description = description;
             ServiceId = serviceId;
             Version = version;
@@ -82,6 +84,11 @@ namespace RockLib.HealthChecks
         /// Gets the list of <see cref="IHealthCheck"/> objects that are checked by this runner.
         /// </summary>
         public IReadOnlyListOfIHealthCheck HealthChecks { get; }
+
+        /// <summary>
+        /// Gets the optional name of the runner.
+        /// </summary>
+        public string Name { get; }
 
         /// <summary>
         /// Gets the human-friendly description of the service.

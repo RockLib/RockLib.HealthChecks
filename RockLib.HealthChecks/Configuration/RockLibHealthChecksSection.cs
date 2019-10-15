@@ -1,45 +1,51 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 
 namespace RockLib.HealthChecks.Configuration
 {
     /// <summary>
-    /// Defines a configuration section that can create an instance of <see cref="HealthCheckRunner"/>.
+    /// Defines a configuration section that can create a collection of <see cref="IHealthCheckRunner"/>
+    /// objects.
     /// </summary>
     public sealed class RockLibHealthChecksSection : ConfigurationSection
     {
         /// <summary>
-        /// Gets the configuration section that defines the <see cref="HealthCheckRunner"/>.
+        /// Gets the <see cref="HealthCheckRunnersSection"/> that defines the collection of <see cref=
+        /// "IHealthCheckRunner"/> objects returned by the <see cref="CreateRunners"/> method.
         /// </summary>
-        [ConfigurationProperty("settings", IsRequired = true)]
-        public RockLibSettingsSection Settings => (RockLibSettingsSection)this["settings"];
+        [ConfigurationProperty("runners", IsRequired = true)]
+        public HealthCheckRunnersSection RunnerSections => (HealthCheckRunnersSection)this["runners"];
 
         /// <summary>
-        /// Create an instance of <see cref="HealthCheck"/> based on the values of the <see cref=
-        /// "Settings"/> property.
+        /// Create a collection of <see cref="IHealthCheckRunner"/> objects based on the values of the <see cref=
+        /// "RunnerSections"/> property.
         /// </summary>
         /// <returns>
-        /// A new instance of <see cref="HealthCheckRunner"/> based on the values of the <see cref=
-        /// "Settings"/> property.
+        /// A collection of <see cref="HealthCheckRunner"/> objects based on the values of the <see cref=
+        /// "RunnerSections"/> property.
         /// </returns>
-        public HealthCheckRunner CreateRunner()
+        public IList<IHealthCheckRunner> CreateRunners()
         {
-            var healthChecks = Settings.HealthChecks.Cast<LateBoundConfigurationElement<IHealthCheck>>()
-                .Select(section => section.CreateInstance());
+            return RunnerSections.Cast<HealthCheckRunnerSection>().Select(runnerSection =>
+            {
+                var healthChecks = runnerSection.HealthChecks.Cast<LateBoundConfigurationElement<IHealthCheck>>()
+                    .Select(section => section.CreateInstance());
 
-            var responseCustomizer =
-                Settings.ResponseCustomizer.ElementInformation.IsPresent
-                    ? Settings.ResponseCustomizer.CreateInstance()
-                    : null;
+                var responseCustomizer =
+                    runnerSection.ResponseCustomizer.ElementInformation.IsPresent
+                        ? runnerSection.ResponseCustomizer.CreateInstance()
+                        : null;
 
-            var contentType = Settings.ContentType ?? HealthCheckRunner.DefaultContentType;
-            var passStatusCode = Settings.PassStatusCode != -1 ? Settings.PassStatusCode : HealthCheckRunner.DefaultPassStatusCode;
-            var warnStatusCode = Settings.WarnStatusCode != -1 ? Settings.WarnStatusCode : HealthCheckRunner.DefaultWarnStatusCode;
-            var failStatusCode = Settings.FailStatusCode != -1 ? Settings.FailStatusCode : HealthCheckRunner.DefaultFailStatusCode;
+                var contentType = runnerSection.ContentType ?? HealthCheckRunner.DefaultContentType;
+                var passStatusCode = runnerSection.PassStatusCode != -1 ? runnerSection.PassStatusCode : HealthCheckRunner.DefaultPassStatusCode;
+                var warnStatusCode = runnerSection.WarnStatusCode != -1 ? runnerSection.WarnStatusCode : HealthCheckRunner.DefaultWarnStatusCode;
+                var failStatusCode = runnerSection.FailStatusCode != -1 ? runnerSection.FailStatusCode : HealthCheckRunner.DefaultFailStatusCode;
 
-            return new HealthCheckRunner(healthChecks, Settings.Description, Settings.ServiceId,
-                Settings.Version, Settings.ReleaseId, responseCustomizer,
-                contentType, passStatusCode, warnStatusCode, failStatusCode);
+                return (IHealthCheckRunner)new HealthCheckRunner(healthChecks, runnerSection.Name, runnerSection.Description, runnerSection.ServiceId,
+                    runnerSection.Version, runnerSection.ReleaseId, responseCustomizer, contentType,
+                    passStatusCode, warnStatusCode, failStatusCode);
+            }).ToList();
         }
     }
 }
