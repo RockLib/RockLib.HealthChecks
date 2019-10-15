@@ -42,16 +42,6 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNullHealthChecks_Throws()
-        {
-            IEnumerable<IHealthCheck> healthChecks = null;
-
-            Action act = () => new HealthCheckRunner(healthChecks);
-
-            act.Should().ThrowExactly<ArgumentNullException>().WithMessage("*healthChecks*");
-        }
-
-        [Fact]
         public void Constructor_GivenNullContentType_Throws()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };

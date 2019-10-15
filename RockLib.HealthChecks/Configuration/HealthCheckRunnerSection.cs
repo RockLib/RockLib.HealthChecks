@@ -69,7 +69,7 @@ namespace RockLib.HealthChecks.Configuration
         /// Gets the section that defines the list of <see cref="IHealthCheck"/> objects that are
         /// checked by the runner.
         /// </summary>
-        [ConfigurationProperty("healthChecks", IsRequired = true)]
+        [ConfigurationProperty("healthChecks", IsRequired = false)]
         public HealthChecksSection HealthChecks => (HealthChecksSection)this["healthChecks"];
 
         /// <summary>

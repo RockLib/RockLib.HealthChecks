@@ -17,7 +17,7 @@ namespace RockLib.HealthChecks.Configuration
         /// <inheritdoc/>
         protected override object GetElementKey(ConfigurationElement element)
         {
-            return ((HealthCheckRunnerSection)element).Name;
+            return ((HealthCheckRunnerSection)element).Name ?? "default";
         }
     }
 }

@@ -14,20 +14,20 @@ namespace RockLib.HealthChecks.Configuration
         /// Gets the <see cref="HealthCheckRunnersSection"/> that defines the collection of <see cref=
         /// "IHealthCheckRunner"/> objects returned by the <see cref="CreateRunners"/> method.
         /// </summary>
-        [ConfigurationProperty("runners", IsRequired = true)]
-        public HealthCheckRunnersSection RunnerSections => (HealthCheckRunnersSection)this["runners"];
+        [ConfigurationProperty("runners", IsRequired = false)]
+        public HealthCheckRunnersSection Runners => (HealthCheckRunnersSection)this["runners"];
 
         /// <summary>
         /// Create a collection of <see cref="IHealthCheckRunner"/> objects based on the values of the <see cref=
-        /// "RunnerSections"/> property.
+        /// "Runners"/> property.
         /// </summary>
         /// <returns>
         /// A collection of <see cref="HealthCheckRunner"/> objects based on the values of the <see cref=
-        /// "RunnerSections"/> property.
+        /// "Runners"/> property.
         /// </returns>
         public IList<IHealthCheckRunner> CreateRunners()
         {
-            return RunnerSections.Cast<HealthCheckRunnerSection>().Select(runnerSection =>
+            return Runners.Cast<HealthCheckRunnerSection>().Select(runnerSection =>
             {
                 var healthChecks = runnerSection.HealthChecks.Cast<LateBoundConfigurationElement<IHealthCheck>>()
                     .Select(section => section.CreateInstance());
