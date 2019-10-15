@@ -30,7 +30,12 @@ namespace RockLib.HealthChecks.HttpModule
         /// <summary>
         /// Gets or sets a value indicating whether to indent the JSON output.
         /// </summary>
-        public bool Indent { get; set; }
+        public static bool Indent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the <see cref="IHealthCheckRunner"/>.
+        /// </summary>
+        public static string HealthCheckRunnerName { get; set; }
 
         /// <summary>
         /// Not implemented.
@@ -78,7 +83,7 @@ namespace RockLib.HealthChecks.HttpModule
 
                 if (ShouldDoHealthCheck(context?.Request?.RawUrl))
                 {
-                    var healthCheckResponse = await HealthCheck.Runner.RunAsync().ConfigureAwait(false);
+                    var healthCheckResponse = await HealthCheck.GetRunner(HealthCheckRunnerName).RunAsync().ConfigureAwait(false);
 
                     context.Response.Clear();
                     context.Response.TrySkipIisCustomErrors = true;

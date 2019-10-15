@@ -12,17 +12,32 @@ namespace RockLib.HealthChecks.AspNetCore
         /// Adds a terminal <see cref="HealthCheckMiddleware"/> to the application.
         /// </summary>
         /// <param name="builder">The application builder.</param>
-        /// <param name="healthCheckRunner">
-        /// The <see cref="IHealthCheckRunner"/> to use. If <see langword="null"/> or not provided,
-        /// the value of the <see cref="HealthCheck.Runner"/> property is used.
+        /// <param name="healthCheckRunnerName">
+        /// The name of the <see cref="IHealthCheckRunner"/> to use. If <see langword="null"/> or not provided,
+        /// the default value of the <see cref="HealthCheck.GetRunner"/> method is used.
         /// </param>
         /// <param name="route">The route of the health endpoint.</param>
         /// <param name="indent">Whether to indent the JSON output.</param>
         /// <returns>The application builder.</returns>
         public static IApplicationBuilder UseRockLibHealthChecks(this IApplicationBuilder builder,
-            IHealthCheckRunner healthCheckRunner = null, string route = "/health", bool indent = false)
+            string healthCheckRunnerName = null, string route = "/health", bool indent = false)
+            => builder.UseRockLibHealthChecks(HealthCheck.GetRunner(healthCheckRunnerName), route, indent);
+
+        /// <summary>
+        /// Adds a terminal <see cref="HealthCheckMiddleware"/> to the application.
+        /// </summary>
+        /// <param name="builder">The application builder.</param>
+        /// <param name="healthCheckRunner">
+        /// The <see cref="IHealthCheckRunner"/> to use. If <see langword="null"/>,
+        /// the value of the <see cref="HealthCheck.GetRunner"/> method is used.
+        /// </param>
+        /// <param name="route">The route of the health endpoint.</param>
+        /// <param name="indent">Whether to indent the JSON output.</param>
+        /// <returns>The application builder.</returns>
+        public static IApplicationBuilder UseRockLibHealthChecks(this IApplicationBuilder builder,
+            IHealthCheckRunner healthCheckRunner, string route = "/health", bool indent = false)
         {
-            healthCheckRunner = healthCheckRunner ?? HealthCheck.Runner;
+            healthCheckRunner = healthCheckRunner ?? HealthCheck.GetRunner();
             route = $"/{route.Trim('/')}";
 
             return builder
