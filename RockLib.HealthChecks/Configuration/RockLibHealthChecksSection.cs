@@ -37,8 +37,8 @@ namespace RockLib.HealthChecks.Configuration
             var warnStatusCode = Settings.WarnStatusCode != -1 ? Settings.WarnStatusCode : HealthCheckRunner.DefaultWarnStatusCode;
             var failStatusCode = Settings.FailStatusCode != -1 ? Settings.FailStatusCode : HealthCheckRunner.DefaultFailStatusCode;
 
-            return new HealthCheckRunner(healthChecks, responseCustomizer,
-                Settings.Version, Settings.ReleaseId, Settings.ServiceId, Settings.Description,
+            return new HealthCheckRunner(healthChecks, Settings.Description, Settings.ServiceId,
+                Settings.Version, Settings.ReleaseId, responseCustomizer,
                 contentType, passStatusCode, warnStatusCode, failStatusCode);
         }
     }

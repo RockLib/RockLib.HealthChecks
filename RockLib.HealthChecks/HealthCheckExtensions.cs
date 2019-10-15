@@ -47,10 +47,10 @@ namespace RockLib.HealthChecks
 
             return new HealthResponse(results)
             {
+                Description = runner.Description,
+                ServiceId = runner.ServiceId,
                 Version = runner.Version,
                 ReleaseId = runner.ReleaseId,
-                ServiceId = runner.ServiceId,
-                Description = runner.Description,
                 ContentType = runner.ContentType
             }.SetStatusCode(runner);
         }

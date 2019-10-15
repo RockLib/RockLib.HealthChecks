@@ -18,7 +18,7 @@ namespace RockLib.HealthChecks
     {
         internal const string DefaultContentType = "application/health+json";
         internal const int DefaultPassStatusCode = 200;
-        internal const int DefaultWarnStatusCode = 202;
+        internal const int DefaultWarnStatusCode = 200;
         internal const int DefaultFailStatusCode = 503;
 
         /// <summary>
@@ -28,14 +28,14 @@ namespace RockLib.HealthChecks
         /// The collection of <see cref="IHealthCheck"/> objects to be checked by this runner. Must not have
         /// a null value.
         /// </param>
+        /// <param name="description">The human-friendly description of the service.</param>
+        /// <param name="serviceId">The unique identifier of the service, in the application scope.</param>
+        /// <param name="version">The public version of the service.</param>
+        /// <param name="releaseId">The "release version" or "release ID" of the service.</param>
         /// <param name="responseCustomizer">
         /// The <see cref="IHealthResponseCustomizer"/> that customizes each <see cref="HealthResponse"/>
         /// object returned by this runner.
         /// </param>
-        /// <param name="version">The public version of the service.</param>
-        /// <param name="releaseId">The "release version" or "release ID" of the service.</param>
-        /// <param name="serviceId">The unique identifier of the service, in the application scope.</param>
-        /// <param name="description">The human-friendly description of the service.</param>
         /// <param name="contentType">
         /// The HTTP content type of responses created by this health check runner. Must not have a null or empty
         /// value.
@@ -52,13 +52,11 @@ namespace RockLib.HealthChecks
         /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
         /// "HealthStatus.Fail"/>. Must have a value in the 400-599 range.
         /// </param>
-        public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks, IHealthResponseCustomizer responseCustomizer = null,
-            string version = null, string releaseId = null, string serviceId = null, string description = null,
-            string contentType = DefaultContentType, int passStatusCode = DefaultPassStatusCode,
-            int warnStatusCode = DefaultWarnStatusCode, int failStatusCode = DefaultFailStatusCode)
+        public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks = null,
+            string description = null, string serviceId = null, string version = null, string releaseId = null,
+            IHealthResponseCustomizer responseCustomizer = null, string contentType = DefaultContentType,
+            int passStatusCode = DefaultPassStatusCode, int warnStatusCode = DefaultWarnStatusCode, int failStatusCode = DefaultFailStatusCode)
         {
-            if (healthChecks == null)
-                throw new ArgumentNullException(nameof(healthChecks));
             if (string.IsNullOrEmpty(contentType))
                 throw new ArgumentNullException(nameof(contentType));
             if (passStatusCode < 200 || passStatusCode > 399)
@@ -68,12 +66,12 @@ namespace RockLib.HealthChecks
             if (failStatusCode < 400 || failStatusCode > 599)
                 throw new ArgumentOutOfRangeException(nameof(failStatusCode), "Must be in the range of 400-599.");
 
-            HealthChecks = healthChecks as IReadOnlyListOfIHealthCheck ?? healthChecks.ToList();
-            ResponseCustomizer = responseCustomizer;
+            HealthChecks = (healthChecks ?? Enumerable.Empty<IHealthCheck>()) as IReadOnlyListOfIHealthCheck ?? healthChecks.ToList();
+            Description = description;
+            ServiceId = serviceId;
             Version = version;
             ReleaseId = releaseId;
-            ServiceId = serviceId;
-            Description = description;
+            ResponseCustomizer = responseCustomizer;
             ContentType = contentType;
             PassStatusCode = passStatusCode;
             WarnStatusCode = warnStatusCode;
@@ -86,10 +84,14 @@ namespace RockLib.HealthChecks
         public IReadOnlyListOfIHealthCheck HealthChecks { get; }
 
         /// <summary>
-        /// Gets the <see cref="IHealthResponseCustomizer"/> that customizes each <see cref=
-        /// "HealthResponse"/> object returned by this runner.
+        /// Gets the human-friendly description of the service.
         /// </summary>
-        public IHealthResponseCustomizer ResponseCustomizer { get; }
+        public string Description { get; }
+
+        /// <summary>
+        /// Gets the unique identifier of the service, in the application scope.
+        /// </summary>
+        public string ServiceId { get; }
 
         /// <summary>
         /// Gets the public version of the service.
@@ -102,14 +104,10 @@ namespace RockLib.HealthChecks
         public string ReleaseId { get; }
 
         /// <summary>
-        /// Gets the unique identifier of the service, in the application scope.
+        /// Gets the <see cref="IHealthResponseCustomizer"/> that customizes each <see cref=
+        /// "HealthResponse"/> object returned by this runner.
         /// </summary>
-        public string ServiceId { get; }
-
-        /// <summary>
-        /// Gets the human-friendly description of the service.
-        /// </summary>
-        public string Description { get; }
+        public IHealthResponseCustomizer ResponseCustomizer { get; }
 
         /// <summary>
         /// Gets the HTTP content type of responses created by this health check runner.

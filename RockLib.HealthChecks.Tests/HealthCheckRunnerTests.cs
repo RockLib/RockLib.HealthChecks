@@ -24,8 +24,8 @@ namespace RockLib.HealthChecks.Tests
             var warnStatusCode = 399;
             var failStatusCode = 599;
 
-            var runner = new HealthCheckRunner(healthChecks, responseCustomizer, version, releaseId,
-                serviceId, description, contentType, passStatusCode, warnStatusCode, failStatusCode);
+            var runner = new HealthCheckRunner(healthChecks, description, serviceId, version, releaseId,
+                responseCustomizer, contentType, passStatusCode, warnStatusCode, failStatusCode);
 
             runner.HealthChecks.Should().BeEquivalentTo(healthChecks);
             runner.ResponseCustomizer.Should().BeSameAs(responseCustomizer);
@@ -147,7 +147,7 @@ namespace RockLib.HealthChecks.Tests
             var healthChecks = new[] { mockHealthCheck1.Object, mockHealthCheck2.Object };
             var responseCustomizer = mockResponseCustomizer.Object;
 
-            var runner = new HealthCheckRunner(healthChecks, responseCustomizer);
+            var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
             var response = await runner.RunAsync();
 
@@ -176,7 +176,7 @@ namespace RockLib.HealthChecks.Tests
             var healthChecks = new[] { mockHealthCheck1.Object, mockHealthCheck2.Object };
             var responseCustomizer = new Mock<IHealthResponseCustomizer>().Object;
 
-            var runner = new HealthCheckRunner(healthChecks, responseCustomizer);
+            var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
             var response = await runner.RunAsync();
 
@@ -231,7 +231,7 @@ namespace RockLib.HealthChecks.Tests
             var healthChecks = new[] { mockHealthCheck1.Object, mockHealthCheck2.Object };
             var responseCustomizer = mockResponseCustomizer.Object;
 
-            var runner = new HealthCheckRunner(healthChecks, responseCustomizer);
+            var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
             var response = await runner.RunAsync();
 

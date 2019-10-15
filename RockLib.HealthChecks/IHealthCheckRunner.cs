@@ -11,6 +11,16 @@ namespace RockLib.HealthChecks
     public interface IHealthCheckRunner
     {
         /// <summary>
+        /// Gets the human-friendly description of the service.
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
+        /// Gets the unique identifier of the service, in the application scope.
+        /// </summary>
+        string ServiceId { get; }
+
+        /// <summary>
         /// Gets the public version of the service.
         /// </summary>
         string Version { get; }
@@ -19,16 +29,6 @@ namespace RockLib.HealthChecks
         /// Gets the "release version" or "release ID" of the service.
         /// </summary>
         string ReleaseId { get; }
-
-        /// <summary>
-        /// Gets the unique identifier of the service, in the application scope.
-        /// </summary>
-        string ServiceId { get; }
-
-        /// <summary>
-        /// Gets the human-friendly description of the service.
-        /// </summary>
-        string Description { get; }
 
         /// <summary>
         /// Gets the HTTP content type of responses created by this health check runner. Must not
