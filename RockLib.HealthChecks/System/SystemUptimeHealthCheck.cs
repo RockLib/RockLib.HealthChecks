@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 #if !(NET35 || NET40)
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,17 +7,17 @@ using System.Threading.Tasks;
 namespace RockLib.HealthChecks.System
 {
     /// <summary>
-    /// A health check that records the uptime of the current process. Always passes.
+    /// A health check that records the uptime of the system. Always passes.
     /// </summary>
-    public class ProcessUptimeHealthCheck : SingleResultHealthCheck
+    public class SystemUptimeHealthCheck : SingleResultHealthCheck
     {
-        private readonly DateTime _currentProcessStartTime;
+        private static readonly double _stopwatchFrequency = Stopwatch.Frequency;
 
         /// <summary>
-        /// Initalizes a new instance of the <see cref="ProcessUptimeHealthCheck"/> class.
+        /// Initalizes a new instance of the <see cref="SystemUptimeHealthCheck"/> class.
         /// </summary>
         /// <param name="componentName">
-        /// The name of the logical downstream dependency or sub-component of a service. Defaults to 'process'.
+        /// The name of the logical downstream dependency or sub-component of a service. Defaults to 'system'.
         /// Must not contain a colon.
         /// </param>
         /// <param name="measurementName">
@@ -29,12 +28,10 @@ namespace RockLib.HealthChecks.System
         /// <param name="componentId">
         /// A unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </param>
-        public ProcessUptimeHealthCheck(string componentName = "process", string measurementName = "uptime",
+        public SystemUptimeHealthCheck(string componentName = "system", string measurementName = "uptime",
             string componentType = "system", string componentId = null)
             : base(componentName, measurementName, componentType, componentId)
         {
-            try { _currentProcessStartTime = Process.GetCurrentProcess().StartTime; }
-            catch { _currentProcessStartTime = DateTime.Now; }
         }
 
 #if NET35 || NET40
@@ -55,7 +52,7 @@ namespace RockLib.HealthChecks.System
         private void SetResult(HealthCheckResult result)
         {
             result.Status = HealthStatus.Pass;
-            result.ObservedValue = (DateTime.Now - _currentProcessStartTime).TotalSeconds;
+            result.ObservedValue = Stopwatch.GetTimestamp() / _stopwatchFrequency;
             result.ObservedUnit = "s";
         }
     }
