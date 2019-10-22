@@ -18,7 +18,7 @@ namespace RockLib.HealthChecks.Configuration
         public HealthCheckRunnersSection Runners => (HealthCheckRunnersSection)this["runners"];
 
         /// <summary>
-        /// Create a collection of <see cref="IHealthCheckRunner"/> objects based on the values of the <see cref=
+        /// Creates a collection of <see cref="IHealthCheckRunner"/> objects based on the values of the <see cref=
         /// "Runners"/> property.
         /// </summary>
         /// <returns>

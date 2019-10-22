@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45</TargetFrameworks>
+    <TargetFramework>net45</TargetFramework>
     <PackageId>RockLib.HealthChecks.WebApi</PackageId>
     <PackageVersion>1.0.0-alpha01</PackageVersion>
     <Authors>Josh Cherry, Brian Friesen, Justin Moss</Authors>

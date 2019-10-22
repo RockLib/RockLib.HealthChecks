@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>RockLib.HealthChecks.AspNetCore</PackageId>
     <PackageVersion>1.0.0-alpha01</PackageVersion>
     <Authors>Andy Ladd, Brian Friesen, Justin Moss</Authors>

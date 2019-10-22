@@ -44,14 +44,33 @@ namespace RockLib.HealthChecks.System
             string componentName = "diskDrive", string measurementName = "availableFreeSpace",
             string componentType = "system", string componentId = null)
         {
+            if (warnGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
+            if (failGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(failGigabytes), "Must not be less than zero.");
+            DriveName = !string.IsNullOrEmpty(driveName) ? driveName : throw new ArgumentNullException(nameof(driveName));
+            WarnGigabytes = warnGigabytes;
+            FailGigabytes = failGigabytes;
             ComponentName = componentName;
             MeasurementName = measurementName;
             ComponentType = componentType;
             ComponentId = componentId;
-            DriveName = driveName;
-            WarnGigabytes = warnGigabytes;
-            FailGigabytes = failGigabytes;
         }
+
+        /// <summary>
+        /// The name of the drive on which to check the free disk storage.
+        /// </summary>
+        public string DriveName { get; }
+
+        /// <summary>
+        /// Gets the the lowest allowable level of available free space in gigabytes, below which results
+		/// in a <see cref="HealthStatus.Warn"/> status.
+        /// </summary>
+        public double WarnGigabytes { get; }
+
+        /// <summary>
+        /// Gets the the lowest allowable level of available free space in gigabytes, below which results
+		/// in a <see cref="HealthStatus.Fail"/> status.
+        /// </summary>
+        public double FailGigabytes { get; }
 
         /// <summary>
         /// Gets the name of the logical downstream dependency or sub-component of a service.
@@ -72,23 +91,6 @@ namespace RockLib.HealthChecks.System
         /// Gets a unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </summary>
         public string ComponentId { get; }
-
-        /// <summary>
-        /// The name of the drive on which to check the free disk storage.
-        /// </summary>
-        public string DriveName { get; }
-
-        /// <summary>
-        /// Gets the the lowest allowable level of available free space in gigabytes, below which results
-		/// in a <see cref="HealthStatus.Warn"/> status.
-        /// </summary>
-        public double WarnGigabytes { get; }
-
-        /// <summary>
-        /// Gets the the lowest allowable level of available free space in gigabytes, below which results
-		/// in a <see cref="HealthStatus.Fail"/> status.
-        /// </summary>
-        public double FailGigabytes { get; }
 
 #if NET35 || NET40
         /// <summary>
@@ -134,21 +136,22 @@ namespace RockLib.HealthChecks.System
             if (drive == null)
             {
                 result.Status = HealthStatus.Warn;
-                result.Output = $"Configured drive {DriveName} is not present on system";
+                result.Output = $"Configured drive {DriveName} is not present on system.";
                 return result;
             }
 
-            var availableFreeSpace = (double)drive.AvailableFreeSpace / (1024 * 1024 * 1024);
+            const double gigabytes = 1024 * 1024 * 1024;
+            var availableFreeSpace = drive.AvailableFreeSpace / gigabytes;
 
             if (availableFreeSpace < FailGigabytes)
             {
                 result.Status = HealthStatus.Fail;
-                result.Output = $"Configured FailGigabytes for disk {drive.Name} is {FailGigabytes:#.###} but the actual free space is {availableFreeSpace:#.###} gigabytes";
+                result.Output = $"Configured FailGigabytes for disk {drive.Name} is {FailGigabytes:#.###} but the actual free space is {availableFreeSpace:#.###} gigabytes.";
             }
             else if (availableFreeSpace < WarnGigabytes)
             {
                 result.Status = HealthStatus.Warn;
-                result.Output = $"Configured WarnGigabytes for disk {drive.Name} is {WarnGigabytes:#.###} but the actual free space is {availableFreeSpace:#.###} gigabytes";
+                result.Output = $"Configured WarnGigabytes for disk {drive.Name} is {WarnGigabytes:#.###} but the actual free space is {availableFreeSpace:#.###} gigabytes.";
             }
             else
             {

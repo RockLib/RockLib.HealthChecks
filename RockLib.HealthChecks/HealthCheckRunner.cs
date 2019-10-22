@@ -25,8 +25,7 @@ namespace RockLib.HealthChecks
         /// Initializes a new instance of the <see cref="HealthCheckRunner"/> class.
         /// </summary>
         /// <param name="healthChecks">
-        /// The collection of <see cref="IHealthCheck"/> objects to be checked by this runner. Must not have
-        /// a null value.
+        /// The collection of <see cref="IHealthCheck"/> objects to be checked by this runner.
         /// </param>
         /// <param name="name">The name of the runner (optional).</param>
         /// <param name="description">The human-friendly description of the service.</param>

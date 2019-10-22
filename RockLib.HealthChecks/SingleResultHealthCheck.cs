@@ -75,7 +75,6 @@ namespace RockLib.HealthChecks
         /// An object to be modified according to the outcome of the health check.
         /// </param>
         protected abstract void Check(HealthCheckResult result);
-
 #else
         /// <summary>
         /// Check the health of the sub-component/dependency.
