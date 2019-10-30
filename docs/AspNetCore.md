@@ -1,4 +1,4 @@
-# How to RockLib.HealthChecks to an ASP.NET Core application
+# How to add RockLib.HealthChecks to an ASP.NET Core application
 
 To add a health endpoint to an ASP.NET Core application, use the RockLib.HealthChecks.AspNetCore nuget package. This package adds the `UseRockLibHealthChecks` extension method on the `IApplicationBuilder` used in the `Startup` class.
 
