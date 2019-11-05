@@ -171,7 +171,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void PropertySetters_WhenPassedNull_ClearDictionaryValues()
+        public void PropertySetters_WhenPassedNull_SetsNullValue()
         {
             var now = DateTime.UtcNow;
 
@@ -198,15 +198,15 @@ namespace RockLib.HealthChecks.Tests
             result.Output = null;
             result.Links = null;
 
-            result.ContainsKey("componentId").Should().BeFalse();
-            result.ContainsKey("componentType").Should().BeFalse();
-            result.ContainsKey("observedValue").Should().BeFalse();
-            result.ContainsKey("observedUnit").Should().BeFalse();
-            result.ContainsKey("status").Should().BeFalse();
-            result.ContainsKey("affectedEndpoints").Should().BeFalse();
-            result.ContainsKey("time").Should().BeFalse();
-            result.ContainsKey("output").Should().BeFalse();
-            result.ContainsKey("links").Should().BeFalse();
+            result["componentId"].Should().BeNull();
+            result["componentType"].Should().BeNull();
+            result["observedValue"].Should().BeNull();
+            result["observedUnit"].Should().BeNull();
+            result["status"].Should().BeNull();
+            result["affectedEndpoints"].Should().BeNull();
+            result["time"].Should().BeNull();
+            result["output"].Should().BeNull();
+            result["links"].Should().BeNull();
         }
 
         [Fact]
