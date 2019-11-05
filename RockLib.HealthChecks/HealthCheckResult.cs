@@ -53,7 +53,7 @@ namespace RockLib.HealthChecks
         public string ComponentId
         {
             get => TryGetValue("componentId", out string value) ? value : null;
-            set => SetValue("componentId", value);
+            set => _dictionary["componentId"] = value;
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace RockLib.HealthChecks
         public string ComponentType
         {
             get => TryGetValue("componentType", out string value) ? value : null;
-            set => SetValue("componentType", value);
+            set => _dictionary["componentType"] = value;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace RockLib.HealthChecks
         public object ObservedValue
         {
             get => TryGetValue("observedValue", out object value) ? value : null;
-            set => SetValue("observedValue", value);
+            set => _dictionary["observedValue"] = value;
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace RockLib.HealthChecks
         public string ObservedUnit
         {
             get => TryGetValue("observedUnit", out string value) ? value : null;
-            set => SetValue("observedUnit", value);
+            set => _dictionary["observedUnit"] = value;
         }
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace RockLib.HealthChecks
         public HealthStatus? Status
         {
             get => TryGetValue("status", out HealthStatus? value) ? value : null;
-            set => SetValue("status", value);
+            set => _dictionary["status"] = value;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace RockLib.HealthChecks
         public List<string> AffectedEndpoints
         {
             get => TryGetValue("affectedEndpoints", out List<string> value) ? value : null;
-            set => SetValue("affectedEndpoints", value);
+            set => _dictionary["affectedEndpoints"] = value;
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace RockLib.HealthChecks
         public DateTime? Time
         {
             get => TryGetValue("time", out DateTime? value) ? value : null;
-            set => SetValue("time", EnsureUtcTime(value));
+            set => _dictionary["time"] = EnsureUtcTime(value);
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace RockLib.HealthChecks
         public string Output
         {
             get => TryGetValue("output", out string value) ? value : null;
-            set => SetValue("output", value);
+            set => _dictionary["output"] = value;
         }
 
         /// <summary>
@@ -143,7 +143,7 @@ namespace RockLib.HealthChecks
         public Dictionary<string, string> Links
         {
             get => TryGetValue("links", out Dictionary<string, string> value) ? value : null;
-            set => SetValue("links", value);
+            set => _dictionary["links"] = value;
         }
 
         private bool TryGetValue<T>(string key, out T value)
@@ -156,14 +156,6 @@ namespace RockLib.HealthChecks
 
             value = default(T);
             return false;
-        }
-
-        private void SetValue(string key, object value)
-        {
-            if (value == null)
-                _dictionary.Remove(key);
-            else
-                _dictionary[key] = value;
         }
 
         internal string GetKey()
@@ -219,7 +211,7 @@ namespace RockLib.HealthChecks
         /// </summary>
         /// <param name="key">The key of the element to get or set.</param>
         /// <returns>The element with the specified key.</returns>
-        public object this[string key] { get => _dictionary[key]; set => SetValue(key, value); }
+        public object this[string key] { get => _dictionary[key]; set => _dictionary[key] = value; }
 
         /// <summary>
         /// Determines whether the <see cref="HealthCheckResult"/> contains an element with
@@ -237,7 +229,7 @@ namespace RockLib.HealthChecks
         /// </summary>
         /// <param name="key">The string to use as the key of the element to add.</param>
         /// <param name="value">The object to use as the value of the element to add.</param>
-        public void Add(string key, object value) => SetValue(key, value);
+        public void Add(string key, object value) => _dictionary.Add(key, value);
 
         /// <summary>
         /// Removes the element with the specified key from the <see cref="HealthCheckResult"/>.
@@ -269,7 +261,7 @@ namespace RockLib.HealthChecks
 
         bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _dictionary.IsReadOnly;
 
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => SetValue(item.Key, item.Value);
+        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => _dictionary.Add(item);
 
         bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) => _dictionary.Contains(item);
 
