@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>RockLib.HealthChecks.AspNetCore</PackageId>
-    <PackageVersion>1.0.0-rc1</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>Andy Ladd, Brian Friesen, Justin Moss</Authors>
     <Description>A simple set of .NET Core Middleware extensions for adding Health Checks to your web application.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -28,7 +28,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
-    <PackageReference Include="RockLib.HealthChecks" Version="1.0.0-rc1" />
+    <PackageReference Include="RockLib.HealthChecks" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
