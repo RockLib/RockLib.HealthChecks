@@ -60,6 +60,7 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
                 Notes = new List<string> { $"TotalDuration: {healthReport.TotalDuration}" }
             };
 
+            httpContext.Response.ContentType = response.ContentType;
             await httpContext.Response.WriteAsync(response.Serialize(Indent));
         }
 
