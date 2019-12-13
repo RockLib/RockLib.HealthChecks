@@ -16,7 +16,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <summary>
         /// Gets the health check registrations responsible for creating the runner's health checks.
         /// </summary>
-        public ICollection<Func<IServiceProvider, IHealthCheck>> Registrations { get; } = new List<Func<IServiceProvider, IHealthCheck>>();
+        public ICollection<HealthCheckRegistration> Registrations { get; } = new List<HealthCheckRegistration>();
 
         /// <summary>
         /// Gets or sets the human-friendly description of the service.

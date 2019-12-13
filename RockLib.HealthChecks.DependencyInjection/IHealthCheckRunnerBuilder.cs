@@ -10,7 +10,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <summary>
         /// Adds a health check registration delegate to the builder.
         /// </summary>
-        /// <param name="registration">The registration delegate.</param>
-        IHealthCheckRunnerBuilder AddHealthCheck(Func<IServiceProvider, IHealthCheck> registration);
+        /// <param name="registration">The health check registration delegate.</param>
+        IHealthCheckRunnerBuilder AddHealthCheck(HealthCheckRegistration registration);
     }
 }

@@ -42,28 +42,28 @@ namespace RockLib.HealthChecks.DependencyInjection
         public IServiceCollection Services { get; }
 
         /// <summary>
-        /// Gets the delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to create the
+        /// Gets the delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to configure the
         /// <see cref="HealthCheckRunner"/>.
         /// </summary>
         public Action<IHealthCheckRunnerOptions> ConfigureOptions { get; }
 
         /// <summary>
-        /// Adds a registration delegate for creating a health check.
+        /// Adds a health check registration delegate to the builder.
         /// </summary>
-        /// <param name="registration">The registration delegate.</param>
-        public IHealthCheckRunnerBuilder AddHealthCheck(Func<IServiceProvider, IHealthCheck> registration)
+        /// <param name="registration">The health check registration delegate.</param>
+        public IHealthCheckRunnerBuilder AddHealthCheck(HealthCheckRegistration registration)
         {
             Services.Configure<HealthCheckRunnerOptions>(Name, options => options.Registrations.Add(registration));
             return this;
         }
 
         /// <summary>
-        /// Creates an instance of <see cref="HealthCheckRunner"/> with 
+        /// Creates an instance of <see cref="HealthCheckRunner"/> using the registered health checks.
         /// </summary>
         /// <param name="serviceProvider">
         /// The <see cref="IServiceProvider"/> that retrieves the services required to create the <see cref="HealthCheckRunner"/>.
         /// </param>
-        /// <returns></returns>
+        /// <returns>An instance of <see cref="HealthCheckRunner"/>.</returns>
         public HealthCheckRunner Build(IServiceProvider serviceProvider)
         {
             if (serviceProvider == null)
@@ -71,7 +71,7 @@ namespace RockLib.HealthChecks.DependencyInjection
 
             var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<HealthCheckRunnerOptions>>();
 
-            var options = optionsMonitor.Get(Name); // TODO: What happens if the named options don't exist?
+            var options = optionsMonitor.Get(Name);
             ConfigureOptions?.Invoke(options);
 
             var healthChecks = options.Registrations.Select(registration => registration.Invoke(serviceProvider));
