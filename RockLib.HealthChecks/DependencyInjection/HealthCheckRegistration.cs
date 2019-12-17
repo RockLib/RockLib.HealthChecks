@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET462 || NETSTANDARD2_0
+using System;
 
 namespace RockLib.HealthChecks.DependencyInjection
 {
@@ -13,3 +14,4 @@ namespace RockLib.HealthChecks.DependencyInjection
     public delegate IHealthCheck HealthCheckRegistration(IServiceProvider serviceProvider);
 
 }
+#endif

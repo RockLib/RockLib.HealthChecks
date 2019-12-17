@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿#if NET462 || NETSTANDARD2_0
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace RockLib.HealthChecks.DependencyInjection
@@ -76,3 +77,4 @@ namespace RockLib.HealthChecks.DependencyInjection
         }
     }
 }
+#endif

@@ -1,4 +1,5 @@
-﻿namespace RockLib.HealthChecks.DependencyInjection
+﻿#if NET462 || NETSTANDARD2_0
+namespace RockLib.HealthChecks.DependencyInjection
 {
     /// <summary>
     /// Defines the editable settings for creating an instance of <see cref="IHealthCheckRunner"/>.
@@ -56,3 +57,4 @@
         int FailStatusCode { get; set; }
     }
 }
+#endif

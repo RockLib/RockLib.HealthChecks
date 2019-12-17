@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RockLib.HealthChecks.DependencyInjection\RockLib.HealthChecks.DependencyInjection.csproj" />
+    <ProjectReference Include="..\RockLib.HealthChecks\RockLib.HealthChecks.csproj" />
   </ItemGroup>
 
 </Project>
