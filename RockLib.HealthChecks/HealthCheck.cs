@@ -75,8 +75,7 @@ namespace RockLib.HealthChecks
             return healtchChecksSection.CreateRunners();
 #else
             var section = Config.Root.GetCompositeSection("RockLib.HealthChecks", "RockLib_HealthChecks");
-            return section.Create<IReadOnlyListOfIHealthCheckRunner>(
-                new DefaultTypes { { typeof(IHealthCheckRunner), typeof(HealthCheckRunner) } });
+            return section.Create<IReadOnlyListOfIHealthCheckRunner>();
 #endif
         }
     }
