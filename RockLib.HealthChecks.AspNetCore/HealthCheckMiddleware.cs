@@ -1,4 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RockLib.Configuration;
+using RockLib.Configuration.ObjectFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,14 +19,24 @@ namespace RockLib.HealthChecks.AspNetCore
         private readonly bool _indent;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HealthCheckMiddleware"/> class.
+        /// Initializes a new instance of the <see cref="HealthCheckMiddleware"/> class using an instance of
+        /// <see cref="IServiceProvider"/> to resolve the <see cref="IHealthCheckRunner"/> dependency.
+        /// <para>
+        /// Implementation details: An attempt is made to resolve a collection of <see cref="IHealthCheckRunner"/>
+        /// objects from the <paramref name="serviceProvider"/> parameter initially. If none can be resolved, then
+        /// an <see cref="IConfiguration"/> instance is resolved, a composite "RockLib_HealthChecks" /
+        /// "RockLib.HealthChecks" section is obtained, and a collection of <see cref="IHealthCheckRunner"/>
+        /// objects is created using RockLib.Configuration.ObjectFactory. The <see cref="IHealthCheckRunner"/>
+        /// whose name matches the <paramref name="healthCheckRunnerName"/> parameter is selected from the
+        /// collection. If none match, an <see cref="InvalidOperationException"/> is thrown.
+        /// </para>
         /// </summary>
         /// <param name="next">
         /// Ignored. Required to exist in the constructor in order to meet the definition of a middleware.
         /// </param>
-        /// <param name="healthCheckRunners">
-        /// A collection of <see cref="IHealthCheckRunner"/> objects. The one whose <see cref="IHealthCheckRunner.Name"/>
-        /// matches the <paramref name="healthCheckRunnerName"/> parameter is the one used by this middleware.
+        /// <param name="serviceProvider">
+        /// The <see cref="IServiceProvider"/> that can resolve the <see cref="IHealthCheckRunner"/> dependency
+        /// for this instance of <see cref="HealthCheckMiddleware"/>.
         /// </param>
         /// <param name="healthCheckRunnerName">The name of the health check runner to use.</param>
         /// <param name="indent">Whether to indent the JSON output.</param>
@@ -30,8 +44,8 @@ namespace RockLib.HealthChecks.AspNetCore
         /// This constructor exists primarily so that the <see cref="HealthCheckMiddleware"/> class "plays nice" with
         /// dependency injection.
         /// </remarks>
-        public HealthCheckMiddleware(RequestDelegate next, IEnumerable<IHealthCheckRunner> healthCheckRunners, string healthCheckRunnerName, bool indent = false)
-            : this(next, GetHealthCheckRunner(healthCheckRunners?.ToList() ?? throw new ArgumentNullException(nameof(healthCheckRunners)), healthCheckRunnerName), indent)
+        public HealthCheckMiddleware(RequestDelegate next, IServiceProvider serviceProvider, string healthCheckRunnerName, bool indent = false)
+            : this(next, GetHealthCheckRunner(serviceProvider, healthCheckRunnerName), indent)
         {
         }
 
@@ -51,7 +65,7 @@ namespace RockLib.HealthChecks.AspNetCore
         {
             // This is a terminal middleware, so throw away the RequestDelegate.
 
-            _healthCheckRunner = healthCheckRunner ?? HealthCheck.GetRunner();
+            _healthCheckRunner = healthCheckRunner ?? throw new ArgumentNullException(nameof(healthCheckRunner));
             _indent = indent;
         }
 
@@ -71,12 +85,17 @@ namespace RockLib.HealthChecks.AspNetCore
             // Terminal middlewares don't invoke the 'next' delegate.
         }
 
-        private static IHealthCheckRunner GetHealthCheckRunner(IEnumerable<IHealthCheckRunner> healthCheckRunners, string healthCheckRunnerName)
+        private static IHealthCheckRunner GetHealthCheckRunner(IServiceProvider serviceProvider, string healthCheckRunnerName)
         {
-            var runners = healthCheckRunners.ToList();
+            var runners = serviceProvider.GetServices<IHealthCheckRunner>().ToList();
 
             if (runners.Count == 0)
-                return HealthCheck.GetRunner(healthCheckRunnerName);
+            {
+                var configuration = serviceProvider.GetRequiredService<IConfiguration>();
+                var section = configuration.GetCompositeSection("RockLib_HealthChecks", "RockLib.HealthChecks");
+                var resolver = new Resolver(type => serviceProvider.GetService(type));
+                runners = section.Create<List<IHealthCheckRunner>>(resolver: resolver);
+            }
 
             healthCheckRunnerName = GetName(healthCheckRunnerName);
             return runners.SingleOrDefault(runner => healthCheckRunnerName.Equals(GetName(runner.Name)))
