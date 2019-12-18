@@ -93,6 +93,7 @@ before_build:
     $csproj.Save((Get-Item $csproj_path))
 
     nuget restore $sln_path
+    msbuild $sln_path /t:Restore
 build:
   project: RockLib.HealthChecks.AspNetCore.sln
   verbosity: minimal
