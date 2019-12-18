@@ -17,10 +17,12 @@ namespace RockLib.HealthChecks.AspNetCore
         /// The name of the health runner that will perform health checks for the health endpoint.
         /// </param>
         /// <param name="route">The route of the health endpoint.</param>
-        /// <param name="indent">Whether to indent the JSON output.</param>
+        /// <param name="formatter">
+        /// The <see cref="IResponseFormatter"/> responsible for formatting health responses for the middleware's HTTP response body.
+        /// </param>
         /// <returns>The application builder.</returns>
         public static IApplicationBuilder UseRockLibHealthChecks(this IApplicationBuilder builder,
-            string healthCheckRunnerName = "", string route = "/health", bool indent = false)
+            string healthCheckRunnerName = "", string route = "/health", IResponseFormatter formatter = null)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
@@ -32,7 +34,7 @@ namespace RockLib.HealthChecks.AspNetCore
             var path = new PathString($"/{route.Trim('/')}");
 
             return builder.Map(path, appBuilder =>
-                appBuilder.UseMiddleware<HealthCheckMiddleware>(healthCheckRunnerName, indent));
+                appBuilder.UseMiddleware<HealthCheckMiddleware>(healthCheckRunnerName, formatter ?? NewtonsoftJsonResponseFormatter.DefaultInstance));
         }
     }
 }

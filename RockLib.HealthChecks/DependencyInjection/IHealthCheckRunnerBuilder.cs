@@ -1,6 +1,4 @@
 ﻿#if NET462 || NETSTANDARD2_0
-using System;
-
 namespace RockLib.HealthChecks.DependencyInjection
 {
     /// <summary>
