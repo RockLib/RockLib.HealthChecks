@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Newtonsoft.Json;
 using RockLib.HealthChecks.AspNetCore;
 
 namespace AspNetCore.netcoreapp2._2
@@ -8,7 +9,7 @@ namespace AspNetCore.netcoreapp2._2
     {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseRockLibHealthChecks(indent: true);
+            app.UseRockLibHealthChecks(formatter: new NewtonsoftJsonResponseFormatter(Formatting.Indented));
         }
     }
 }
