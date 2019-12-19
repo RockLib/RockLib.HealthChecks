@@ -3,11 +3,18 @@ using System.Threading;
 using System.Threading.Tasks;
 #endif
 
+#if NET462 || NETSTANDARD2_0
+using RockLib.Configuration.ObjectFactory;
+#endif
+
 namespace RockLib.HealthChecks
 {
     /// <summary>
     /// Defines an object that checks the health of a service.
     /// </summary>
+#if NET462 || NETSTANDARD2_0
+    [DefaultType(typeof(HealthCheckRunner))]
+#endif
     public interface IHealthCheckRunner
     {
         /// <summary>
