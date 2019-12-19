@@ -16,20 +16,11 @@ namespace RockLib.HealthChecks.AspNetCore
     public sealed class HealthCheckMiddleware
     {
         private readonly IHealthCheckRunner _healthCheckRunner;
-        private readonly bool _indent;
+        private readonly IResponseFormatter _formatter;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HealthCheckMiddleware"/> class using an instance of
-        /// <see cref="IServiceProvider"/> to resolve the <see cref="IHealthCheckRunner"/> dependency.
-        /// <para>
-        /// Implementation details: An attempt is made to resolve a collection of <see cref="IHealthCheckRunner"/>
-        /// objects from the <paramref name="serviceProvider"/> parameter initially. If none can be resolved, then
-        /// an <see cref="IConfiguration"/> instance is resolved, a composite "RockLib_HealthChecks" /
-        /// "RockLib.HealthChecks" section is obtained, and a collection of <see cref="IHealthCheckRunner"/>
-        /// objects is created using RockLib.Configuration.ObjectFactory. The <see cref="IHealthCheckRunner"/>
-        /// whose name matches the <paramref name="healthCheckRunnerName"/> parameter is selected from the
-        /// collection. If none match, an <see cref="InvalidOperationException"/> is thrown.
-        /// </para>
+        /// <see cref="IServiceProvider"/> to resolve its <see cref="IHealthCheckRunner"/> dependency.
         /// </summary>
         /// <param name="next">
         /// Ignored. Required to exist in the constructor in order to meet the definition of a middleware.
@@ -39,13 +30,22 @@ namespace RockLib.HealthChecks.AspNetCore
         /// for this instance of <see cref="HealthCheckMiddleware"/>.
         /// </param>
         /// <param name="healthCheckRunnerName">The name of the health check runner to use.</param>
-        /// <param name="indent">Whether to indent the JSON output.</param>
+        /// <param name="formatter"></param>
         /// <remarks>
         /// This constructor exists primarily so that the <see cref="HealthCheckMiddleware"/> class "plays nice" with
         /// dependency injection.
+        /// <para>
+        /// Implementation details: An attempt is made to resolve a collection of <see cref="IHealthCheckRunner"/>
+        /// objects from the <paramref name="serviceProvider"/> parameter initially. If none can be resolved, then
+        /// an <see cref="IConfiguration"/> instance is resolved, a composite "RockLib_HealthChecks" /
+        /// "RockLib.HealthChecks" section is obtained, and a collection of <see cref="IHealthCheckRunner"/>
+        /// objects is created using RockLib.Configuration.ObjectFactory. The <see cref="IHealthCheckRunner"/>
+        /// whose name matches the <paramref name="healthCheckRunnerName"/> parameter is selected from the
+        /// collection. If none match, an <see cref="InvalidOperationException"/> is thrown.
+        /// </para>
         /// </remarks>
-        public HealthCheckMiddleware(RequestDelegate next, IServiceProvider serviceProvider, string healthCheckRunnerName, bool indent = false)
-            : this(next, GetHealthCheckRunner(serviceProvider, healthCheckRunnerName), indent)
+        public HealthCheckMiddleware(RequestDelegate next, IServiceProvider serviceProvider, string healthCheckRunnerName, IResponseFormatter formatter = null)
+            : this(next, GetHealthCheckRunner(serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider)), healthCheckRunnerName), formatter)
         {
         }
 
@@ -59,14 +59,14 @@ namespace RockLib.HealthChecks.AspNetCore
         /// <param name="healthCheckRunner">
         /// The <see cref="IHealthCheckRunner"/> that evaluates the health of the service.
         /// </param>
-        /// <param name="indent">Whether to indent the JSON output.</param>
-        public HealthCheckMiddleware(RequestDelegate next, IHealthCheckRunner healthCheckRunner, bool indent)
+        /// <param name="formatter"></param>
+        public HealthCheckMiddleware(RequestDelegate next, IHealthCheckRunner healthCheckRunner, IResponseFormatter formatter = null)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             // This is a terminal middleware, so throw away the RequestDelegate.
 
             _healthCheckRunner = healthCheckRunner ?? throw new ArgumentNullException(nameof(healthCheckRunner));
-            _indent = indent;
+            _formatter = formatter ?? NewtonsoftJsonResponseFormatter.DefaultInstance;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace RockLib.HealthChecks.AspNetCore
             context.Response.StatusCode = healthResponse.StatusCode;
             context.Response.ContentType = healthResponse.ContentType;
 
-            await context.Response.WriteAsync(healthResponse.Serialize(_indent)).ConfigureAwait(false);
+            await context.Response.WriteAsync(_formatter.Format(healthResponse)).ConfigureAwait(false);
 
             // Terminal middlewares don't invoke the 'next' delegate.
         }
