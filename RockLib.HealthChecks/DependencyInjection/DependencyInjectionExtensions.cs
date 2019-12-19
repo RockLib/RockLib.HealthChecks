@@ -13,8 +13,8 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// Adds an unnamed <see cref="HealthCheckRunner"/> to the service collection.
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection"/>.</param>
-        /// <param name="configureOptions"></param>
-        /// <returns></returns>
+        /// <param name="configureOptions">A callback for configuring the <see cref="IHealthCheckRunnerOptions"/>.</param>
+        /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
             Action<IHealthCheckRunnerOptions> configureOptions = null) =>
             services.AddHealthCheckRunner("", configureOptions);
@@ -28,7 +28,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// A delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to create the
         /// <see cref="HealthCheckRunner"/>.
         /// </param>
-        /// <returns></returns>
+        /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
             string name, Action<IHealthCheckRunnerOptions> configureOptions = null)
         {
