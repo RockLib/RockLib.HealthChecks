@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net35;net40;net45;net451;net462;netstandard2.0</TargetFrameworks>
     <PackageId>RockLib.HealthChecks</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>Andy Ladd, Brian Friesen, Justin Moss</Authors>
     <Description>An implementation of the draft health check RFC located at https://inadarei.github.io/rfc-healthcheck/.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
