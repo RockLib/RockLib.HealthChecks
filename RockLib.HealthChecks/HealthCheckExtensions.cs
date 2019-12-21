@@ -20,14 +20,20 @@ namespace RockLib.HealthChecks
             if (healthCheck == null)
                 throw new ArgumentNullException(nameof(healthCheck));
 
-            return new HealthCheckResult
+            var result = new HealthCheckResult
             {
-                ComponentId = healthCheck.ComponentId,
                 ComponentName = healthCheck.ComponentName,
-                ComponentType = healthCheck.ComponentType,
                 MeasurementName = healthCheck.MeasurementName,
                 Time = DateTime.UtcNow
             };
+
+            if (healthCheck.ComponentId != null)
+                result.ComponentId = healthCheck.ComponentId;
+
+            if (healthCheck.ComponentType != null)
+                result.ComponentType = healthCheck.ComponentType;
+
+            return result;
         }
 
         /// <summary>
