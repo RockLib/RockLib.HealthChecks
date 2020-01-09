@@ -9,6 +9,8 @@ namespace RockLib.HealthChecks.DependencyInjection
     /// </summary>
     public static class DependencyInjectionExtensions
     {
+        private const ServiceLifetime _defaultLifetime = ServiceLifetime.Singleton;
+
         /// <summary>
         /// Adds an unnamed <see cref="HealthCheckRunner"/> to the service collection.
         /// </summary>
@@ -16,8 +18,21 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <param name="configureOptions">A callback for configuring the <see cref="IHealthCheckRunnerOptions"/>.</param>
         /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
-            Action<IHealthCheckRunnerOptions> configureOptions = null) =>
-            services.AddHealthCheckRunner("", configureOptions);
+            Action<IHealthCheckRunnerOptions> configureOptions) =>
+            services.AddHealthCheckRunner(configureOptions, _defaultLifetime);
+
+
+        /// <summary>
+        /// Adds an unnamed <see cref="HealthCheckRunner"/> to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+        /// <param name="configureOptions">A callback for configuring the <see cref="IHealthCheckRunnerOptions"/>.</param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the health check runner.</param>
+        /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
+        public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
+            Action<IHealthCheckRunnerOptions> configureOptions = null,
+            ServiceLifetime lifetime = _defaultLifetime) =>
+            services.AddHealthCheckRunner("", configureOptions, lifetime);
 
         /// <summary>
         /// Adds a <see cref="HealthCheckRunner"/> with the specified name to the service collection.
@@ -30,7 +45,23 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// </param>
         /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
-            string name, Action<IHealthCheckRunnerOptions> configureOptions = null)
+            string name, Action<IHealthCheckRunnerOptions> configureOptions) =>
+            services.AddHealthCheckRunner(name, configureOptions, _defaultLifetime);
+
+        /// <summary>
+        /// Adds a <see cref="HealthCheckRunner"/> with the specified name to the service collection.
+        /// </summary>
+        /// <param name="services">The <see cref="IServiceCollection"/>.</param>
+        /// <param name="name">The name of the health check runner to add.</param>
+        /// <param name="configureOptions">
+        /// A delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to create the
+        /// <see cref="HealthCheckRunner"/>.
+        /// </param>
+        /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the health check runner.</param>
+        /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
+        public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
+            string name, Action<IHealthCheckRunnerOptions> configureOptions = null,
+            ServiceLifetime lifetime = _defaultLifetime)
         {
             if (services == null)
                 throw new ArgumentNullException(nameof(services));
@@ -39,7 +70,7 @@ namespace RockLib.HealthChecks.DependencyInjection
 
             var builder = new HealthCheckRunnerBuilder(name, services, configureOptions);
             
-            services.AddSingleton<IHealthCheckRunner>(builder.Build);
+            services.Add(new ServiceDescriptor(typeof(IHealthCheckRunner), builder.Build, lifetime));
 
             return builder;
         }
