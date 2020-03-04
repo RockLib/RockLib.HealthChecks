@@ -9,10 +9,11 @@ namespace RockLib.HealthChecks.DependencyInjection
     /// </summary>
     public sealed class HealthCheckRunnerOptions : IHealthCheckRunnerOptions
     {
-        private string _contentType = "application/health+json";
-        private int _passStatusCode = 200;
-        private int _warnStatusCode = 200;
-        private int _failStatusCode = 503;
+        private string _contentType = HealthCheckRunner.DefaultContentType;
+        private int _passStatusCode = HealthCheckRunner.DefaultPassStatusCode;
+        private int _warnStatusCode = HealthCheckRunner.DefaultWarnStatusCode;
+        private int _failStatusCode = HealthCheckRunner.DefaultFailStatusCode;
+        private HealthStatus? _uncaughtExceptionStatus = HealthCheckRunner.DefaultUncaughtExceptionStatus;
 
         /// <summary>
         /// Gets the health check registrations responsible for creating the runner's health checks.
@@ -99,6 +100,21 @@ namespace RockLib.HealthChecks.DependencyInjection
                 if (value < 400 || value > 599)
                     throw new ArgumentOutOfRangeException(nameof(value), "Must be in the range of 400-599.");
                 _failStatusCode = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="HealthStatus"/> for the <see cref="HealthCheckResult"/> that is
+        /// returned because an <see cref="IHealthCheck"/> has thrown an exception.
+        /// </summary>
+        public HealthStatus? UncaughtExceptionStatus
+        {
+            get => _uncaughtExceptionStatus;
+            set
+            {
+                if (value.HasValue && !Enum.IsDefined(typeof(HealthStatus), value.Value))
+                    throw new ArgumentOutOfRangeException(nameof(value), "Must be a defined HealthStatus (or null).");
+                _uncaughtExceptionStatus = value;
             }
         }
     }

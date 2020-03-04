@@ -55,6 +55,12 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// status of <see cref="HealthStatus.Fail"/>. Must have a value in the 400-599 range.
         /// </summary>
         int FailStatusCode { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="HealthStatus"/> for the <see cref="HealthCheckResult"/> that is
+        /// returned because an <see cref="IHealthCheck"/> has thrown an exception.
+        /// </summary>
+        HealthStatus? UncaughtExceptionStatus { get; set; }
     }
 }
 #endif

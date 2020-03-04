@@ -44,7 +44,7 @@ namespace RockLib.HealthChecks.Configuration
 
                 return (IHealthCheckRunner)new HealthCheckRunner(healthChecks, runnerSection.Name, runnerSection.Description, runnerSection.ServiceId,
                     runnerSection.Version, runnerSection.ReleaseId, responseCustomizer, contentType,
-                    passStatusCode, warnStatusCode, failStatusCode);
+                    passStatusCode, warnStatusCode, failStatusCode, runnerSection.UncaughtExceptionStatus);
             }).ToList();
         }
     }

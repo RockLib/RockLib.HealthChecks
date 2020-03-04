@@ -80,7 +80,7 @@ namespace RockLib.HealthChecks.DependencyInjection
             return new HealthCheckRunner(healthChecks, Name,
                 options.Description, options.ServiceId, options.Version, options.ReleaseId,
                 options.ResponseCustomizer, options.ContentType, options.PassStatusCode,
-                options.WarnStatusCode, options.FailStatusCode);
+                options.WarnStatusCode, options.FailStatusCode, options.UncaughtExceptionStatus);
         }
     }
 }

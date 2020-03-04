@@ -20,6 +20,7 @@ namespace RockLib.HealthChecks
         internal const int DefaultPassStatusCode = 200;
         internal const int DefaultWarnStatusCode = 200;
         internal const int DefaultFailStatusCode = 503;
+        internal const HealthStatus DefaultUncaughtExceptionStatus = HealthStatus.Warn;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HealthCheckRunner"/> class.
@@ -52,10 +53,54 @@ namespace RockLib.HealthChecks
         /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
         /// "HealthStatus.Fail"/>. Must have a value in the 400-599 range.
         /// </param>
+        public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks, string name, string description, string serviceId,
+            string version, string releaseId, IHealthResponseCustomizer responseCustomizer, string contentType,
+            int passStatusCode, int warnStatusCode, int failStatusCode)
+            : this(healthChecks, name, description, serviceId, version, releaseId, responseCustomizer, contentType,
+                  passStatusCode, warnStatusCode, failStatusCode, DefaultUncaughtExceptionStatus)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HealthCheckRunner"/> class.
+        /// </summary>
+        /// <param name="healthChecks">
+        /// The collection of <see cref="IHealthCheck"/> objects to be checked by this runner.
+        /// </param>
+        /// <param name="name">The name of the runner (optional).</param>
+        /// <param name="description">The human-friendly description of the service.</param>
+        /// <param name="serviceId">The unique identifier of the service, in the application scope.</param>
+        /// <param name="version">The public version of the service.</param>
+        /// <param name="releaseId">The "release version" or "release ID" of the service.</param>
+        /// <param name="responseCustomizer">
+        /// The <see cref="IHealthResponseCustomizer"/> that customizes each <see cref="HealthResponse"/>
+        /// object returned by this runner.
+        /// </param>
+        /// <param name="contentType">
+        /// The HTTP content type of responses created by this health check runner. Must not have a null or empty
+        /// value.
+        /// </param>
+        /// <param name="passStatusCode">
+        /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
+        /// "HealthStatus.Pass"/>. Must have a value in the 200-399 range.
+        /// </param>
+        /// <param name="warnStatusCode">
+        /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
+        /// "HealthStatus.Warn"/>. Must have a value in the 200-399 range.
+        /// </param>
+        /// <param name="failStatusCode">
+        /// The HTTP status code of responses created by this health check runner that have a status of <see cref=
+        /// "HealthStatus.Fail"/>. Must have a value in the 400-599 range.
+        /// </param>
+        /// <param name="uncaughtExceptionStatus">
+        /// The <see cref="HealthStatus"/> for the <see cref="HealthCheckResult"/> that is
+        /// returned because an <see cref="IHealthCheck"/> has thrown an exception.
+        /// </param>
         public HealthCheckRunner(IEnumerable<IHealthCheck> healthChecks = null, string name = null,
             string description = null, string serviceId = null, string version = null, string releaseId = null,
             IHealthResponseCustomizer responseCustomizer = null, string contentType = DefaultContentType,
-            int passStatusCode = DefaultPassStatusCode, int warnStatusCode = DefaultWarnStatusCode, int failStatusCode = DefaultFailStatusCode)
+            int passStatusCode = DefaultPassStatusCode, int warnStatusCode = DefaultWarnStatusCode,
+            int failStatusCode = DefaultFailStatusCode, HealthStatus? uncaughtExceptionStatus = DefaultUncaughtExceptionStatus)
         {
             if (string.IsNullOrEmpty(contentType))
                 throw new ArgumentNullException(nameof(contentType));
@@ -65,6 +110,8 @@ namespace RockLib.HealthChecks
                 throw new ArgumentOutOfRangeException(nameof(warnStatusCode), "Must be in the range of 200-399.");
             if (failStatusCode < 400 || failStatusCode > 599)
                 throw new ArgumentOutOfRangeException(nameof(failStatusCode), "Must be in the range of 400-599.");
+            if (uncaughtExceptionStatus.HasValue && !Enum.IsDefined(typeof(HealthStatus), uncaughtExceptionStatus.Value))
+                throw new ArgumentOutOfRangeException(nameof(uncaughtExceptionStatus), "Must be a defined HealthStatus (or null).");
 
             HealthChecks = (healthChecks ?? Enumerable.Empty<IHealthCheck>()) as IReadOnlyListOfIHealthCheck ?? healthChecks.ToList();
             Name = name;
@@ -77,6 +124,7 @@ namespace RockLib.HealthChecks
             PassStatusCode = passStatusCode;
             WarnStatusCode = warnStatusCode;
             FailStatusCode = failStatusCode;
+            UncaughtExceptionStatus = uncaughtExceptionStatus;
         }
 
         /// <summary>
@@ -138,6 +186,12 @@ namespace RockLib.HealthChecks
         /// </summary>
         public int FailStatusCode { get; }
 
+        /// <summary>
+        /// Gets the <see cref="HealthStatus"/> for the <see cref="HealthCheckResult"/> that is
+        /// returned because an <see cref="IHealthCheck"/> has thrown an exception.
+        /// </summary>
+        public HealthStatus? UncaughtExceptionStatus { get; }
+
 #if NET35 || NET40
         /// <summary>
         /// Runs the health checks.
@@ -150,7 +204,7 @@ namespace RockLib.HealthChecks
             return TryCustomizeResponse(healthResponse);
         }
 
-        private static IList<HealthCheckResult> TryCheck(IHealthCheck check)
+        private IList<HealthCheckResult> TryCheck(IHealthCheck check)
         {
             try { return check.Check(); }
             catch (Exception ex) { return GetExceptionHealthCheckResult(check, ex); }
@@ -171,12 +225,13 @@ namespace RockLib.HealthChecks
             var healthCheckResults = await Task.WhenAll(healthCheckResultTasks).ConfigureAwait(false);
             var healthResponse = this.CreateHealthResponse(healthCheckResults.SelectMany(x => x));
             return TryCustomizeResponse(healthResponse);
-        }
 
-        private static async Task<IReadOnlyList<HealthCheckResult>> TryCheckAsync(IHealthCheck check)
-        {
-            try { return await check.CheckAsync().ConfigureAwait(false); }
-            catch (Exception ex) { return GetExceptionHealthCheckResult(check, ex); }
+            async Task<IReadOnlyList<HealthCheckResult>> TryCheckAsync(IHealthCheck check)
+            {
+                try { return await check.CheckAsync(cancellationToken).ConfigureAwait(false); }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex) { return GetExceptionHealthCheckResult(check, ex); }
+            }
         }
 #endif
 
@@ -187,7 +242,7 @@ namespace RockLib.HealthChecks
             return response;
         }
 
-        private static HealthCheckResult[] GetExceptionHealthCheckResult(IHealthCheck check, Exception ex)
+        private HealthCheckResult[] GetExceptionHealthCheckResult(IHealthCheck check, Exception ex)
         {
             return new[]
             {
@@ -198,7 +253,7 @@ namespace RockLib.HealthChecks
                     ComponentType = check.ComponentType,
                     ComponentId = check.ComponentId,
                     Output = $"Exception in health check of type {check.GetType()}:\r\n{ex}",
-                    Status = HealthStatus.Warn,
+                    Status = UncaughtExceptionStatus,
                     Time = DateTime.UtcNow
                 }
             };
