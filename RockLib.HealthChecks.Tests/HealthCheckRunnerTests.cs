@@ -11,7 +11,7 @@ namespace RockLib.HealthChecks.Tests
     public class HealthCheckRunnerTests
     {
         [Fact]
-        public void Constructor_SetsProperties()
+        public void Constructor1_SetsProperties()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
             var name = "test-name";
@@ -39,6 +39,39 @@ namespace RockLib.HealthChecks.Tests
             runner.PassStatusCode.Should().Be(passStatusCode);
             runner.WarnStatusCode.Should().Be(warnStatusCode);
             runner.FailStatusCode.Should().Be(failStatusCode);
+        }
+
+        [Fact]
+        public void Constructor2_SetsProperties()
+        {
+            var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
+            var name = "test-name";
+            var description = "fake";
+            var serviceId = "2.4.6";
+            var version = "1.2.3";
+            var releaseId = "4.5.6";
+            var responseCustomizer = new Mock<IHealthResponseCustomizer>().Object;
+            var contentType = "application/fake+json";
+            var passStatusCode = 299;
+            var warnStatusCode = 399;
+            var failStatusCode = 599;
+            var uncaughtExceptionStatus = HealthStatus.Fail;
+
+            var runner = new HealthCheckRunner(healthChecks, name, description, serviceId, version, releaseId,
+                responseCustomizer, contentType, passStatusCode, warnStatusCode, failStatusCode, uncaughtExceptionStatus);
+
+            runner.HealthChecks.Should().BeEquivalentTo(healthChecks);
+            runner.Name.Should().Be(name);
+            runner.Description.Should().Be(description);
+            runner.ServiceId.Should().Be(serviceId);
+            runner.Version.Should().Be(version);
+            runner.ReleaseId.Should().Be(releaseId);
+            runner.ResponseCustomizer.Should().BeSameAs(responseCustomizer);
+            runner.ContentType.Should().Be(contentType);
+            runner.PassStatusCode.Should().Be(passStatusCode);
+            runner.WarnStatusCode.Should().Be(warnStatusCode);
+            runner.FailStatusCode.Should().Be(failStatusCode);
+            runner.UncaughtExceptionStatus.Should().Be(uncaughtExceptionStatus);
         }
 
         [Fact]
@@ -119,6 +152,16 @@ namespace RockLib.HealthChecks.Tests
             Action act = () => new HealthCheckRunner(healthChecks, failStatusCode: 600);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*failStatusCode*");
+        }
+
+        [Fact]
+        public void Constructor_GivenUndefinedUncaughtExceptionStatus_Throws()
+        {
+            var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
+
+            Action act = () => new HealthCheckRunner(healthChecks, uncaughtExceptionStatus: (HealthStatus)(-1));
+
+            act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*uncaughtExceptionStatus*");
         }
 
         [Fact]

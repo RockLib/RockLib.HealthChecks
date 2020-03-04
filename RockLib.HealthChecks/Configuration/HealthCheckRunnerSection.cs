@@ -66,6 +66,14 @@ namespace RockLib.HealthChecks.Configuration
         public int FailStatusCode => (int)this["failStatusCode"];
 
         /// <summary>
+        /// Gets the <see cref="HealthStatus"/> for the <see cref="HealthCheckResult"/> that is
+        /// returned because an <see cref="IHealthCheck"/> has thrown an exception. An undefined
+        /// value is treated as <see langword="null"/>.
+        /// </summary>
+        [ConfigurationProperty("uncaughtExceptionStatus", IsRequired = false, DefaultValue = HealthCheckRunner.DefaultUncaughtExceptionStatus)]
+        public HealthStatus UncaughtExceptionStatus => (HealthStatus)this["uncaughtExceptionStatus"];
+
+        /// <summary>
         /// Gets the section that defines the list of <see cref="IHealthCheck"/> objects that are
         /// checked by the runner.
         /// </summary>
