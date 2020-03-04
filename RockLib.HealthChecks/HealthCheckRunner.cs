@@ -204,10 +204,10 @@ namespace RockLib.HealthChecks
             return TryCustomizeResponse(healthResponse);
         }
 
-        private IList<HealthCheckResult> TryCheck(IHealthCheck check)
+        private IList<HealthCheckResult> TryCheck(IHealthCheck healthCheck)
         {
-            try { return check.Check(); }
-            catch (Exception ex) { return GetExceptionHealthCheckResult(check, ex); }
+            try { return healthCheck.Check(); }
+            catch (Exception ex) { return GetExceptionHealthCheckResult(healthCheck, ex); }
         }
 #else
         /// <summary>
@@ -226,11 +226,11 @@ namespace RockLib.HealthChecks
             var healthResponse = this.CreateHealthResponse(healthCheckResults.SelectMany(x => x));
             return TryCustomizeResponse(healthResponse);
 
-            async Task<IReadOnlyList<HealthCheckResult>> TryCheckAsync(IHealthCheck check)
+            async Task<IReadOnlyList<HealthCheckResult>> TryCheckAsync(IHealthCheck healthCheck)
             {
-                try { return await check.CheckAsync(cancellationToken).ConfigureAwait(false); }
+                try { return await healthCheck.CheckAsync(cancellationToken).ConfigureAwait(false); }
                 catch (OperationCanceledException) { throw; }
-                catch (Exception ex) { return GetExceptionHealthCheckResult(check, ex); }
+                catch (Exception ex) { return GetExceptionHealthCheckResult(healthCheck, ex); }
             }
         }
 #endif
@@ -242,21 +242,15 @@ namespace RockLib.HealthChecks
             return response;
         }
 
-        private HealthCheckResult[] GetExceptionHealthCheckResult(IHealthCheck check, Exception ex)
+        private HealthCheckResult[] GetExceptionHealthCheckResult(IHealthCheck healthCheck, Exception ex)
         {
-            return new[]
-            {
-                new HealthCheckResult
-                {
-                    ComponentName = check.ComponentName,
-                    MeasurementName = check.MeasurementName,
-                    ComponentType = check.ComponentType,
-                    ComponentId = check.ComponentId,
-                    Output = $"Exception in health check of type {check.GetType()}:\r\n{ex}",
-                    Status = UncaughtExceptionStatus,
-                    Time = DateTime.UtcNow
-                }
-            };
+            var result = healthCheck.CreateHealthCheckResult();
+            result.Output = $"Exception in health check of type {healthCheck.GetType()}:\r\n{ex}";
+
+            if (UncaughtExceptionStatus != null)
+                result.Status = UncaughtExceptionStatus;
+
+            return new[] { result };
         }
     }
 }
