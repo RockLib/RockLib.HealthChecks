@@ -42,7 +42,7 @@ namespace HealthCheckTutorial
     {
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseRockLibHealthChecks(indent: true);
+            app.UseRockLibHealthChecks();
         }
     }
 }
