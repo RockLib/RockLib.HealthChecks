@@ -7,7 +7,7 @@ public class Startup
 {
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
-        app.UseRockLibHealthChecks(indent: true);
+        app.UseRockLibHealthChecks();
     }
 }
 ```
@@ -32,19 +32,19 @@ There are two versions of the `UseRockLibHealthChecks` method. One takes the nam
 
 ### Named HealthCheckRunner from config
 
-Parameter              | Default Value      | Description
----------------------- | ------------------ | -----------
-builder                | Required           | The application builder.
-healthCheckRunnerName  | `null`             | The name of the `IHealthCheckRunner` to use. If `null` or not provided, the default value of the `HealthCheck.GetRunner` method is used.
-route                  | `/health`          | The route of the health endpoint.
-indent                 | `false`            | Whether to indent the JSON output.
+Parameter              | Default Value                     | Description
+---------------------- | --------------------------------- | -----------
+builder                | Required                          | The application builder.
+healthCheckRunnerName  | `null`                            | The name of the `IHealthCheckRunner` to use. If `null` or not provided, the default value of the `HealthCheck.GetRunner` method is used.
+route                  | `/health`                         | The route of the health endpoint.
+formatter              | `NewtonsoftJsonResponseFormatter` | The `IResponseFormatter` responsible for formatting health responses for the middleware's HTTP response body.
 
 
 ### Direct HealthCheckRunner
 
-Parameter              | Default Value      | Description
----------------------- | ------------------ | -----------
-builder                | Required           | The application builder.
-healthCheckRunner      | Required           | The `IHealthCheckRunner` to use. If `null`, the default value of the `HealthCheck.GetRunner` method is used.
-route                  | `/health`          | The route of the health endpoint.
-indent                 | `false`            | Whether to indent the JSON output.
+Parameter              | Default Value                     | Description
+---------------------- | --------------------------------- | -----------
+builder                | Required                          | The application builder.
+healthCheckRunner      | Required                          | The `IHealthCheckRunner` to use. If `null`, the default value of the `HealthCheck.GetRunner` method is used.
+route                  | `/health`                         | The route of the health endpoint.
+formatter              | `NewtonsoftJsonResponseFormatter` | The `IResponseFormatter` responsible for formatting health responses for the middleware's HTTP response body.
