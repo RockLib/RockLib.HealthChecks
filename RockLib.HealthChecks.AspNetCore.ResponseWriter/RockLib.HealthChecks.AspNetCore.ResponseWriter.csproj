@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>RockLib.HealthChecks.AspNetCore.ResponseWriter</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>RockLib</Authors>
     <Description>A ResponseWriter for Microsoft.Extensions.Diagnostics.HealthChecks that writes in the format described by https://inadarei.github.io/rfc-healthcheck/.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
