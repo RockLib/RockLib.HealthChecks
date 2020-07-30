@@ -4,13 +4,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>RockLib.HealthChecks.AspNetCore.ResponseWriter</PackageId>
     <PackageVersion>1.0.0</PackageVersion>
-    <Authors>Brian Friesen, Justin Moss</Authors>
+    <Authors>RockLib</Authors>
     <Description>A ResponseWriter for Microsoft.Extensions.Diagnostics.HealthChecks that writes in the format described by https://inadarei.github.io/rfc-healthcheck/.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/RockLib/RockLib.HealthChecks</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Copyright>Copyright 2019 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Copyright>Copyright 2019-2020 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
     <PackageTags>rocklib health checks aspnetcore responsewriter</PackageTags>
     <Version>1.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
