@@ -140,8 +140,26 @@ namespace RockLib.HealthChecks.System
                 return result;
             }
 
-            const double gigabytes = 1024 * 1024 * 1024;
-            var availableFreeSpace = drive.AvailableFreeSpace / gigabytes;
+
+            if (!drive.IsReady)
+            {
+                result.Status = HealthStatus.Warn;
+                result.Output = $"Configured drive {DriveName} is not ready.";
+                return result;
+            }
+
+            double availableFreeSpace;
+            try
+            {
+                const double gigabytes = 1024 * 1024 * 1024;
+                availableFreeSpace = drive.AvailableFreeSpace / gigabytes;
+            }
+            catch (Exception ex)
+            {
+                result.Status = HealthStatus.Warn;
+                result.Output = $"Error reading available free space on drive {DriveName}. {ex.GetType().Name}: {ex.Message}";
+                return result;
+            }
 
             if (availableFreeSpace < FailGigabytes)
             {
