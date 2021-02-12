@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿#if NET35 || NET40 || NET45
+using System.Configuration;
 
 namespace RockLib.HealthChecks.Configuration
 {
@@ -94,3 +95,4 @@ namespace RockLib.HealthChecks.Configuration
         }
     }
 }
+#endif

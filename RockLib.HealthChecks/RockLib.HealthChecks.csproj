@@ -38,17 +38,16 @@
   <ItemGroup Condition="'$(TargetFramework)'!='net35' And '$(TargetFramework)'!='net40' And '$(TargetFramework)'!='net45'">
     <PackageReference Include="RockLib.Configuration" Version="2.4.4" />
     <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.4" />
-    
-    <Compile Remove="Configuration\HealthCheckRunnerSection.cs" />
-    <Compile Remove="Configuration\HealthCheckRunnersSection.cs" />
-    <Compile Remove="Configuration\HealthChecksSection.cs" />
-    <Compile Remove="Configuration\LateBoundConfigurationElement.cs" />
-    <Compile Remove="Configuration\RockLibHealthChecksSection.cs" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='netstandard2.0'">
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
