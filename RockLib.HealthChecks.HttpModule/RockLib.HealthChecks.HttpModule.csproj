@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <PackageId>RockLib.HealthChecks.HttpModule</PackageId>
-    <PackageVersion>1.0.2</PackageVersion>
+    <PackageVersion>1.0.3</PackageVersion>
     <Authors>RockLib</Authors>
     <Description>A simple HTTP Module you can add to a web application for running Health Checks.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
