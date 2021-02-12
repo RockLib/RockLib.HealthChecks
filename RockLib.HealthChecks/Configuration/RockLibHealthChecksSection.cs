@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿#if NET35 || NET40 || NET45
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 
@@ -49,3 +50,4 @@ namespace RockLib.HealthChecks.Configuration
         }
     }
 }
+#endif

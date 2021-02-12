@@ -4,7 +4,7 @@ configuration: Release
 only_commits:
   files:
   - RockLib.HealthChecks/
-  - RockLib.HealthChecks.Tests/
+  - Tests/RockLib.HealthChecks.Tests/
   - RockLib.HealthChecks.sln
   - RockLib.HealthChecks.appveyor.yml
 before_build:
