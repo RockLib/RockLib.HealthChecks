@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>net5.0;netstandard2.0</TargetFrameworks>
     <PackageId>RockLib.HealthChecks.AspNetCore</PackageId>
     <PackageVersion>2.0.3</PackageVersion>
     <Authors>RockLib</Authors>
@@ -27,10 +27,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.1.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.0" />
-    <PackageReference Include="RockLib.HealthChecks" Version="1.3.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
+    <PackageReference Include="RockLib.HealthChecks" Version="1.3.6" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
