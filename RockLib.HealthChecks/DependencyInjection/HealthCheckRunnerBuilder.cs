@@ -1,4 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0
+﻿#if NET462 || NETSTANDARD2_0 || NET5_0
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
