@@ -1,4 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0
+﻿#if NET462 || NETSTANDARD2_0 || NET5_0
 using System;
 using System.Collections.Generic;
 
