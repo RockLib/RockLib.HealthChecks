@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.net47", "Examples\Mvc.n
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{EDD461DF-0B21-43ED-B082-C4F3698D284B}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client", "RockLib.HealthChecks.Client\RockLib.HealthChecks.Client.csproj", "{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{3E505D4D-1C8D-4F85-B8B0-4C2DDC11C9A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E505D4D-1C8D-4F85-B8B0-4C2DDC11C9A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E505D4D-1C8D-4F85-B8B0-4C2DDC11C9A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
