@@ -36,8 +36,8 @@ Since the response writer doesn't have a way to pass in the usual RockLib option
 Property               | Default Value      | Description
 ---------------------- | ------------------ | -----------
 Indent                 | `false`            | Gets or sets a value indicating whether the `ResponseWriter` delegate will indent its JSON output.
-ShowOutputs            | `false`            | Gets or sets a value indicating whether the `ResponseWriter` delegate will hide the output property in its JSON output.
-HideExceptions         | `false`            | Gets or sets a value indicating whether the `ResponseWriter` delegate will display the exception property in its JSON output.
+HideOutputs            | `false`            | Gets or sets a value indicating whether the `ResponseWriter` delegate will hide the output property in its JSON output.
+HideExceptions         | `false`            | Gets or sets a value indicating whether the `ResponseWriter` delegate will hide the exception property in its JSON output.
 
 This can be done in the 'Startup.cs'
 
@@ -48,7 +48,7 @@ public class Startup
     {
         RockLibHealthChecks.Indent = true;
         RockLibHealthChecks.HideOutputs = true;
-        RockLibHealthChecks.ShowExceptions = true;
+        RockLibHealthChecks.HideExceptions = true;
 
         app.UseHealthChecks("/health", new HealthCheckOptions
         {

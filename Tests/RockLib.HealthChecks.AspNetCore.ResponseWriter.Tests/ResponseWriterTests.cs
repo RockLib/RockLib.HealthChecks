@@ -15,55 +15,11 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests
     {
         [Theory]
         [AutoData]
-        public async Task ResponseWriter_ShowException_Default_ShouldNotShowExceptionProperty(
+        public async Task ResponseWriter_HideExceptions_Default_ShouldShowExceptionsProperty(
             HealthReport healthReport)
         {
             // Arrange
             var httpContext = CreateHttpContext();
-
-            // Act
-            await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
-
-            // Assert
-            var jsonBody = await GetJsonBody(httpContext);
-            var healthCheckEntries = GetHealthCheckEntries(jsonBody);
-
-            healthCheckEntries
-                .Any(x => x["exception"] != null)
-                .Should()
-                .BeFalse();
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task ResponseWriter_ShowException_SetToFalse_ShouldNotShowExceptionProperty(
-            HealthReport healthReport)
-        {
-            // Arrange
-            var httpContext = CreateHttpContext();
-            RockLibHealthChecks.ShowExceptions = false;
-
-            // Act
-            await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
-
-            // Assert
-            var jsonBody = await GetJsonBody(httpContext);
-            var healthCheckEntries = GetHealthCheckEntries(jsonBody);
-
-            healthCheckEntries
-                .Any(x => x["exception"] != null)
-                .Should()
-                .BeFalse();
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task ResponseWriter_ShowException_SetToTrue_ShouldShowExceptionProperty(
-            HealthReport healthReport)
-        {
-            // Arrange
-            var httpContext = CreateHttpContext();
-            RockLibHealthChecks.ShowExceptions = true;
 
             // Act
             await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
@@ -76,6 +32,50 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests
                 .Any(x => x["exception"] != null)
                 .Should()
                 .BeTrue();
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task ResponseWriter_HideExceptions_SetToFalse_ShouldShowExceptionsProperty(
+            HealthReport healthReport)
+        {
+            // Arrange
+            var httpContext = CreateHttpContext();
+            RockLibHealthChecks.HideExceptions = false;
+
+            // Act
+            await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
+
+            // Assert
+            var jsonBody = await GetJsonBody(httpContext);
+            var healthCheckEntries = GetHealthCheckEntries(jsonBody);
+
+            healthCheckEntries
+                .Any(x => x["exception"] != null)
+                .Should()
+                .BeTrue();
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task ResponseWriter_HideExceptions_SetToTrue_ShouldHideExceptionsProperty(
+            HealthReport healthReport)
+        {
+            // Arrange
+            var httpContext = CreateHttpContext();
+            RockLibHealthChecks.HideExceptions = true;
+
+            // Act
+            await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
+
+            // Assert
+            var jsonBody = await GetJsonBody(httpContext);
+            var healthCheckEntries = GetHealthCheckEntries(jsonBody);
+
+            healthCheckEntries
+                .Any(x => x["exception"] != null)
+                .Should()
+                .BeFalse();
         }
 
         [Theory]

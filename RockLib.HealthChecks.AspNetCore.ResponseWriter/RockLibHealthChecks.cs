@@ -27,7 +27,7 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
         /// the exception property in its JSON output.
         /// The default is to hide the exception.
         /// </summary>
-        public static bool ShowExceptions { get; set; }
+        public static bool HideExceptions { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the <see cref="ResponseWriter"/> delegate will hide
@@ -57,7 +57,7 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
                     ["duration"] = entry.Duration
                 };
 
-                if (ShowExceptions)
+                if (!HideExceptions)
                     result["exception"] = entry.Exception?.ToString();
 
                 if (!HideOutputs)
