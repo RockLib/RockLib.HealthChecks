@@ -23,6 +23,20 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
         public static bool Indent { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="ResponseWriter"/> delegate will display
+        /// the exception property in its JSON output.
+        /// The default is to hide the exception.
+        /// </summary>
+        public static bool HideExceptions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the <see cref="ResponseWriter"/> delegate will hide
+        /// the output property in its JSON output.
+        /// The default is to show the output.
+        /// </summary>
+        public static bool HideOutputs { get; set; }
+
+        /// <summary>
         /// Gets a delegate that maps its <see cref="HealthReport"/> parameter to the <see cref="HealthResponse"/>
         /// type and writes it to its <see cref="HttpContext.Response"/> parameter. Intended to be used to set the
         /// value of the <see cref="HealthCheckOptions.ResponseWriter"/> property.
@@ -35,20 +49,24 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
             {
                 var entry = x.Value;
 
-                var result = new HealthCheckResult()
+                var result = new HealthCheckResult
                 {
                     ComponentName = GetComponentName(x.Key),
                     MeasurementName = GetMeasurementName(x.Key),
                     Status = MapStatus(entry.Status),
-                    Output = entry.Description,
-                    ["exception"] = entry.Exception?.ToString(),
                     ["duration"] = entry.Duration
                 };
+
+                if (!HideExceptions)
+                    result["exception"] = entry.Exception?.ToString();
+
+                if (!HideOutputs)
+                    result.Output = entry.Description;
 
                 // TODO: Detect collisions between entry.Exception/result.Output,
                 // entry.Description/result["description", or entry.Duration/result["duration"].
 
-                foreach (var data in entry.Data)
+            foreach (var data in entry.Data)
                     result[data.Key] = data.Value;
 
                 return result;

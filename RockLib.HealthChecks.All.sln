@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client.Tests", "Tests\RockLib.HealthChecks.Client.Tests\RockLib.HealthChecks.Client.Tests.csproj", "{0E738824-8F16-4102-9876-9FC528F25240}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests", "Tests\RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests\RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests.csproj", "{13F497C9-6BCC-4F41-85F7-8B9FD70047F8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -103,6 +105,10 @@ Global
 		{0E738824-8F16-4102-9876-9FC528F25240}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E738824-8F16-4102-9876-9FC528F25240}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E738824-8F16-4102-9876-9FC528F25240}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -117,6 +123,7 @@ Global
 		{4B767F60-0A55-4C43-B59F-F8D1EC17817E} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{3E505D4D-1C8D-4F85-B8B0-4C2DDC11C9A0} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{0E738824-8F16-4102-9876-9FC528F25240} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
+		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}
