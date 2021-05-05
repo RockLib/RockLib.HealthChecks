@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client", "RockLib.HealthChecks.Client\RockLib.HealthChecks.Client.csproj", "{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client", "RockLib.HealthChecks.Client.csproj", "{2868E92B-CC2B-4D4A-B62D-B324A8E484C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client.Tests", "Tests\RockLib.HealthChecks.Client.Tests\RockLib.HealthChecks.Client.Tests.csproj", "{0E738824-8F16-4102-9876-9FC528F25240}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.Client.Tests", "..\Tests\RockLib.HealthChecks.Client.Tests\RockLib.HealthChecks.Client.Tests.csproj", "{0E738824-8F16-4102-9876-9FC528F25240}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
