@@ -29,7 +29,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,17 +38,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
     
   <ItemGroup Condition="'$(TargetFramework)'=='net35' Or '$(TargetFramework)'=='net40' Or '$(TargetFramework)'=='net45'">
     <Reference Include="System.Configuration" />
-    <PackageReference Include="RockLib.Immutable" Version="1.0.4" />
+    <PackageReference Include="RockLib.Immutable" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='net35' And '$(TargetFramework)'!='net40' And '$(TargetFramework)'!='net45'">
-    <PackageReference Include="RockLib.Configuration" Version="2.5.1" />
-    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.6" />
+    <PackageReference Include="RockLib.Configuration" Version="2.5.2" />
+    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.8" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='netstandard2.0'">

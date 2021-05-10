@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adds SourceLink to nuget package.
 
+#### Changed
+
+- Updates RockLib.Configuration, RockLib.Configuration.ObjectFactory, and RockLib.Immutable packages to latest versions, which include SourceLink.
+- Updates Newtonsoft.Json package to latest version.
+
 ----
 
 **Note:** Release notes in the above format are not available for earlier versions of
