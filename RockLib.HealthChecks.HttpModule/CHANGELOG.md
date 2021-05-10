@@ -22,6 +22,10 @@ RockLib.HealthChecks.HttpModule. What follows below are the original release not
 
 ----
 
+## 1.0.3
+
+Updates dependencies.
+
 ## 1.0.2
 
 Adds icon to project and nuget package.
