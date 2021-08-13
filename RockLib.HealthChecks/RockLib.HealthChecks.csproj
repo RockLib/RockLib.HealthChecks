@@ -43,12 +43,12 @@
     
   <ItemGroup Condition="'$(TargetFramework)'=='net35' Or '$(TargetFramework)'=='net40' Or '$(TargetFramework)'=='net45'">
     <Reference Include="System.Configuration" />
-    <PackageReference Include="RockLib.Immutable" Version="1.0.6" />
+    <PackageReference Include="RockLib.Immutable" Version="1.0.7" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'!='net35' And '$(TargetFramework)'!='net40' And '$(TargetFramework)'!='net45'">
-    <PackageReference Include="RockLib.Configuration" Version="2.5.2" />
-    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.8" />
+    <PackageReference Include="RockLib.Configuration" Version="2.5.3" />
+    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.9" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='netstandard2.0'">
