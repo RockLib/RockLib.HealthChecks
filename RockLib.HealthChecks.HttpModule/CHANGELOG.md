@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Changed
 
 - Changes "Quicken Loans" to "Rocket Mortgage".
+- Updates RockLib.HealthChecks to latest version, [1.3.9](https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks/CHANGELOG.md#139---2021-08-13).
 
 ## 1.0.4 - 2021-05-10
 
