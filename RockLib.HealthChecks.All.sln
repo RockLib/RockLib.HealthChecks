@@ -39,6 +39,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.AspNet
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.HealthChecks.AspNetCore", "Examples\Example.HealthChecks.AspNetCore\Example.HealthChecks.AspNetCore.csproj", "{727B6914-AAED-4B74-BE69-B4294E2468FE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2ED8388C-93F4-4883-BFD8-6C54AF84BB3A}"
+	ProjectSection(SolutionItems) = preProject
+		docs\AspNetCore.md = docs\AspNetCore.md
+		docs\ConfigureAppSettings.md = docs\ConfigureAppSettings.md
+		docs\ConfigureNet451AndAbove.md = docs\ConfigureNet451AndAbove.md
+		docs\ConfigureNet45AndBelow.md = docs\ConfigureNet45AndBelow.md
+		docs\CustomHealthCheck.md = docs\CustomHealthCheck.md
+		docs\DiskDriveHealthCheck.md = docs\DiskDriveHealthCheck.md
+		docs\GettingStarted.md = docs\GettingStarted.md
+		docs\HttpModule.md = docs\HttpModule.md
+		docs\InstantiateRunner.md = docs\InstantiateRunner.md
+		docs\ManualHealthChecks.md = docs\ManualHealthChecks.md
+		docs\ProcessUptimeHealthCheck.md = docs\ProcessUptimeHealthCheck.md
+		README.md = README.md
+		docs\ResponseWriter.md = docs\ResponseWriter.md
+		docs\SystemUptimeHealthCheck.md = docs\SystemUptimeHealthCheck.md
+		docs\WebApi.md = docs\WebApi.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
