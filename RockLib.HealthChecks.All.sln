@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.WebApi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.AspNetCore.ResponseWriter", "RockLib.HealthChecks.AspNetCore.ResponseWriter\RockLib.HealthChecks.AspNetCore.ResponseWriter.csproj", "{84643E2D-F162-42B2-AF96-B2D8B9844C8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ResponseWriter.netcoreapp2.2", "Examples\ResponseWriter.netcoreapp2.2\ResponseWriter.netcoreapp2.2.csproj", "{5C605777-0F04-454F-8A93-615146EE6EB2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.net45", "Examples\WebApi.net45\WebApi.net45.csproj", "{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpModule.net45", "Examples\HttpModule.net45\HttpModule.net45.csproj", "{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}"
@@ -58,6 +56,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2ED8388C-9
 		docs\WebApi.md = docs\WebApi.md
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.HealthChecks.AspNetCore.ResponseWriter", "Examples\Example.HealthChecks.AspNetCore.ResponseWriter\Example.HealthChecks.AspNetCore.ResponseWriter.csproj", "{B9895A59-CF38-4077-AB40-F81A1ADBC86D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,10 +88,6 @@ Global
 		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84643E2D-F162-42B2-AF96-B2D8B9844C8A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5C605777-0F04-454F-8A93-615146EE6EB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5C605777-0F04-454F-8A93-615146EE6EB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5C605777-0F04-454F-8A93-615146EE6EB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5C605777-0F04-454F-8A93-615146EE6EB2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -128,13 +124,16 @@ Global
 		{727B6914-AAED-4B74-BE69-B4294E2468FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{727B6914-AAED-4B74-BE69-B4294E2468FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{727B6914-AAED-4B74-BE69-B4294E2468FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
-		{5C605777-0F04-454F-8A93-615146EE6EB2} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{E24877F8-6793-4411-9B90-711E57C35719} = {077997E9-BD03-4F84-8B84-9047B35C1004}
@@ -143,6 +142,7 @@ Global
 		{0E738824-8F16-4102-9876-9FC528F25240} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
 		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
 		{727B6914-AAED-4B74-BE69-B4294E2468FE} = {077997E9-BD03-4F84-8B84-9047B35C1004}
+		{B9895A59-CF38-4077-AB40-F81A1ADBC86D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}
