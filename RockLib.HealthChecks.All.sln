@@ -58,6 +58,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{2ED8388C-9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.HealthChecks.AspNetCore.ResponseWriter", "Examples\Example.HealthChecks.AspNetCore.ResponseWriter\Example.HealthChecks.AspNetCore.ResponseWriter.csproj", "{B9895A59-CF38-4077-AB40-F81A1ADBC86D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.HealthChecks.Client", "Examples\Example.HealthChecks.Client\Example.HealthChecks.Client.csproj", "{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -128,6 +130,10 @@ Global
 		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9895A59-CF38-4077-AB40-F81A1ADBC86D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -143,6 +149,7 @@ Global
 		{13F497C9-6BCC-4F41-85F7-8B9FD70047F8} = {EDD461DF-0B21-43ED-B082-C4F3698D284B}
 		{727B6914-AAED-4B74-BE69-B4294E2468FE} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{B9895A59-CF38-4077-AB40-F81A1ADBC86D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
+		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}
