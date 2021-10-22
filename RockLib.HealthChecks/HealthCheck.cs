@@ -74,7 +74,7 @@ namespace RockLib.HealthChecks
             var healtchChecksSection = (RockLibHealthChecksSection)ConfigurationManager.GetSection("rockLib.healthChecks");
             return healtchChecksSection.CreateRunners();
 #else
-            var section = Config.Root.GetCompositeSection("RockLib.HealthChecks", "RockLib_HealthChecks");
+            var section = Config.Root.GetCompositeSection("RockLib_HealthChecks", "RockLib.HealthChecks");
             return section.Create<IReadOnlyListOfIHealthCheckRunner>();
 #endif
         }
