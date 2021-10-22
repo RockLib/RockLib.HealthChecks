@@ -1,7 +1,7 @@
 ﻿using RockLib.HealthChecks.WebApi;
 using System.Web.Http;
 
-namespace WebApi.net45
+namespace Example.HealthChecks.WebApi
 {
     public static class WebApiConfig
     {
@@ -18,7 +18,8 @@ namespace WebApi.net45
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            config.Routes.MapHealthRoute(indent: true);
+            // Add the health endpoint. The health check runner is defined in Web.config.
+            config.Routes.MapHealthRoute(route: "/health", indent: true);
         }
     }
 }
