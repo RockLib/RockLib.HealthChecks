@@ -28,8 +28,7 @@ namespace RockLib.HealthChecks.Client
         }
 
         /// <summary>
-        /// Gets or sets the type of the component. SHOULD be present if <see cref="ComponentName"/> is
-        /// present.
+        /// Gets or sets the type of the component.
         /// </summary>
         [JsonIgnore()]
         public string ComponentType
