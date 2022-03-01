@@ -1,46 +1,39 @@
-﻿#if !(NET35 || NET40)
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
-#endif
-
-#if NET462 || NETSTANDARD2_0 || NET5_0
 using RockLib.Configuration.ObjectFactory;
-#endif
 
 namespace RockLib.HealthChecks
 {
     /// <summary>
     /// Defines an object that checks the health of a service.
     /// </summary>
-#if NET462 || NETSTANDARD2_0 || NET5_0
     [DefaultType(typeof(HealthCheckRunner))]
-#endif
     public interface IHealthCheckRunner
     {
         /// <summary>
         /// Gets the optional name of the runner.
         /// </summary>
-        string Name { get; }
+        string? Name { get; }
 
         /// <summary>
         /// Gets the human-friendly description of the service.
         /// </summary>
-        string Description { get; }
+        string? Description { get; }
 
         /// <summary>
         /// Gets the unique identifier of the service, in the application scope.
         /// </summary>
-        string ServiceId { get; }
+        string? ServiceId { get; }
 
         /// <summary>
         /// Gets the public version of the service.
         /// </summary>
-        string Version { get; }
+        string? Version { get; }
 
         /// <summary>
         /// Gets the "release version" or "release ID" of the service.
         /// </summary>
-        string ReleaseId { get; }
+        string? ReleaseId { get; }
 
         /// <summary>
         /// Gets the HTTP content type of responses created by this health check runner. Must not
@@ -66,13 +59,6 @@ namespace RockLib.HealthChecks
         /// </summary>
         int FailStatusCode { get; }
 
-#if NET35 || NET40
-        /// <summary>
-        /// Runs the health checks.
-        /// </summary>
-        /// <returns>A health response.</returns>
-        HealthResponse Run();
-#else
         /// <summary>
         /// Runs the health checks asynchronously.
         /// </summary>
@@ -82,7 +68,6 @@ namespace RockLib.HealthChecks
         /// <returns>
         /// A task healh response representing the asynchronous operation.
         /// </returns>
-        Task<HealthResponse> RunAsync(CancellationToken cancellationToken = default(CancellationToken));
-#endif
+        Task<HealthResponse> RunAsync(CancellationToken cancellationToken = default);
     }
 }

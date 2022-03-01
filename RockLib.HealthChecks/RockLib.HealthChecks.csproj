@@ -1,64 +1,36 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFrameworks>net5.0;netstandard2.0;net35;net40;net45;net451;net462</TargetFrameworks>
-    <PackageId>RockLib.HealthChecks</PackageId>
-    <PackageVersion>1.4.0</PackageVersion>
-    <Authors>RockLib</Authors>
-    <Description>An implementation of the draft health check RFC located at https://inadarei.github.io/rfc-healthcheck/.</Description>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks/CHANGELOG.md.</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/RockLib/RockLib.HealthChecks</PackageProjectUrl>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageIcon>icon.png</PackageIcon>
-    <Copyright>Copyright 2019-2021 (c) Rocket Mortgage. All rights reserved.</Copyright>
-    <PackageTags>rocklib health checks</PackageTags>
-    <Version>1.0.0</Version>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PublishRepositoryUrl>True</PublishRepositoryUrl>
-    <EmbedUntrackedSources>True</EmbedUntrackedSources>
-    <DebugType>Embedded</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)'=='Release'">
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
-    <None Include="..\icon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
-    
-  <ItemGroup Condition="'$(TargetFramework)'=='net35' Or '$(TargetFramework)'=='net40' Or '$(TargetFramework)'=='net45'">
-    <Reference Include="System.Configuration" />
-    <PackageReference Include="RockLib.Immutable" Version="1.0.7" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'!='net35' And '$(TargetFramework)'!='net40' And '$(TargetFramework)'!='net45'">
-    <PackageReference Include="RockLib.Configuration" Version="2.5.3" />
-    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.9" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net462' Or '$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.2.0" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<DebugType>Embedded</DebugType>
+		<Description>An implementation of the draft health check RFC located at https://inadarei.github.io/rfc-healthcheck/.</Description>
+		<EmbedUntrackedSources>True</EmbedUntrackedSources>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageId>RockLib.HealthChecks</PackageId>
+		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+		<PackageProjectUrl>https://github.com/RockLib/RockLib.HealthChecks</PackageProjectUrl>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks/CHANGELOG.md.</PackageReleaseNotes>
+		<PackageTags>rocklib health checks</PackageTags>
+		<PackageVersion>1.4.0</PackageVersion>
+		<PackageIcon>icon.png</PackageIcon>
+		<PublishRepositoryUrl>True</PublishRepositoryUrl>
+		<Version>1.0.0</Version>
+	</PropertyGroup>
+	<PropertyGroup>
+		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)'=='Release'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+		<None Include="..\icon.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="RockLib.Configuration" Version="3.0.0" />
+		<PackageReference Include="RockLib.Configuration.ObjectFactory" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+	</ItemGroup>
 </Project>

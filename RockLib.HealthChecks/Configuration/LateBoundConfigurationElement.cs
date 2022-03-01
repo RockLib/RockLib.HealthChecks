@@ -50,14 +50,14 @@ namespace RockLib.HealthChecks.Configuration
         /// <param name="defaultType">The default type of object to create.</param>
         public LateBoundConfigurationElement(Type defaultType)
         {
-            if (defaultType == null && !typeof(TTarget).IsAbstract)
+            if (defaultType is null && !typeof(TTarget).IsAbstract)
             {
                 _defaultType = typeof(TTarget);
             }
 
             _defaultType = ThrowIfNotAssignableToT(defaultType);
             _type = new Lazy<Type>(() => Type.GetType(TypeAssemblyQualifiedName, true));
-            if (_defaultType != null)
+            if (_defaultType is not null)
                 this["type"] = _defaultType.AssemblyQualifiedName;
         }
 
@@ -83,7 +83,7 @@ namespace RockLib.HealthChecks.Configuration
             {
                 var xml = SerializeToXml();
 
-                if (TypeAssemblyQualifiedName == null)
+                if (TypeAssemblyQualifiedName is null)
                 {
                     throw new LateBoundConfigurationElementException("The required 'type' attribute was not provided.", ex, xml);
                 }
@@ -230,7 +230,7 @@ namespace RockLib.HealthChecks.Configuration
         {
             if (TryGetPropertyValue(name, type, out value))
             {
-                if (value == null)
+                if (value is null)
                 {
                     object additionalValue;
                     if (TryGetAdditionalValue(name, type, out additionalValue))
@@ -263,7 +263,7 @@ namespace RockLib.HealthChecks.Configuration
                 {
                     value = property.GetValue(this, null);
 
-                    if (value != null)
+                    if (value is not null)
                     {
                         return true;
                     }
@@ -283,7 +283,7 @@ namespace RockLib.HealthChecks.Configuration
             {
                 var additionalElement = additionalNode as XElement;
 
-                if (additionalElement != null)
+                if (additionalElement is not null)
                 {
                     if (TryGetElementValue(additionalElement, type, out value))
                     {
@@ -322,13 +322,13 @@ namespace RockLib.HealthChecks.Configuration
         private static string GetName(XObject xObject)
         {
             var xElement = xObject as XElement;
-            if (xElement != null)
+            if (xElement is not null)
             {
                 return xElement.Name.ToString();
             }
 
             var xAttribute = xObject as XAttribute;
-            if (xAttribute != null)
+            if (xAttribute is not null)
             {
                 return xAttribute.Name.ToString();
             }
@@ -360,18 +360,18 @@ namespace RockLib.HealthChecks.Configuration
 
                     var typeAttribute = additionalElement.Attribute("type");
 
-                    if (typeAttribute != null)
+                    if (typeAttribute is not null)
                     {
                         var typeName = typeAttribute.Value;
                         var typeFromAttribute = Type.GetType(typeName);
 
-                        if (typeFromAttribute != null)
+                        if (typeFromAttribute is not null)
                         {
                             serializer = new XmlSerializer(typeFromAttribute, new XmlRootAttribute(additionalElement.Name.ToString()));
                         }
                     }
 
-                    if (serializer == null)
+                    if (serializer is null)
                     {
                         if (type.IsInterface || type.IsAbstract)
                         {
@@ -420,7 +420,7 @@ namespace RockLib.HealthChecks.Configuration
 
         private static Type ThrowIfNotAssignableToT(Type type)
         {
-            if (type == null)
+            if (type is null)
             {
                 return null;
             }

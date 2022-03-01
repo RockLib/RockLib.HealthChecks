@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
-#if !(NET35 || NET40)
 using System.Collections.Concurrent;
-#endif
+using System.Diagnostics.CodeAnalysis;
 
 namespace RockLib.HealthChecks
 {
     /// <summary>
     /// Represents the results of checking the health of a logical downstream dependency or sub-component.
     /// </summary>
-    public sealed class HealthCheckResult : IDictionary<string, object>
+#pragma warning disable CA1710 // Identifiers should have correct suffix
+    public sealed class HealthCheckResult : IDictionary<string, object?>
+#pragma warning restore CA1710 // Identifiers should have correct suffix
     {
-        private readonly IDictionary<string, object> _dictionary
-#if NET35 || NET40
-            = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-#else
-            = new ConcurrentDictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-#endif
+        private readonly IDictionary<string, object?> _dictionary
+            = new ConcurrentDictionary<string, object?>(StringComparer.OrdinalIgnoreCase);
 
-        private string _componentName;
-        private string _measurementName;
+        private string? _componentName;
+        private string? _measurementName;
 
         /// <summary>
         /// Gets or sets the human-readable name for the component. Must not contain a colon.
         /// </summary>
         [JsonIgnore]
-        public string ComponentName
+        public string? ComponentName
         {
             get => _componentName;
             set => _componentName = DisallowColon(value);
@@ -38,7 +34,7 @@ namespace RockLib.HealthChecks
         /// Gets or sets the name of the measurement type (a data point type) that the status is reported for.
         /// </summary>
         [JsonIgnore]
-        public string MeasurementName
+        public string? MeasurementName
         {
             get => _measurementName;
             set => _measurementName = DisallowColon(value);
@@ -50,9 +46,9 @@ namespace RockLib.HealthChecks
         /// different nodes.
         /// </summary>
         [JsonIgnore]
-        public string ComponentId
+        public string? ComponentId
         {
-            get => TryGetValue("componentId", out string value) ? value : null;
+            get => TryGetValue("componentId", out string? value) ? value : null;
             set => _dictionary["componentId"] = value;
         }
 
@@ -61,9 +57,9 @@ namespace RockLib.HealthChecks
         /// present.
         /// </summary>
         [JsonIgnore]
-        public string ComponentType
+        public string? ComponentType
         {
-            get => TryGetValue("componentType", out string value) ? value : null;
+            get => TryGetValue("componentType", out string? value) ? value : null;
             set => _dictionary["componentType"] = value;
         }
 
@@ -71,9 +67,9 @@ namespace RockLib.HealthChecks
         /// Gets or sets the observed value.
         /// </summary>
         [JsonIgnore]
-        public object ObservedValue
+        public object? ObservedValue
         {
-            get => TryGetValue("observedValue", out object value) ? value : null;
+            get => TryGetValue("observedValue", out var value) ? value : null;
             set => _dictionary["observedValue"] = value;
         }
 
@@ -83,9 +79,9 @@ namespace RockLib.HealthChecks
         /// something else.
         /// </summary>
         [JsonIgnore]
-        public string ObservedUnit
+        public string? ObservedUnit
         {
-            get => TryGetValue("observedUnit", out string value) ? value : null;
+            get => TryGetValue("observedUnit", out string? value) ? value : null;
             set => _dictionary["observedUnit"] = value;
         }
 
@@ -104,9 +100,11 @@ namespace RockLib.HealthChecks
         /// check's troubles.
         /// </summary>
         [JsonIgnore]
-        public List<string> AffectedEndpoints
+#pragma warning disable CA1002 // Do not expose generic lists
+        public List<string>? AffectedEndpoints
+#pragma warning restore CA1002 // Do not expose generic lists
         {
-            get => TryGetValue("affectedEndpoints", out List<string> value) ? value : null;
+            get => TryGetValue("affectedEndpoints", out List<string>? value) ? value : null;
             set => _dictionary["affectedEndpoints"] = value;
         }
 
@@ -126,9 +124,9 @@ namespace RockLib.HealthChecks
         /// state.
         /// </summary>
         [JsonIgnore]
-        public string Output
+        public string? Output
         {
-            get => TryGetValue("output", out string value) ? value : null;
+            get => TryGetValue("output", out string? value) ? value : null;
             set => _dictionary["output"] = value;
         }
 
@@ -140,21 +138,21 @@ namespace RockLib.HealthChecks
         /// link is provided, it MAY be used by clients to check health via HTTP response code.
         /// </summary>
         [JsonIgnore]
-        public Dictionary<string, string> Links
+        public Dictionary<string, string>? Links
         {
-            get => TryGetValue("links", out Dictionary<string, string> value) ? value : null;
+            get => TryGetValue("links", out Dictionary<string, string>? value) ? value : null;
             set => _dictionary["links"] = value;
         }
 
-        private bool TryGetValue<T>(string key, out T value)
+        private bool TryGetValue<T>(string key, [MaybeNullWhen(false)] out T value)
         {
-            if (_dictionary.TryGetValue(key, out object obj) && obj is T t)
+            if (_dictionary.TryGetValue(key, out var obj) && obj is T t)
             {
                 value = t;
                 return true;
             }
 
-            value = default(T);
+            value = default;
             return false;
         }
 
@@ -164,18 +162,32 @@ namespace RockLib.HealthChecks
             var emptyMeasurementName = string.IsNullOrEmpty(MeasurementName);
 
             if (emptyComponentName && emptyMeasurementName)
+            {
                 return "";
+            }
             if (emptyComponentName)
-                return MeasurementName;
+            {
+                return MeasurementName!;
+            }
             if (emptyMeasurementName)
-                return ComponentName;
+            {
+                return ComponentName!;
+            }
+
             return $"{ComponentName}:{MeasurementName}";
         }
 
-        private static string DisallowColon(string value)
+        private static string? DisallowColon(string? value)
         {
-            if (value != null && value.Contains(':'))
+#if NET48
+            if (value is not null && value.Contains(":"))
+#else
+            if (value is not null && value.Contains(':', StringComparison.OrdinalIgnoreCase))
+#endif
+            {
                 throw new ArgumentException("value cannot contain ':' (colon) character.", nameof(value));
+            }
+
             return value;
         }
 
@@ -186,7 +198,7 @@ namespace RockLib.HealthChecks
                 : value;
         }
 
-        #region IDictionary<string, object> Members
+#region IDictionary<string, object> Members
 
         /// <summary>
         /// Gets an <see cref="ICollection{T}"/> containing the keys of <see cref="HealthCheckResult"/>.
@@ -198,7 +210,7 @@ namespace RockLib.HealthChecks
         /// Gets an <see cref="ICollection{T}"/> containing the values in the <see cref="HealthCheckResult"/>.
         /// </summary>
         [JsonIgnore]
-        public ICollection<object> Values => _dictionary.Values;
+        public ICollection<object?> Values => _dictionary.Values;
 
         /// <summary>
         /// Gets the number of elements contained in the <see cref="HealthCheckResult"/>.
@@ -211,7 +223,7 @@ namespace RockLib.HealthChecks
         /// </summary>
         /// <param name="key">The key of the element to get or set.</param>
         /// <returns>The element with the specified key.</returns>
-        public object this[string key] { get => _dictionary[key]; set => _dictionary[key] = value; }
+        public object? this[string key] { get => _dictionary[key]; set => _dictionary[key] = value; }
 
         /// <summary>
         /// Determines whether the <see cref="HealthCheckResult"/> contains an element with
@@ -229,7 +241,7 @@ namespace RockLib.HealthChecks
         /// </summary>
         /// <param name="key">The string to use as the key of the element to add.</param>
         /// <param name="value">The object to use as the value of the element to add.</param>
-        public void Add(string key, object value) => _dictionary.Add(key, value);
+        public void Add(string key, object? value) => _dictionary.Add(key, value);
 
         /// <summary>
         /// Removes the element with the specified key from the <see cref="HealthCheckResult"/>.
@@ -255,24 +267,24 @@ namespace RockLib.HealthChecks
         /// <see langword="true"/> if the <see cref="HealthCheckResult"/> contains an element
         /// with the specified key; otherwise, <see langword="false"/>.
         /// </returns>
-        public bool TryGetValue(string key, out object value) => _dictionary.TryGetValue(key, out value);
+        public bool TryGetValue(string key, [MaybeNullWhen(false)] out object value) => _dictionary.TryGetValue(key, out value);
 
-        void ICollection<KeyValuePair<string, object>>.Clear() => _dictionary.Clear();
+        void ICollection<KeyValuePair<string, object?>>.Clear() => _dictionary.Clear();
 
-        bool ICollection<KeyValuePair<string, object>>.IsReadOnly => _dictionary.IsReadOnly;
+        bool ICollection<KeyValuePair<string, object?>>.IsReadOnly => _dictionary.IsReadOnly;
 
-        void ICollection<KeyValuePair<string, object>>.Add(KeyValuePair<string, object> item) => _dictionary.Add(item);
+        void ICollection<KeyValuePair<string, object?>>.Add(KeyValuePair<string, object?> item) => _dictionary.Add(item);
 
-        bool ICollection<KeyValuePair<string, object>>.Contains(KeyValuePair<string, object> item) => _dictionary.Contains(item);
+        bool ICollection<KeyValuePair<string, object?>>.Contains(KeyValuePair<string, object?> item) => _dictionary.Contains(item);
 
-        void ICollection<KeyValuePair<string, object>>.CopyTo(KeyValuePair<string, object>[] array, int arrayIndex) => _dictionary.CopyTo(array, arrayIndex);
-        
-        bool ICollection<KeyValuePair<string, object>>.Remove(KeyValuePair<string, object> item) => _dictionary.Remove(item);
-        
-        IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator() => _dictionary.GetEnumerator();
-        
+        void ICollection<KeyValuePair<string, object?>>.CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex) => _dictionary.CopyTo(array, arrayIndex);
+
+        bool ICollection<KeyValuePair<string, object?>>.Remove(KeyValuePair<string, object?> item) => _dictionary.Remove(item);
+
+        IEnumerator<KeyValuePair<string, object?>> IEnumerable<KeyValuePair<string, object?>>.GetEnumerator() => _dictionary.GetEnumerator();
+
         IEnumerator IEnumerable.GetEnumerator() => _dictionary.GetEnumerator();
-        
+
 #endregion
     }
 }
