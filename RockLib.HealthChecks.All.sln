@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29001.49
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks", "RockLib.HealthChecks\RockLib.HealthChecks.csproj", "{9A19103F-16F7-4668-BE54-9A1E7A4F7556}"
 EndProject
@@ -49,10 +49,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.HealthChecks.AspNetCore.ResponseWriter", "Examples\Example.HealthChecks.AspNetCore.ResponseWriter\Example.HealthChecks.AspNetCore.ResponseWriter.csproj", "{B9895A59-CF38-4077-AB40-F81A1ADBC86D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.HealthChecks.Client", "Examples\Example.HealthChecks.Client\Example.HealthChecks.Client.csproj", "{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.HealthChecks.HttpModule", "Examples\Example.HealthChecks.HttpModule\Example.HealthChecks.HttpModule.csproj", "{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.HealthChecks.WebApi", "Examples\Example.HealthChecks.WebApi\Example.HealthChecks.WebApi.csproj", "{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -108,14 +104,6 @@ Global
 		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -127,8 +115,6 @@ Global
 		{727B6914-AAED-4B74-BE69-B4294E2468FE} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{B9895A59-CF38-4077-AB40-F81A1ADBC86D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 		{613C1FFF-FA38-4FF4-8182-F5F2207D1E1D} = {077997E9-BD03-4F84-8B84-9047B35C1004}
-		{3A117C2C-A6EB-41E7-BBAC-83DCC4431D03} = {077997E9-BD03-4F84-8B84-9047B35C1004}
-		{8D36E038-337F-4EBD-8B05-87C04BF8CBC0} = {077997E9-BD03-4F84-8B84-9047B35C1004}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9BD2137B-45A2-4572-9151-93471F4F7CC9}

@@ -11,7 +11,7 @@ namespace RockLib.HealthChecks.Tests
     public class HealthCheckRunnerTests
     {
         [Fact]
-        public void Constructor1_SetsProperties()
+        public void Constructor1SetsProperties()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
             var name = "test-name";
@@ -42,7 +42,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor2_SetsProperties()
+        public void Constructor2SetsProperties()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
             var name = "test-name";
@@ -75,97 +75,97 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNullContentType_Throws()
+        public void ConstructorGivenNullContentTypeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, contentType: null);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, contentType: null!);
 
             act.Should().ThrowExactly<ArgumentNullException>().WithMessage("*contentType*");
         }
 
         [Fact]
-        public void Constructor_GivenEmptyContentType_Throws()
+        public void ConstructorGivenEmptyContentTypeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, contentType: "");
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, contentType: "");
 
             act.Should().ThrowExactly<ArgumentNullException>().WithMessage("*contentType*");
         }
 
         [Fact]
-        public void Constructor_GivenTooLowPassStatusCode_Throws()
+        public void ConstructorGivenTooLowPassStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, passStatusCode: 199);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, passStatusCode: 199);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*passStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenTooHighPassStatusCode_Throws()
+        public void ConstructorGivenTooHighPassStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, passStatusCode: 400);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, passStatusCode: 400);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*passStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenTooLowWarnStatusCode_Throws()
+        public void ConstructorGivenTooLowWarnStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, warnStatusCode: 199);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, warnStatusCode: 199);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*warnStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenTooHighWarnStatusCode_Throws()
+        public void ConstructorGivenTooHighWarnStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, warnStatusCode: 400);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, warnStatusCode: 400);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*warnStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenTooLowFailStatusCode_Throws()
+        public void ConstructorGivenTooLowFailStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, failStatusCode: 399);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, failStatusCode: 399);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*failStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenTooHighFailStatusCode_Throws()
+        public void ConstructorGivenTooHighFailStatusCodeThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, failStatusCode: 600);
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, failStatusCode: 600);
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*failStatusCode*");
         }
 
         [Fact]
-        public void Constructor_GivenUndefinedUncaughtExceptionStatus_Throws()
+        public void ConstructorGivenUndefinedUncaughtExceptionStatusThrows()
         {
             var healthChecks = new[] { new Mock<IHealthCheck>().Object, new Mock<IHealthCheck>().Object };
 
-            Action act = () => new HealthCheckRunner(healthChecks, uncaughtExceptionStatus: (HealthStatus)(-1));
+            Func<HealthCheckRunner> act = () => new HealthCheckRunner(healthChecks, uncaughtExceptionStatus: (HealthStatus)(-1));
 
             act.Should().ThrowExactly<ArgumentOutOfRangeException>().WithMessage("*uncaughtExceptionStatus*");
         }
 
         [Fact]
-        public async Task RunAsync_RunsAllTheHealthChecksAndCallsTheHealthResponseCustomizer()
+        public async Task RunAsyncRunsAllTheHealthChecksAndCallsTheHealthResponseCustomizer()
         {
             var mockHealthCheck1 = new Mock<IHealthCheck>();
             var result1 = new HealthCheckResult();
@@ -184,7 +184,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync();
+            var response = await runner.RunAsync().ConfigureAwait(false);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 
@@ -195,7 +195,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public async Task RunAsync_GivenAHealthCheckThatThrows_DoesNotThrow()
+        public async Task RunAsyncGivenAHealthCheckThatThrowsDoesNotThrow()
         {
             var mockHealthCheck1 = new Mock<IHealthCheck>();
             var result1 = new HealthCheckResult();
@@ -205,7 +205,9 @@ namespace RockLib.HealthChecks.Tests
             var mockHealthCheck2 = new Mock<IHealthCheck>();
             var result2 = new HealthCheckResult();
             IReadOnlyList<HealthCheckResult> results2 = new[] { result2 };
-            Exception exception = new Exception();
+#pragma warning disable CA2201 // Do not raise reserved exception types
+            var exception = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
             mockHealthCheck2.Setup(m => m.CheckAsync(It.IsAny<CancellationToken>())).Throws(exception);
 
             var healthChecks = new[] { mockHealthCheck1.Object, mockHealthCheck2.Object };
@@ -213,7 +215,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync();
+            var response = await runner.RunAsync().ConfigureAwait(false);
 
             response.GetChecks().Should().NotBeEquivalentTo(new[] { result1, result2 });
 
@@ -222,7 +224,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public async Task RunAsync_GivenNoResponseCustomizer_DoesNotThrow()
+        public async Task RunAsyncGivenNoResponseCustomizerDoesNotThrow()
         {
             var mockHealthCheck1 = new Mock<IHealthCheck>();
             var result1 = new HealthCheckResult();
@@ -238,7 +240,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks);
 
-            var response = await runner.RunAsync();
+            var response = await runner.RunAsync().ConfigureAwait(false);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 
@@ -247,7 +249,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public async Task RunAsync_GivenAResponseCustomizerThatThrows_DoesNotThrow()
+        public async Task RunAsyncGivenAResponseCustomizerThatThrowsDoesNotThrow()
         {
             var mockHealthCheck1 = new Mock<IHealthCheck>();
             var result1 = new HealthCheckResult();
@@ -260,7 +262,9 @@ namespace RockLib.HealthChecks.Tests
             mockHealthCheck2.Setup(m => m.CheckAsync(It.IsAny<CancellationToken>())).Returns(Task.FromResult(results2));
 
             var mockResponseCustomizer = new Mock<IHealthResponseCustomizer>();
+#pragma warning disable CA2201 // Do not raise reserved exception types
             var exception = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
             mockResponseCustomizer.Setup(m => m.CustomizeResponse(It.IsAny<HealthResponse>())).Throws(exception);
 
             var healthChecks = new[] { mockHealthCheck1.Object, mockHealthCheck2.Object };
@@ -268,7 +272,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync();
+            var response = await runner.RunAsync().ConfigureAwait(false);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 

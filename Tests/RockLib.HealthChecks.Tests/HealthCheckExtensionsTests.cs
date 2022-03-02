@@ -8,7 +8,7 @@ namespace RockLib.HealthChecks.Tests
     public class HealthCheckExtensionsTests
     {
         [Fact]
-        public void CreateHealthCheckResult_SetsPropertiesOfResult()
+        public void CreateHealthCheckResultSetsPropertiesOfResult()
         {
             var mockHealthCheck = new Mock<IHealthCheck>();
 
@@ -33,17 +33,17 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void CreateHealthCheckResult_GivenNullHealthCheck_Throws()
+        public void CreateHealthCheckResultGivenNullHealthCheckThrows()
         {
-            IHealthCheck healthCheck = null;
+            IHealthCheck healthCheck = null!;
 
-            Action act = () => healthCheck.CreateHealthCheckResult();
+            Func<HealthCheckResult> act = () => healthCheck!.CreateHealthCheckResult();
 
             act.Should().ThrowExactly<ArgumentNullException>().WithMessage("*healthCheck*");
         }
 
         [Fact]
-        public void CreateHealthResponse_SetsPropertiesOfResponse()
+        public void CreateHealthResponseSetsPropertiesOfResponse()
         {
             var mockRunner = new Mock<IHealthCheckRunner>();
 
@@ -75,7 +75,7 @@ namespace RockLib.HealthChecks.Tests
         [InlineData(HealthStatus.Pass, 299)]
         [InlineData(HealthStatus.Warn, 399)]
         [InlineData(HealthStatus.Fail, 599)]
-        public void SetStatusCode_SetsStatusCode(HealthStatus status, int expectedStatusCode)
+        public void SetStatusCodeSetsStatusCode(HealthStatus status, int expectedStatusCode)
         {
             var mockRunner = new Mock<IHealthCheckRunner>();
 

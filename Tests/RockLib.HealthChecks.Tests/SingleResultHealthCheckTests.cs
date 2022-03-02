@@ -11,7 +11,7 @@ namespace RockLib.HealthChecks.Tests
     public class SingleResultHealthCheckTests
     {
         [Fact]
-        public void Constructor_SetsProperties()
+        public void ConstructorSetsProperties()
         {
             var healthCheck = new TestHealthCheck("FakeComponentName", "FakeMeasurementName", "FakeComponentType", "FakeComponentId");
             
@@ -22,11 +22,11 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public async Task CheckAsync_ReturnsOneResult()
+        public async Task CheckAsyncReturnsOneResult()
         {
             var healthCheck = new TestHealthCheck();
 
-            var result = await healthCheck.CheckAsync();
+            var result = await healthCheck.CheckAsync().ConfigureAwait(false);
 
             result.Should().HaveCount(1);
             result[0]["fake"].Should().Be(true);
@@ -34,7 +34,7 @@ namespace RockLib.HealthChecks.Tests
 
         private class TestHealthCheck : SingleResultHealthCheck
         {
-            public TestHealthCheck(string componentName = null, string measurementName = null, string componentType = null, string componentId = null)
+            public TestHealthCheck(string? componentName = null, string? measurementName = null, string? componentType = null, string? componentId = null)
                 : base(componentName, measurementName, componentType, componentId) { }
 
             protected override Task CheckAsync(HealthCheckResult result, CancellationToken cancellationToken)

@@ -8,7 +8,7 @@ namespace RockLib.HealthChecks.Tests
     public class HealthResponseTests
     {
         [Fact]
-        public void Constructor_SetsChecks()
+        public void ConstructorSetsChecks()
         {
             var results = new[] { new HealthCheckResult(), new HealthCheckResult() };
 
@@ -19,9 +19,9 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNullResults_DoesNotSetChecks()
+        public void ConstructorGivenNullResultsDoesNotSetChecks()
         {
-            IEnumerable<HealthCheckResult> results = null;
+            IEnumerable<HealthCheckResult> results = null!;
 
             var response = new HealthResponse(results);
 
@@ -30,7 +30,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenEmptyResults_DoesNotSetChecks()
+        public void ConstructorGivenEmptyResultsDoesNotSetChecks()
         {
             var results = Enumerable.Empty<HealthCheckResult>();
 
@@ -41,9 +41,9 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNullResults_SetsStatusToPass()
+        public void ConstructorGivenNullResultsSetsStatusToPass()
         {
-            IEnumerable<HealthCheckResult> results = null;
+            IEnumerable<HealthCheckResult> results = null!;
 
             var response = new HealthResponse(results);
 
@@ -51,7 +51,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenEmptyResults_SetsStatusToPass()
+        public void ConstructorGivenEmptyResultsSetsStatusToPass()
         {
             var results = Enumerable.Empty<HealthCheckResult>();
 
@@ -61,7 +61,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNonEmptyResultsWithNoStatus_SetsStatusToPass()
+        public void ConstructorGivenNonEmptyResultsWithNoStatusSetsStatusToPass()
         {
             var results = new[] { new HealthCheckResult(), new HealthCheckResult() };
 
@@ -71,7 +71,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNonEmptyResults_SetsStatusToHighestStatus1()
+        public void ConstructorGivenNonEmptyResultsSetsStatusToHighestStatus1()
         {
             var results = new[]
             {
@@ -86,7 +86,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNonEmptyResults_SetsStatusToHighestStatus2()
+        public void ConstructorGivenNonEmptyResultsSetsStatusToHighestStatus2()
         {
             var results = new[]
             {
@@ -101,7 +101,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Constructor_GivenNonEmptyResults_SetsStatusToHighestStatus3()
+        public void ConstructorGivenNonEmptyResultsSetsStatusToHighestStatus3()
         {
             var results = new[]
             {

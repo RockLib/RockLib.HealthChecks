@@ -226,7 +226,12 @@ namespace RockLib.HealthChecks
 
         private HealthResponse TryCustomizeResponse(HealthResponse response)
         {
-            ResponseCustomizer?.CustomizeResponse(response);
+            // Unfortunately, we can't remove the empty catch block
+            // as there's specific behavior that this will always return with a value.
+            try { ResponseCustomizer?.CustomizeResponse(response); }
+#pragma warning disable CA1031 // Do not catch general exception types
+            catch { }
+#pragma warning restore CA1031 // Do not catch general exception types
             return response;
         }
 
