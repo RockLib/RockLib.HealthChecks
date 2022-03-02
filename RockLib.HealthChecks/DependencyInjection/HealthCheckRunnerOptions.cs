@@ -1,5 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0 || NET5_0
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace RockLib.HealthChecks.DependencyInjection
@@ -23,28 +22,28 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <summary>
         /// Gets or sets the human-friendly description of the service.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the service, in the application scope.
         /// </summary>
-        public string ServiceId { get; set; }
+        public string? ServiceId { get; set; }
 
         /// <summary>
         /// Gets or sets the public version of the service.
         /// </summary>
-        public string Version { get; set; }
+        public string? Version { get; set; }
 
         /// <summary>
         /// Gets or sets the "release version" or "release ID" of the service.
         /// </summary>
-        public string ReleaseId { get; set; }
+        public string? ReleaseId { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="IHealthResponseCustomizer"/> that customizes each <see cref="HealthResponse"/>
         /// object returned by the health check runner.
         /// </summary>
-        public IHealthResponseCustomizer ResponseCustomizer { get; set; }
+        public IHealthResponseCustomizer? ResponseCustomizer { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP content type of responses created by the health check runner. Must not
@@ -56,7 +55,9 @@ namespace RockLib.HealthChecks.DependencyInjection
             set
             {
                 if (string.IsNullOrEmpty(value))
+                {
                     throw new ArgumentNullException(nameof(value));
+                }
                 _contentType = value;
             }
         }
@@ -70,7 +71,9 @@ namespace RockLib.HealthChecks.DependencyInjection
             set
             {
                 if (value < 200 || value > 399)
+                {
                     throw new ArgumentOutOfRangeException(nameof(value), "Must be in the range of 200-399.");
+                }
                 _passStatusCode = value;
             }
         }
@@ -84,7 +87,9 @@ namespace RockLib.HealthChecks.DependencyInjection
             set
             {
                 if (value < 200 || value > 399)
+                {
                     throw new ArgumentOutOfRangeException(nameof(value), "Must be in the range of 200-399.");
+                }
                 _warnStatusCode = value;
             }
         }
@@ -98,7 +103,9 @@ namespace RockLib.HealthChecks.DependencyInjection
             set
             {
                 if (value < 400 || value > 599)
+                {
                     throw new ArgumentOutOfRangeException(nameof(value), "Must be in the range of 400-599.");
+                }
                 _failStatusCode = value;
             }
         }
@@ -113,10 +120,11 @@ namespace RockLib.HealthChecks.DependencyInjection
             set
             {
                 if (value.HasValue && !Enum.IsDefined(typeof(HealthStatus), value.Value))
+                {
                     throw new ArgumentOutOfRangeException(nameof(value), "Must be a defined HealthStatus (or null).");
+                }
                 _uncaughtExceptionStatus = value;
             }
         }
     }
 }
-#endif

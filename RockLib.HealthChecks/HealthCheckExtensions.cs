@@ -17,8 +17,10 @@ namespace RockLib.HealthChecks
         /// <returns>An instance of <see cref="HealthCheckResult"/>.</returns>
         public static HealthCheckResult CreateHealthCheckResult(this IHealthCheck healthCheck)
         {
-            if (healthCheck == null)
+            if (healthCheck is null)
+            {
                 throw new ArgumentNullException(nameof(healthCheck));
+            }
 
             var result = new HealthCheckResult
             {
@@ -27,11 +29,15 @@ namespace RockLib.HealthChecks
                 Time = DateTime.UtcNow
             };
 
-            if (healthCheck.ComponentId != null)
+            if (healthCheck.ComponentId is not null)
+            {
                 result.ComponentId = healthCheck.ComponentId;
+            }
 
-            if (healthCheck.ComponentType != null)
+            if (healthCheck.ComponentType is not null)
+            {
                 result.ComponentType = healthCheck.ComponentType;
+            }
 
             return result;
         }
@@ -46,10 +52,14 @@ namespace RockLib.HealthChecks
         /// <returns>An instance of <see cref="HealthResponse"/>.</returns>
         public static HealthResponse CreateHealthResponse(this IHealthCheckRunner runner, IEnumerable<HealthCheckResult> results)
         {
-            if (runner == null)
+            if (runner is null)
+            {
                 throw new ArgumentNullException(nameof(runner));
-            if (results == null)
+            }
+            if (results is null)
+            {
                 throw new ArgumentNullException(nameof(results));
+            }
 
             return new HealthResponse(results)
             {
@@ -72,6 +82,15 @@ namespace RockLib.HealthChecks
         /// <returns>The same <see cref="HealthResponse"/> object.</returns>
         public static HealthResponse SetStatusCode(this HealthResponse response, IHealthCheckRunner runner)
         {
+            if (response is null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+            if (runner is null)
+            {
+                throw new ArgumentNullException(nameof(runner));
+            }
+
             switch (response.Status)
             {
                 case HealthStatus.Pass:

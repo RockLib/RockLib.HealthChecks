@@ -1,5 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0 || NET5_0
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
@@ -22,7 +21,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// A delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to create the
         /// <see cref="HealthCheckRunner"/>.
         /// </param>
-        public HealthCheckRunnerBuilder(string name, IServiceCollection services, Action<IHealthCheckRunnerOptions> configureOptions = null)
+        public HealthCheckRunnerBuilder(string name, IServiceCollection services, Action<IHealthCheckRunnerOptions>? configureOptions = null)
         {
             Name = name ?? throw new ArgumentNullException(nameof(name));
             Services = services ?? throw new ArgumentNullException(nameof(services));
@@ -46,7 +45,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// Gets the delegate to configure the <see cref="IHealthCheckRunnerOptions"/> object that is used to configure the
         /// <see cref="HealthCheckRunner"/>.
         /// </summary>
-        public Action<IHealthCheckRunnerOptions> ConfigureOptions { get; }
+        public Action<IHealthCheckRunnerOptions>? ConfigureOptions { get; }
 
         /// <summary>
         /// Adds a health check registration delegate to the builder.
@@ -67,8 +66,10 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <returns>An instance of <see cref="HealthCheckRunner"/>.</returns>
         public HealthCheckRunner Build(IServiceProvider serviceProvider)
         {
-            if (serviceProvider == null)
+            if (serviceProvider is null)
+            {
                 throw new ArgumentNullException(nameof(serviceProvider));
+            }
 
             var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<HealthCheckRunnerOptions>>();
 
@@ -84,4 +85,3 @@ namespace RockLib.HealthChecks.DependencyInjection
         }
     }
 }
-#endif

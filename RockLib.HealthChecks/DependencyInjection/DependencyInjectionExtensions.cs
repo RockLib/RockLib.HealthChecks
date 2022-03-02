@@ -1,5 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0 || NET5_0
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 
 namespace RockLib.HealthChecks.DependencyInjection
@@ -30,7 +29,7 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the health check runner.</param>
         /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
-            Action<IHealthCheckRunnerOptions> configureOptions = null,
+            Action<IHealthCheckRunnerOptions>? configureOptions = null,
             ServiceLifetime lifetime = _defaultLifetime) =>
             services.AddHealthCheckRunner("", configureOptions, lifetime);
 
@@ -60,16 +59,20 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <param name="lifetime">The <see cref="ServiceLifetime"/> of the health check runner.</param>
         /// <returns>A new <see cref="IHealthCheckRunnerBuilder"/> for registering health checks.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheckRunner(this IServiceCollection services,
-            string name, Action<IHealthCheckRunnerOptions> configureOptions = null,
+            string name, Action<IHealthCheckRunnerOptions>? configureOptions = null,
             ServiceLifetime lifetime = _defaultLifetime)
         {
-            if (services == null)
+            if (services is null)
+            {
                 throw new ArgumentNullException(nameof(services));
-            if (name == null)
+            }
+            if (name is null)
+            {
                 throw new ArgumentNullException(nameof(name));
+            }
 
             var builder = new HealthCheckRunnerBuilder(name, services, configureOptions);
-            
+
             services.Add(new ServiceDescriptor(typeof(IHealthCheckRunner), builder.Build, lifetime));
 
             return builder;
@@ -83,10 +86,14 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <returns>The <see cref="IHealthCheckRunnerBuilder"/>.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheck(this IHealthCheckRunnerBuilder builder, IHealthCheck healthCheck)
         {
-            if (builder == null)
+            if (builder is null)
+            {
                 throw new ArgumentNullException(nameof(builder));
-            if (healthCheck == null)
+            }
+            if (healthCheck is null)
+            {
                 throw new ArgumentNullException(nameof(healthCheck));
+            }
 
             return builder.AddHealthCheck(_ => healthCheck);
         }
@@ -101,11 +108,12 @@ namespace RockLib.HealthChecks.DependencyInjection
         public static IHealthCheckRunnerBuilder AddHealthCheck<THealthCheck>(this IHealthCheckRunnerBuilder builder, params object[] parameters)
             where THealthCheck : class, IHealthCheck
         {
-            if (builder == null)
+            if (builder is null)
+            {
                 throw new ArgumentNullException(nameof(builder));
+            }
 
             return builder.AddHealthCheck(serviceProvider => ActivatorUtilities.CreateInstance<THealthCheck>(serviceProvider, parameters));
         }
     }
 }
-#endif

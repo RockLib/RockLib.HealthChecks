@@ -8,7 +8,7 @@ namespace RockLib.HealthChecks.Tests
     public class HealthCheckResultTests
     {
         [Fact]
-        public void Set_ComponentName_DoesNotChangeDictionary()
+        public void SetComponentNameDoesNotChangeDictionary()
         {
             var result = new HealthCheckResult();
 
@@ -18,7 +18,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Set_ComponentName_GivenValueWithColon_Throws()
+        public void SetComponentNameGivenValueWithColonThrows()
         {
             var result = new HealthCheckResult();
 
@@ -28,7 +28,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Set_MeasurementName_DoesNotChangeDictionary()
+        public void SetMeasurementNameDoesNotChangeDictionary()
         {
             var result = new HealthCheckResult();
 
@@ -38,7 +38,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void Set_MeasurementName_GivenValueWithColon_Throws()
+        public void SetMeasurementNameGivenValueWithColonThrows()
         {
             var result = new HealthCheckResult();
 
@@ -48,7 +48,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void GetKey_GivenNoComponentNameOrMeasureName_ReturnsEmptyString()
+        public void GetKeyGivenNoComponentNameOrMeasureNameReturnsEmptyString()
         {
             var result = new HealthCheckResult();
 
@@ -58,7 +58,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void GetKey_GivenNoMeasurementName_ReturnsComponentName()
+        public void GetKeyGivenNoMeasurementNameReturnsComponentName()
         {
             var result = new HealthCheckResult { ComponentName = "foo" };
 
@@ -68,7 +68,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void GetKey_GivenNoComponentName_ReturnsMeasurementName()
+        public void GetKeyGivenNoComponentNameReturnsMeasurementName()
         {
             var result = new HealthCheckResult { MeasurementName = "foo" };
 
@@ -78,7 +78,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void GetKey_GivenComponentNameAndMeasurementName_ReturnsBoth()
+        public void GetKeyGivenComponentNameAndMeasurementNameReturnsBoth()
         {
             var result = new HealthCheckResult { ComponentName = "foo", MeasurementName = "bar" };
 
@@ -88,7 +88,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void PropertyGetters_ReturnDictionaryValues()
+        public void PropertyGettersReturnDictionaryValues()
         {
             var now = DateTime.UtcNow;
 
@@ -117,7 +117,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void PropertyGetters_WhenFoundValueTypeDoesNotMatchExpectedType_ReturnNull()
+        public void PropertyGettersWhenFoundValueTypeDoesNotMatchExpectedTypeReturnNull()
         {
             var result = new HealthCheckResult
             {
@@ -142,7 +142,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void PropertySetters_SetDictionaryValues()
+        public void PropertySettersSetDictionaryValues()
         {
             var now = DateTime.UtcNow;
 
@@ -171,7 +171,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void PropertySetters_WhenPassedNull_SetsNullValue()
+        public void PropertySettersWhenPassedNullSetsNullValue()
         {
             var now = DateTime.UtcNow;
 
@@ -210,7 +210,7 @@ namespace RockLib.HealthChecks.Tests
         }
 
         [Fact]
-        public void SettingDictionaryValuesToNull_SetsPropertyValuesToNull()
+        public void SettingDictionaryValuesToNullSetsPropertyValuesToNull()
         {
             var now = DateTime.UtcNow;
 

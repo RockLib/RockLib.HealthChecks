@@ -1,9 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
-#if !(NET35 || NET40)
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 
 namespace RockLib.HealthChecks.System
 {
@@ -30,27 +29,30 @@ namespace RockLib.HealthChecks.System
         /// A unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </param>
         public ProcessUptimeHealthCheck(string componentName = "process", string measurementName = "uptime",
-            string componentType = "system", string componentId = null)
+            string componentType = "system", string? componentId = null)
             : base(componentName, measurementName, componentType, componentId)
         {
-            try { _currentProcessStartTime = Process.GetCurrentProcess().StartTime; }
-            catch { _currentProcessStartTime = DateTime.Now; }
+            try 
+            { 
+                _currentProcessStartTime = Process.GetCurrentProcess().StartTime; 
+            }
+            catch(Exception ex) when (ex is NotSupportedException || ex is InvalidOperationException || ex is Win32Exception) 
+            { 
+                _currentProcessStartTime = DateTime.Now; 
+            }
         }
 
-#if NET35 || NET40
-        /// <inheritdoc/>
-        protected override void Check(HealthCheckResult result)
-        {
-            SetResult(result);
-        }
-#else
         /// <inheritdoc/>
         protected override Task CheckAsync(HealthCheckResult result, CancellationToken cancellationToken)
         {
+            if (result is null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
+
             SetResult(result);
-            return Task.FromResult(0);
+            return Task.CompletedTask;
         }
-#endif
 
         private void SetResult(HealthCheckResult result)
         {

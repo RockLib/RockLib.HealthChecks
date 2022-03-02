@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-#if !(NET35 || NET40)
 using System.Threading;
 using System.Threading.Tasks;
-#endif
 
 namespace RockLib.HealthChecks.System
 {
@@ -42,10 +40,16 @@ namespace RockLib.HealthChecks.System
         /// </param>
         public DiskDriveHealthCheck(double warnGigabytes = 5, double failGigabytes = .5, string driveName = "*",
             string componentName = "diskDrive", string measurementName = "availableFreeSpace",
-            string componentType = "system", string componentId = null)
+            string componentType = "system", string? componentId = null)
         {
-            if (warnGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
-            if (failGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(failGigabytes), "Must not be less than zero.");
+            if (warnGigabytes < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
+            }
+            if (failGigabytes < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(failGigabytes), "Must not be less than zero.");
+            }
             DriveName = !string.IsNullOrEmpty(driveName) ? driveName : throw new ArgumentNullException(nameof(driveName));
             WarnGigabytes = warnGigabytes;
             FailGigabytes = failGigabytes;
@@ -62,13 +66,13 @@ namespace RockLib.HealthChecks.System
 
         /// <summary>
         /// Gets the the lowest allowable level of available free space in gigabytes, below which results
-		/// in a <see cref="HealthStatus.Warn"/> status.
+        /// in a <see cref="HealthStatus.Warn"/> status.
         /// </summary>
         public double WarnGigabytes { get; }
 
         /// <summary>
         /// Gets the the lowest allowable level of available free space in gigabytes, below which results
-		/// in a <see cref="HealthStatus.Fail"/> status.
+        /// in a <see cref="HealthStatus.Fail"/> status.
         /// </summary>
         public double FailGigabytes { get; }
 
@@ -90,15 +94,8 @@ namespace RockLib.HealthChecks.System
         /// <summary>
         /// Gets a unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </summary>
-        public string ComponentId { get; }
+        public string? ComponentId { get; }
 
-#if NET35 || NET40
-        /// <summary>
-        /// Check the health of the sub-component/dependency.
-        /// </summary>
-        /// <returns>A list of health check results.</returns>
-        public IList<HealthCheckResult> Check() => GetResults();
-#else
         /// <summary>
         /// Check the health of the sub-component/dependency.
         /// </summary>
@@ -108,9 +105,8 @@ namespace RockLib.HealthChecks.System
         /// <returns>
         /// A task list of health check results representing the asynchronous operation.
         /// </returns>
-        public Task<IReadOnlyList<HealthCheckResult>> CheckAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public Task<IReadOnlyList<HealthCheckResult>> CheckAsync(CancellationToken cancellationToken = default)
             => Task.FromResult((IReadOnlyList<HealthCheckResult>)GetResults());
-#endif
 
         private List<HealthCheckResult> GetResults()
         {
@@ -124,22 +120,21 @@ namespace RockLib.HealthChecks.System
             else
             {
                 var drive = DriveInfo.GetDrives()
-                    .FirstOrDefault(d => string.Equals(d.Name, DriveName, StringComparison.InvariantCultureIgnoreCase));
+                    .FirstOrDefault(d => string.Equals(d.Name, DriveName, StringComparison.OrdinalIgnoreCase));
                 return new List<HealthCheckResult>() { GetResult(drive) };
             }
         }
 
-        private HealthCheckResult GetResult(DriveInfo drive)
+        private HealthCheckResult GetResult(DriveInfo? drive)
         {
             var result = this.CreateHealthCheckResult();
 
-            if (drive == null)
+            if (drive is null)
             {
                 result.Status = HealthStatus.Warn;
                 result.Output = $"Configured drive {DriveName} is not present on system.";
                 return result;
             }
-
 
             if (!drive.IsReady)
             {
@@ -154,7 +149,7 @@ namespace RockLib.HealthChecks.System
                 const double gigabytes = 1024 * 1024 * 1024;
                 availableFreeSpace = drive.AvailableFreeSpace / gigabytes;
             }
-            catch (Exception ex)
+            catch (Exception ex) when (ex is UnauthorizedAccessException || ex is IOException)
             {
                 result.Status = HealthStatus.Warn;
                 result.Output = $"Error reading available free space on drive {DriveName}. {ex.GetType().Name}: {ex.Message}";

@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-#if !(NET35 || NET40)
 using System.Threading.Tasks;
-#endif
 
 namespace RockLib.HealthChecks
 {
@@ -26,8 +24,8 @@ namespace RockLib.HealthChecks
         /// <param name="componentId">
         /// A unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </param>
-        protected SingleResultHealthCheck(string componentName = null, string measurementName = null,
-            string componentType = null, string componentId = null)
+        protected SingleResultHealthCheck(string? componentName = null, string? measurementName = null,
+            string? componentType = null, string? componentId = null)
         {
             ComponentName = componentName;
             MeasurementName = measurementName;
@@ -39,43 +37,23 @@ namespace RockLib.HealthChecks
         /// Gets the name of the logical downstream dependency or sub-component of a service. Must not
         /// contain a colon.
         /// </summary>
-        public string ComponentName { get; }
+        public string? ComponentName { get; }
 
         /// <summary>
         /// Gets the name of the measurement that the status is reported for. Must not contain a colon.
         /// </summary>
-        public string MeasurementName { get; }
+        public string? MeasurementName { get; }
 
         /// <summary>
         /// Gets the type of the component.
         /// </summary>
-        public string ComponentType { get; }
+        public string? ComponentType { get; }
 
         /// <summary>
         /// Gets a unique identifier of an instance of a specific sub-component/dependency of a service.
         /// </summary>
-        public string ComponentId { get; }
+        public string? ComponentId { get; }
 
-#if NET35 || NET40
-        /// <summary>
-        /// Check the health of the sub-component/dependency.
-        /// </summary>
-        /// <returns>A list of health check results.</returns>
-        public IList<HealthCheckResult> Check()
-        {
-            var result = this.CreateHealthCheckResult();
-            Check(result);
-            return new[] { result };
-        }
-
-        /// <summary>
-        /// Check the health of the sub-component/dependency.
-        /// </summary>
-        /// <param name="result">
-        /// An object to be modified according to the outcome of the health check.
-        /// </param>
-        protected abstract void Check(HealthCheckResult result);
-#else
         /// <summary>
         /// Check the health of the sub-component/dependency.
         /// </summary>
@@ -85,7 +63,7 @@ namespace RockLib.HealthChecks
         /// <returns>
         /// A task list of health check results representing the asynchronous operation.
         /// </returns>
-        public async Task<IReadOnlyList<HealthCheckResult>> CheckAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<IReadOnlyList<HealthCheckResult>> CheckAsync(CancellationToken cancellationToken = default)
         {
             var result = this.CreateHealthCheckResult();
             await CheckAsync(result, cancellationToken).ConfigureAwait(false);
@@ -103,6 +81,5 @@ namespace RockLib.HealthChecks
         /// </param>
         /// <returns>A task representing the asynchronous operation.</returns>
         protected abstract Task CheckAsync(HealthCheckResult result, CancellationToken cancellationToken);
-#endif
     }
 }

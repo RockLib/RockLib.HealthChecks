@@ -21,14 +21,16 @@ namespace RockLib.HealthChecks
         /// The results of the health checks of the logical downstream dependencies and sub-components of
         /// the service.
         /// </param>
-        public HealthResponse(IEnumerable<HealthCheckResult> results = null)
+        public HealthResponse(IEnumerable<HealthCheckResult>? results = null)
         {
-            if (results != null)
+            if (results is not null)
             {
                 Checks = results.ToLookup(x => x.GetKey(), StringComparer.OrdinalIgnoreCase)
                     .ToDictionary(x => x.Key, x => x.ToList(), StringComparer.OrdinalIgnoreCase);
                 if (Checks.Count == 0)
+                {
                     Checks = null;
+                }
             }
             Status = GetChecks().Max(x => x.Status) ?? HealthStatus.Pass;
         }
@@ -43,19 +45,21 @@ namespace RockLib.HealthChecks
         /// Gets or sets the public version of the service.
         /// </summary>
         [JsonProperty("version", NullValueHandling = NullValueHandling.Ignore)]
-        public string Version { get; set; }
+        public string? Version { get; set; }
 
         /// <summary>
         /// Gets or sets the "release version" or "release ID" of the service.
         /// </summary>
         [JsonProperty("releaseId", NullValueHandling = NullValueHandling.Ignore)]
-        public string ReleaseId { get; set; }
+        public string? ReleaseId { get; set; }
 
         /// <summary>
         /// Gets or sets a list of notes relevant to current state of health.
         /// </summary>
         [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
-        public List<string> Notes { get; set; }
+#pragma warning disable CA1002 // Do not expose generic lists
+        public List<string>? Notes { get; set; }
+#pragma warning restore CA1002 // Do not expose generic lists
 
         /// <summary>
         /// Gets or sets the raw error output, in case of <see cref="HealthStatus.Fail"/> or <see cref=
@@ -63,26 +67,28 @@ namespace RockLib.HealthChecks
         /// state.
         /// </summary>
         [JsonProperty("output", NullValueHandling = NullValueHandling.Ignore)]
-        public string Output { get; set; }
+        public string? Output { get; set; }
 
         /// <summary>
         /// Gets or sets a unique identifier of the service, in the application scope.
         /// </summary>
         [JsonProperty("serviceId", NullValueHandling = NullValueHandling.Ignore)]
-        public string ServiceId { get; set; }
+        public string? ServiceId { get; set; }
 
         /// <summary>
         /// Gets or sets a human-friendly description of the service.
         /// </summary>
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// Gets the health check results of the logical downstream dependencies and sub-components of the
         /// service according the component name and measurement name of the health check result.
         /// </summary>
         [JsonProperty("checks", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, List<HealthCheckResult>> Checks { get; }
+#pragma warning disable CA1721 // Property names should not match get methods
+        public Dictionary<string, List<HealthCheckResult>>? Checks { get; }
+#pragma warning restore CA1721 // Property names should not match get methods
 
         /// <summary>
         /// Gets or sets a dictionary containing link relations and URIs [RFC3986] for external links that
@@ -92,7 +98,7 @@ namespace RockLib.HealthChecks
         /// link is provided, it MAY be used by clients to check health via HTTP response code.
         /// </summary>
         [JsonProperty("links", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, string> Links { get; set; }
+        public Dictionary<string, string>? Links { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP status code to be used with this health response. Value must be in the
@@ -105,7 +111,9 @@ namespace RockLib.HealthChecks
             set
             {
                 if (value < 200 || value > 599)
+                {
                     throw new ArgumentOutOfRangeException(nameof(value), "Value must be in the 200-599 range.");
+                }
                 _statusCode = value;
             }
         }
@@ -125,7 +133,7 @@ namespace RockLib.HealthChecks
         /// service.
         /// </summary>
         public IEnumerable<HealthCheckResult> GetChecks() =>
-            Checks != null ? Checks.Values.SelectMany(x => x) : Enumerable.Empty<HealthCheckResult>();
+            Checks is not null ? Checks.Values.SelectMany(x => x) : Enumerable.Empty<HealthCheckResult>();
 
         /// <summary>
         /// Serializes this health response to JSON.

@@ -1,5 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0 || NET5_0
-namespace RockLib.HealthChecks.DependencyInjection
+﻿namespace RockLib.HealthChecks.DependencyInjection
 {
     /// <summary>
     /// Defines the editable settings for creating an instance of <see cref="IHealthCheckRunner"/>.
@@ -9,28 +8,28 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <summary>
         /// Gets or sets the human-friendly description of the service.
         /// </summary>
-        string Description { get; set; }
+        string? Description { get; set; }
 
         /// <summary>
         /// Gets or sets the unique identifier of the service, in the application scope.
         /// </summary>
-        string ServiceId { get; set; }
+        string? ServiceId { get; set; }
 
         /// <summary>
         /// Gets or sets the public version of the service.
         /// </summary>
-        string Version { get; set; }
+        string? Version { get; set; }
 
         /// <summary>
         /// Gets or sets the "release version" or "release ID" of the service.
         /// </summary>
-        string ReleaseId { get; set; }
+        string? ReleaseId { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="IHealthResponseCustomizer"/> that customizes each <see cref="HealthResponse"/>
         /// object returned by the health check runner.
         /// </summary>
-        IHealthResponseCustomizer ResponseCustomizer { get; set; }
+        IHealthResponseCustomizer? ResponseCustomizer { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP content type of responses created by the health check runner. Must not
@@ -63,4 +62,3 @@ namespace RockLib.HealthChecks.DependencyInjection
         HealthStatus? UncaughtExceptionStatus { get; set; }
     }
 }
-#endif

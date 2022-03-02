@@ -1,5 +1,4 @@
-﻿#if NET462 || NETSTANDARD2_0 || NET5_0
-using RockLib.HealthChecks.DependencyInjection;
+﻿using RockLib.HealthChecks.DependencyInjection;
 using System;
 
 namespace RockLib.HealthChecks.System
@@ -41,11 +40,24 @@ namespace RockLib.HealthChecks.System
         public static IHealthCheckRunnerBuilder AddDiskDriveHealthCheck(this IHealthCheckRunnerBuilder builder,
             double warnGigabytes = 5, double failGigabytes = .5, string driveName = "*",
             string componentName = "diskDrive", string measurementName = "availableFreeSpace",
-            string componentType = "system", string componentId = null)
+            string componentType = "system", string? componentId = null)
         {
-            if (string.IsNullOrEmpty(driveName)) throw new ArgumentNullException(nameof(driveName));
-            if (warnGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
-            if (failGigabytes < 0) throw new ArgumentOutOfRangeException(nameof(failGigabytes), "Must not be less than zero.");
+            if (string.IsNullOrEmpty(driveName))
+            {
+                throw new ArgumentNullException(nameof(driveName));
+            }
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
+            if (warnGigabytes < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
+            }
+            if (failGigabytes < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(failGigabytes), "Must not be less than zero.");
+            }
 
             return builder.AddHealthCheck(serviceProvider =>
                 new DiskDriveHealthCheck(warnGigabytes, failGigabytes, driveName, componentName, measurementName, componentType, componentId));
@@ -70,8 +82,12 @@ namespace RockLib.HealthChecks.System
         /// <returns>The <see cref="IHealthCheckRunnerBuilder"/>.</returns>
         public static IHealthCheckRunnerBuilder AddProcessUptimeHealthCheck(this IHealthCheckRunnerBuilder builder,
             string componentName = "process", string measurementName = "uptime",
-            string componentType = "system", string componentId = null)
+            string componentType = "system", string? componentId = null)
         {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
             return builder.AddHealthCheck(serviceProvider =>
                 new ProcessUptimeHealthCheck(componentName, measurementName, componentType, componentId));
         }
@@ -95,11 +111,14 @@ namespace RockLib.HealthChecks.System
         /// <returns>The <see cref="IHealthCheckRunnerBuilder"/>.</returns>
         public static IHealthCheckRunnerBuilder AddSystemUptimeHealthCheck(this IHealthCheckRunnerBuilder builder,
             string componentName = "system", string measurementName = "uptime",
-            string componentType = "system", string componentId = null)
+            string componentType = "system", string? componentId = null)
         {
+            if (builder is null)
+            {
+                throw new ArgumentNullException(nameof(builder));
+            }
             return builder.AddHealthCheck(serviceProvider =>
                 new SystemUptimeHealthCheck(componentName, measurementName, componentType, componentId));
         }
     }
 }
-#endif
