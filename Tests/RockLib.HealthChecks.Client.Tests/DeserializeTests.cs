@@ -1,15 +1,14 @@
 using FluentAssertions;
-using System;
 using System.Linq;
 using System.Text.Json;
 using Xunit;
 
 namespace RockLib.HealthChecks.Client.Tests
 {
-    public class DeserializeTests
+    public static class DeserializeTests
     {
-        [Fact(DisplayName = "Can deserialize a ResponseWriter output with Newtonsoft")]
-        public void Test1()
+        [Fact]
+        public static void DeserializeResponseWriterWithNewtonsoft()
         {
             const string response =
 @"{
@@ -33,15 +32,15 @@ namespace RockLib.HealthChecks.Client.Tests
   }
 }";
 
-            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<HealthResponse>(response);
+            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<HealthResponse>(response)!;
 
             result.Status.Should().Be(HealthStatus.Fail);
-            result.Notes[0].Should().Be("TotalDuration: 00:00:00.0197315");
+            result.Notes![0].Should().Be("TotalDuration: 00:00:00.0197315");
 
             result.Checks.Should().ContainKey("disk:space");
             result.Checks.Should().ContainKey("maxvalue");
 
-            var checkResult1 = result.Checks["disk:space"].First();
+            var checkResult1 = result.Checks!["disk:space"].First();
 
             checkResult1.Output.Should().BeNull();
             checkResult1.Status.Should().Be(HealthStatus.Pass);
@@ -56,13 +55,13 @@ namespace RockLib.HealthChecks.Client.Tests
             checkResult2["exception"].Should().Be("Something went wrong");
         }
 
-        [Fact(DisplayName = "Can deserialize a common RockLib HealthCheck output with Newtonsoft")]
-        public void Test2()
+        [Fact]
+        public static void DeserializeHealthCheckOutputWithNewtonsoft()
         {
             const string response = @"{""status"":""pass"",""version"":""1"",""serviceId"":""3390b579-d076-4610-a9bd-7d1a5af893f9"",""description"":""My health check""
 ,""checks"":{""process: uptime"":[{""componentType"":""system"",""observedUnit"":""s"",""time"":""2021-03-11T18:15:47.7383888Z"",""status"":""pass"",""observedValue"":9.8543048999999989}]}}";
 
-            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<HealthResponse>(response);
+            var result = Newtonsoft.Json.JsonConvert.DeserializeObject<HealthResponse>(response)!;
 
             result.Status.Should().Be(HealthStatus.Pass);
             result.Version.Should().Be("1");
@@ -71,16 +70,16 @@ namespace RockLib.HealthChecks.Client.Tests
 
             result.Checks.Should().ContainKey("process: uptime");
 
-            var checkResult = result.Checks["process: uptime"].First();
+            var checkResult = result.Checks!["process: uptime"].First();
 
             checkResult.ComponentType.Should().Be("system");
-            checkResult.Time.Value.ToString("O").Should().Be("2021-03-11T18:15:47.7383888Z");
+            checkResult.Time!.Value.ToString("O").Should().Be("2021-03-11T18:15:47.7383888Z");
             checkResult.Status.Should().Be(HealthStatus.Pass);
             checkResult.ObservedValue.Should().Be(9.8543048999999989);
         }
 
-        [Fact(DisplayName = "Can deserialize a ResponseWriter output with System.Text.Json")]
-        public void Test3()
+        [Fact]
+        public static void DeserializeResponseWriterWithSystemTextJson()
         {
             const string response =
 @"{
@@ -104,15 +103,15 @@ namespace RockLib.HealthChecks.Client.Tests
   }
 }";
 
-            var result = JsonSerializer.Deserialize<HealthResponse>(response);
+            var result = JsonSerializer.Deserialize<HealthResponse>(response)!;
 
             result.Status.Should().Be(HealthStatus.Fail);
-            result.Notes[0].Should().Be("TotalDuration: 00:00:00.0197315");
+            result.Notes![0].Should().Be("TotalDuration: 00:00:00.0197315");
 
             result.Checks.Should().ContainKey("disk:space");
             result.Checks.Should().ContainKey("maxvalue");
 
-            var checkResult1 = result.Checks["disk:space"].First();
+            var checkResult1 = result.Checks!["disk:space"].First();
 
             checkResult1.Output.Should().BeNull();
             checkResult1.Status.Should().Be(HealthStatus.Pass);
@@ -127,13 +126,13 @@ namespace RockLib.HealthChecks.Client.Tests
             checkResult2["exception"].Should().Be("Something went wrong");
         }
 
-        [Fact(DisplayName = "Can deserialize a common RockLib HealthCheck output with System.Text.Json")]
-        public void Test4()
+        [Fact]
+        public static void DeserializeHealthCheckOutputWithSystemTextJson()
         {
             const string response = @"{""status"":""pass"",""version"":""1"",""serviceId"":""3390b579-d076-4610-a9bd-7d1a5af893f9"",""description"":""My health check""
 ,""checks"":{""process: uptime"":[{""componentType"":""system"",""observedUnit"":""s"",""time"":""2021-03-11T18:15:47.7383888Z"",""status"":""pass"",""observedValue"":9.8543048999999989}]}}";
 
-            var result = JsonSerializer.Deserialize<HealthResponse>(response);
+            var result = JsonSerializer.Deserialize<HealthResponse>(response)!;
 
             result.Status.Should().Be(HealthStatus.Pass);
             result.Version.Should().Be("1");
@@ -142,10 +141,10 @@ namespace RockLib.HealthChecks.Client.Tests
 
             result.Checks.Should().ContainKey("process: uptime");
 
-            var checkResult = result.Checks["process: uptime"].First();
+            var checkResult = result.Checks!["process: uptime"].First();
 
             checkResult.ComponentType.Should().Be("system");
-            checkResult.Time.Value.ToString("O").Should().Be("2021-03-11T18:15:47.7383888Z");
+            checkResult.Time!.Value.ToString("O").Should().Be("2021-03-11T18:15:47.7383888Z");
             checkResult.Status.Should().Be(HealthStatus.Pass);
             checkResult.ObservedValue.Should().Be(9.8543048999999989M);
         }
