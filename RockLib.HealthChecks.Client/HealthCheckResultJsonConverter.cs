@@ -31,7 +31,7 @@ namespace RockLib.HealthChecks.Client
                     throw new JsonException("JsonTokenType was not PropertyName");
                 }
 
-                var propertyName = reader.GetString();
+                var propertyName = reader.GetString()!;
 
                 if (string.IsNullOrWhiteSpace(propertyName))
                 {
@@ -52,7 +52,7 @@ namespace RockLib.HealthChecks.Client
             JsonSerializer.Serialize(writer, value, options);
         }
 
-        private object ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
+        private object? ExtractValue(ref Utf8JsonReader reader, JsonSerializerOptions options)
         {
             switch (reader.TokenType)
             {
@@ -75,9 +75,9 @@ namespace RockLib.HealthChecks.Client
                     }
                     return reader.GetDecimal();
                 case JsonTokenType.StartObject:
-                    return Read(ref reader, null, options);
+                    return Read(ref reader, null!, options);
                 case JsonTokenType.StartArray:
-                    var list = new List<object>();
+                    var list = new List<object?>();
                     while (reader.Read() && reader.TokenType != JsonTokenType.EndArray)
                     {
                         list.Add(ExtractValue(ref reader, options));
