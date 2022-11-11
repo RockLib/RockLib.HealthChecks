@@ -1,10 +1,15 @@
+---
+sidebar_position: 2
+sidebar_label: 'Manually perform health checks'
+---
+
 # How to manually perform health checks
 
 The simplest way to manually run a set of health checks is to call `RunAsync` method on a `HealthCheckRunner`.  A runner can be instantiated manually, see [here](InstantiateRunner.md), or it can loaded from config by using the static `HealthChecks.GetRunner` method.
 
 Example MVC Controller:
 
-```c#
+```csharp
 public class HealthController : Controller
 {
     public async Task<ContentResult> Index()

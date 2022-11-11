@@ -1,4 +1,9 @@
-# How to RockLib.HealthChecks to an ASP.NET application via HttpModule
+---
+sidebar_position: 5
+sidebar_label: 'Add to an ASP.NET application via HttpModule'
+---
+
+# How to add RockLib.HealthChecks to an ASP.NET application via HttpModule
 
 To add a health endpoint to an ASP.NET application via HttpModule, use the RockLib.HealthChecks.HttpModule nuget package. This package adds the `HealthCheckHttpModule` HTTP module. This can be wired up in the web.config.
 
@@ -22,7 +27,7 @@ Indent                 | `false`            | Gets or sets a value indicating wh
 
 This can be done in the composition root. One example is the 'Global.asax.cs'.
 
-```c#
+```csharp
 public class Global : System.Web.HttpApplication
 {
     protected void Application_Start(object sender, EventArgs e)

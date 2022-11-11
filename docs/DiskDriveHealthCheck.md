@@ -1,3 +1,8 @@
+---
+sidebar_position: 12
+sidebar_label: 'Disk Drive Health Check'
+---
+
 # DiskDriveHealthCheck
 
 This health check monitors the amount of available free space on disk. If a disk's available free space is below `WarnGigabytes`, results will have a status of `Warn`. If below `FailGigabytes`, results will have a status of `Fail`.

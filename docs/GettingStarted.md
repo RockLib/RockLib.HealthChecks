@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Getting Started
 
 In this tutorial, we will be building a web application that has a basic health check.
@@ -31,7 +35,7 @@ Add a new JSON file to the project named 'appsettings.json'. Set its 'Copy to Ou
 
 Edit the `Startup.cs` file as follows:
 
-```c#
+```csharp
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using RockLib.HealthChecks.AspNetCore;
@@ -74,5 +78,4 @@ Start the app. It should open a web browser and navigate to the health end point
     ]
   }
 }
-
 ```

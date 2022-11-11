@@ -1,10 +1,15 @@
+---
+sidebar_position: 11
+sidebar_label: 'Create custom health checks'
+---
+
 # How to create custom health checks
 
-To create a custom health check, either implement the `IHealthCheck` interface or inherit from the `SingleResultHealthCheck` abstract class. 
+To create a custom health check, either implement the `IHealthCheck` interface or inherit from the `SingleResultHealthCheck` abstract class.
 
 For custom health checks that generate a single result, inherit from `SingleResultHealthCheck`, override the `CheckAsync` method, and optionally specify parameters for the base constructor.
 
-```c#
+```csharp
 public class MyHealthCheck : SingleResultHealthCheck
 {
     public MyHealthCheck()
@@ -26,7 +31,7 @@ public class MyHealthCheck : SingleResultHealthCheck
 
 For custom health checks that generate multiple results, implement the `IHealthCheck` interface directly.
 
-```c#
+```csharp
 public class AnotherHealthCheck : IHealthCheck
 {
     public AnotherHealthCheck(string componentName = "another", string measurementName = "healthCheck",
@@ -61,11 +66,11 @@ public class AnotherHealthCheck : IHealthCheck
 }
 ```
 
-### .NET Framework 3.5 and 4.0
+## .NET Framework 3.5 and 4.0
 
 In .NET Framework 4.0 and below, there is no support for `async` methods, so the `IHealthCheck` interface and `SingleResultHealthCheck` abstract class have synchronous methods instead. Here is the signatures of the synchronous methods:
 
-```c#
+```csharp
 public interface IHealthCheck
 {
     IList<HealthCheckResult> Check();
