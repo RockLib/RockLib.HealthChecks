@@ -1,8 +1,13 @@
+---
+sidebar_position: 6
+sidebar_label: 'Format the output'
+---
+
 # How to format the output of Microsoft.Extensions.Diagnostics.HealthChecks in the draft RFC format
 
 To format the output of Microsoft.Extensions.Diagnostics.HealthChecks in the draft RFC format, use the RockLib.HealthChecks.AspNetCore.ResponseWriter nuget package. This package adds the `RockLibHealthChecks.ResponseWriter` that can be set as the `Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions.ResponseWriter`. This will map the `HealthReport` into a `RockLib.HealthChecks.HealthResponse`.
 
-```c#
+```csharp
 public class Startup
 {
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -17,7 +22,7 @@ public class Startup
 
 This is generally set up in the Program.cs.
 
-```c#
+```csharp
 public class Program
 {
     public static void Main(string[] args)
@@ -41,7 +46,7 @@ HideExceptions         | `false`            | Gets or sets a value indicating wh
 
 This can be done in the 'Startup.cs'
 
-```c#
+```csharp
 public class Startup
 {
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)

@@ -1,8 +1,13 @@
-# How to RockLib.HealthChecks to an ASP.NET WebApi application
+---
+sidebar_position: 4
+sidebar_label: 'Add to an ASP.NET WebApi application'
+---
+
+# How to add RockLib.HealthChecks to an ASP.NET WebApi application
 
 To add a health endpoint to an ASP.NET WebApi application, use the RockLib.HealthChecks.WebApi nuget package. This package adds the `MapHealthRoute` extension method on the `HttpRoutesCollection` used in the `WebApiConfig` class.
 
-```c#
+```csharp
 public static class WebApiConfig
 {
     public static void Register(HttpConfiguration config)
@@ -14,7 +19,7 @@ public static class WebApiConfig
 
 This is generally set up in the Global.aspx.cs.
 
-```c#
+```csharp
 public class WebApiApplication : System.Web.HttpApplication
 {
     protected void Application_Start()
@@ -26,7 +31,7 @@ public class WebApiApplication : System.Web.HttpApplication
 
 There are two versions of the `MapHealthRoute` method. One takes the name of the `HealthCheckRunner` that should be loaded from config and the other takes a `HealthCheckRunner` directly.
 
-### Named HealthCheckRunner from config
+## Named HealthCheckRunner from config
 
 Parameter              | Default Value      | Description
 ---------------------- | ------------------ | -----------
@@ -36,7 +41,7 @@ route                  | `/health`          | The route of the health endpoint.
 indent                 | `false`            | Whether to indent the JSON output.
 
 
-### Direct HealthCheckRunner
+## Direct HealthCheckRunner
 
 Parameter              | Default Value      | Description
 ---------------------- | ------------------ | -----------

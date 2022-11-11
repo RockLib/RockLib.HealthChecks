@@ -1,3 +1,8 @@
+---
+sidebar_position: 7
+sidebar_label: 'Instantiate a health check runner'
+---
+
 # How to instantiate a health check runner
 
 A `HealthCheckRunner` object can be instantiated directly with its constructor.
@@ -20,7 +25,7 @@ failStatusCode     | `503`                       | The HTTP status code of respo
 
 This example creates an empty runner - one that always passes.
 
-```c#
+```csharp
 IHealthCheckRunner runner = new HealthCheckRunner();
 ```
 
@@ -28,7 +33,7 @@ IHealthCheckRunner runner = new HealthCheckRunner();
 
 This example creates a runner with multiple health checks:
 
-```c#
+```csharp
 IHealthCheckRunner runner = new HealthCheckRunner(
     healthChecks: new IHealthCheck[]
     {

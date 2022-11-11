@@ -1,3 +1,8 @@
+---
+sidebar_position: 14
+sidebar_label: 'SystemUptime HealthCheck'
+---
+
 # SystemUptimeHealthCheck
 
 This health check records the uptime of the system. Results will always have a status of `Pass`.

@@ -1,3 +1,8 @@
+---
+sidebar_position: 9
+sidebar_label: 'Configure for .NET Framework 4.5 and below'
+---
+
 # How to configure for .NET Framework 4.5 and below
 
 Applications and libraries referencing RockLib.HealthChecks and targeting .NET Framework 4.5.1 and above can be configured with `app.config` or `web.config`. The static `HealthCheck.Runners` property is defined by default by the "rockLib.healthChecks" section from `ConfigurationManager` as type `RockLibHealthChecksSection` by calling its `CreateRunners` method.

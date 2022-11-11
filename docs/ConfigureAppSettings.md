@@ -1,3 +1,8 @@
+---
+sidebar_position: 8
+sidebar_label: 'Configure with appsettings.json'
+---
+
 # How to configure with appsettings.json
 
 Applications and libraries referencing RockLib.HealthChecks and targeting .NET Core, .NET Standard, or .NET Framework 4.5.1 and above can be configured with `appsettings.json`. The static `HealthCheck.Runners` property is defined by default by the "RockLib.HealthChecks" sub-section of the `Config.Root` property (from the `RockLib.Configuration` package).

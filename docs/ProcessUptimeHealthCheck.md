@@ -1,3 +1,8 @@
+---
+sidebar_position: 13
+sidebar_label: 'Process Up time HealthCheck'
+---
+
 # ProcessUptimeHealthCheck
 
 This health check records the uptime of the current process. Results will alwas have a status of `Pass`.
