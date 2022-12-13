@@ -5,6 +5,10 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.AspNetCore", "RockLib.HealthChecks.AspNetCore.csproj", "{2374AEAA-E75B-4C25-9CC0-54E214D1F772}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B551CDB9-DDCF-45A8-85EF-51EEB96E92DD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.HealthChecks.AspNetCore.Tests", "..\Tests\RockLib.HealthChecks.AspNetCore.Tests\RockLib.HealthChecks.AspNetCore.Tests.csproj", "{3B860C82-1B81-4E13-A1A7-1C690A19E138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,10 @@ Global
 		{2374AEAA-E75B-4C25-9CC0-54E214D1F772}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2374AEAA-E75B-4C25-9CC0-54E214D1F772}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2374AEAA-E75B-4C25-9CC0-54E214D1F772}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B860C82-1B81-4E13-A1A7-1C690A19E138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B860C82-1B81-4E13-A1A7-1C690A19E138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B860C82-1B81-4E13-A1A7-1C690A19E138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B860C82-1B81-4E13-A1A7-1C690A19E138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
