@@ -108,8 +108,5 @@ public sealed class HealthCheckMiddleware
             ?? throw new InvalidOperationException($"One or more health check runners were provided, but none match the specified name, '{healthCheckRunnerName}'.");
     }
 
-#if NETCOREAPP3_1_OR_GREATER
-    [return: NotNull]
-#endif
     private static string GetName(string? name) => string.IsNullOrEmpty(name) ? "default" : name!;
 }
