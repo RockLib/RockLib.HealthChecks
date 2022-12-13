@@ -31,11 +31,4 @@
 		<None Include="..\LICENSE.md" Pack="true" PackagePath="" />
 		<None Include="..\icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
-	<!--<ItemGroup Condition="'$(TargetFramework)'=='net5.0'">
-		<FrameworkReference Include="Microsoft.AspNetCore.App" />
-	</ItemGroup>-->
-	<!--<ItemGroup Condition="'$(TargetFramework)'!='net5.0'">
-		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
-		<PackageReference Include="Microsoft.AspNetCore.Http.Extensions" Version="2.2.0" />
-	</ItemGroup>-->
 </Project>
