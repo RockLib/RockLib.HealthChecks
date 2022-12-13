@@ -30,7 +30,6 @@ public static class HealthCheckMiddlewareTests
         contextResponse.SetupSet(_ => _.StatusCode = It.IsAny<int>()).Callback<int>(_ => statusCode = _);
         contextResponse.SetupSet(_ => _.ContentType = It.IsAny<string>()).Callback<string>(_ => contentType = _);
         contextResponse.SetupGet(_ => _.Body).Returns(responseStream);
-        //contextResponse.Setup(_ => _.WriteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
         var context = new Mock<HttpContext>(MockBehavior.Strict);
         context.SetupGet(_ => _.Response).Returns(contextResponse.Object);
@@ -47,4 +46,10 @@ public static class HealthCheckMiddlewareTests
         contextResponse.VerifyAll();
         runner.VerifyAll();
     }
+
+    [Fact]
+    public static async Task InvokeAsyncWithNullContext() => 
+        await Assert.ThrowsAsync<ArgumentNullException>(
+            async () => await new HealthCheckMiddleware(new RequestDelegate(context => Task.CompletedTask), Mock.Of<IHealthCheckRunner>())
+                .InvokeAsync(null!).ConfigureAwait(false)).ConfigureAwait(false);
 }
