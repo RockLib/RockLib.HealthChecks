@@ -47,7 +47,7 @@ public static class HealthCheckHandlerExtensions
 
         if (string.IsNullOrWhiteSpace(route))
         {
-            throw new ArgumentNullException(nameof(route));
+            throw new ArgumentException("The route parameter has to contain a value.", nameof(route));
         }
 
         healthCheckRunner ??= HealthCheck.GetRunner()!;
