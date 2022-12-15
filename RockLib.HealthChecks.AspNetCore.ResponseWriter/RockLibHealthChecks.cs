@@ -43,7 +43,7 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
         /// </summary>
         public static Func<HttpContext, HealthReport, Task> ResponseWriter { get; } = WriteResponse;
 
-        private async static Task WriteResponse(HttpContext httpContext, HealthReport healthReport)
+        private static async Task WriteResponse(HttpContext httpContext, HealthReport healthReport)
         {
             var results = healthReport.Entries.Select(x =>
             {
@@ -58,16 +58,22 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
                 };
 
                 if (!HideExceptions)
+                {
                     result["exception"] = entry.Exception?.ToString();
+                }
 
                 if (!HideOutputs)
+                {
                     result.Output = entry.Description;
+                }
 
                 // TODO: Detect collisions between entry.Exception/result.Output,
                 // entry.Description/result["description", or entry.Duration/result["duration"].
 
                 foreach (var data in entry.Data)
+                {
                     result[data.Key] = data.Value;
+                }
 
                 return result;
             }).ToList();
@@ -79,50 +85,39 @@ namespace RockLib.HealthChecks.AspNetCore.ResponseWriter
             };
 
             httpContext.Response.ContentType = response.ContentType;
-            await httpContext.Response.WriteAsync(response.Serialize(Indent));
+            await httpContext.Response.WriteAsync(response.Serialize(Indent)).ConfigureAwait(false);
         }
 
-        private static HealthStatus MapStatus(MSHealthStatus status)
-        {
-            switch (status)
+        private static HealthStatus MapStatus(MSHealthStatus status) => 
+            status switch
             {
-                case MSHealthStatus.Unhealthy:
-                    return HealthStatus.Fail;
-                case MSHealthStatus.Degraded:
-                    return HealthStatus.Warn;
-                case MSHealthStatus.Healthy:
-                    return HealthStatus.Pass;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(status));
-            }
-        }
+                MSHealthStatus.Unhealthy => HealthStatus.Fail,
+                MSHealthStatus.Degraded => HealthStatus.Warn,
+                MSHealthStatus.Healthy => HealthStatus.Pass,
+                _ => throw new ArgumentOutOfRangeException(nameof(status)),
+            };
 
-        private static string GetComponentName(string key)
+        private static string? GetComponentName(string key)
         {
             var split = key.Split(':');
 
-            switch (split.Length)
+            return split.Length switch
             {
-                case 1:
-                    return null;
-                default:
-                    return split[0];
-            }
+                1 => null,
+                _ => split[0],
+            };
         }
 
         private static string GetMeasurementName(string key)
         {
             var split = key.Split(':');
 
-            switch (split.Length)
+            return split.Length switch
             {
-                case 1:
-                    return split[0];
-                case 2:
-                    return split[1];
-                default:
-                    return string.Join("", split.Skip(1));
-            }
+                1 => split[0],
+                2 => split[1],
+                _ => string.Join("", split.Skip(1)),
+            };
         }
     }
 }
