@@ -11,9 +11,9 @@
 		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks.AspNetCore/CHANGELOG.md.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>rocklib health checks aspnetcore middleware</PackageTags>
-		<PackageVersion>3.0.0-alpha.1</PackageVersion>
+		<PackageVersion>3.0.0-alpha.2</PackageVersion>
 		<PublishRepositoryUrl>True</PublishRepositoryUrl>
-		<Version>3.0.0-alpha.1</Version>
+		<Version>3.0.0-alpha.2</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
@@ -24,7 +24,7 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-		<PackageReference Include="RockLib.HealthChecks" Version="2.0.0" />
+		<PackageReference Include="RockLib.HealthChecks" Version="2.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 	</ItemGroup>
 	<ItemGroup>
