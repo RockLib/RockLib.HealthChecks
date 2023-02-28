@@ -53,19 +53,29 @@ public sealed class HealthCheckHttpModule : IHttpModule
     {
         _healthCheckRouteRegex = new Regex($@"^\/*({Route})\/*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+#pragma warning disable CA1031 // Do not catch general exception types
         try
         {
+            if(context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
             context.AuthenticateRequest -= AuthenticateRequest;
             context.AuthenticateRequest += AuthenticateRequest;
 
             var healthCheckAsyncEventHelper = new EventHandlerTaskAsyncHelper(ExecuteHealthChecksEventAsync);
             context.AddOnPostAcquireRequestStateAsync(healthCheckAsyncEventHelper.BeginEventHandler, healthCheckAsyncEventHelper.EndEventHandler);
         }
-        catch { }
+        catch
+        {
+            
+        }
+#pragma warning restore CA1031 // Do not catch general exception types
     }
 
     private void AuthenticateRequest(object sender, EventArgs e)
     {
+#pragma warning disable CA1031 // Do not catch general exception types
         try
         {
             var context = GetHttpContext(sender);
@@ -76,10 +86,12 @@ public sealed class HealthCheckHttpModule : IHttpModule
             }
         }
         catch { }
+#pragma warning restore CA1031 // Do not catch general exception types
     }
 
     private async Task ExecuteHealthChecksEventAsync(object sender, EventArgs e)
     {
+#pragma warning disable CA1031 // Do not catch general exception types
         try
         {
             var context = GetHttpContext(sender);
@@ -97,9 +109,10 @@ public sealed class HealthCheckHttpModule : IHttpModule
             }
         }
         catch { }
+#pragma warning restore CA1031 // Do not catch general exception types
     }
 
-    private HttpContext? GetHttpContext(object sender)
+    private static HttpContext? GetHttpContext(object sender)
     {
         return (sender as HttpApplication)?.Context;
     }
