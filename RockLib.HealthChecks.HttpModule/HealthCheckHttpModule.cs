@@ -67,9 +67,7 @@ public sealed class HealthCheckHttpModule : IHttpModule
             context.AddOnPostAcquireRequestStateAsync(healthCheckAsyncEventHelper.BeginEventHandler, healthCheckAsyncEventHelper.EndEventHandler);
         }
         catch
-        {
-            
-        }
+        { }
 #pragma warning restore CA1031 // Do not catch general exception types
     }
 
