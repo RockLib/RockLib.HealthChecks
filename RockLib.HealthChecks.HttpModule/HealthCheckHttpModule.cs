@@ -53,13 +53,17 @@ public sealed class HealthCheckHttpModule : IHttpModule
     {
         _healthCheckRouteRegex = new Regex($@"^\/*({Route})\/*$", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
+#if NET_60_OR_GREATER
+ArgumentNullException.ThrowIfNull(context);
+#else
+        if (context is null)
+        {
+            throw new ArgumentNullException(nameof(context));
+        }
+#endif
 #pragma warning disable CA1031 // Do not catch general exception types
         try
         {
-            if(context == null)
-            {
-                throw new ArgumentNullException(nameof(context));
-            }
             context.AuthenticateRequest -= AuthenticateRequest;
             context.AuthenticateRequest += AuthenticateRequest;
 
