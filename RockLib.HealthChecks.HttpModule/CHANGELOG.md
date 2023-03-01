@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 - Added a null check for the context and disabled warnings about catching general exceptions.
+- Updated RockLib.HealthChecks dependency to 2.0.1.
 
 ## 2.0.0-alpha.1 - 2022-12-15
 
