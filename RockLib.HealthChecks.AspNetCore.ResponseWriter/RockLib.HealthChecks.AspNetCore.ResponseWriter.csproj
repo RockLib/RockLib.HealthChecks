@@ -11,9 +11,9 @@
 		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks.AspNetCore.ResponseWriter/CHANGELOG.md.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>rocklib health checks aspnetcore responsewriter</PackageTags>
-		<PackageVersion>2.0.0-alpha.1</PackageVersion>
+		<PackageVersion>2.0.0-alpha.2</PackageVersion>
 		<PublishRepositoryUrl>True</PublishRepositoryUrl>
-		<Version>2.0.0-alpha.1</Version>
+		<Version>2.0.0-alpha.2</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
