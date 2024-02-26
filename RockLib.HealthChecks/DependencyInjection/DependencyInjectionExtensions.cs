@@ -64,13 +64,9 @@ namespace RockLib.HealthChecks.DependencyInjection
         {
 #if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(services);
-#else
-        if (services is null) { throw new ArgumentNullException(nameof(services)); }
-#endif
-            
-#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(name);
 #else
+        if (services is null) { throw new ArgumentNullException(nameof(services)); }
         if (name is null) { throw new ArgumentNullException(nameof(name)); }
 #endif
 
@@ -91,15 +87,12 @@ namespace RockLib.HealthChecks.DependencyInjection
         {
 #if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(builder);
-#else
-        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
-#endif
-            
-#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(healthCheck);
 #else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
         if (healthCheck is null) { throw new ArgumentNullException(nameof(healthCheck)); }
 #endif
+
 
             return builder.AddHealthCheck(_ => healthCheck);
         }

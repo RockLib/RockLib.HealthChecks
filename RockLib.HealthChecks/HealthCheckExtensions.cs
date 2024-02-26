@@ -55,13 +55,9 @@ namespace RockLib.HealthChecks
         {
 #if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(runner);
-#else
-        if (runner is null) { throw new ArgumentNullException(nameof(runner)); }
-#endif
-            
-#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(results);
 #else
+        if (runner is null) { throw new ArgumentNullException(nameof(runner)); }
         if (results is null) { throw new ArgumentNullException(nameof(results)); }
 #endif
 
@@ -88,13 +84,9 @@ namespace RockLib.HealthChecks
         {
 #if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(response);
-#else
-        if (response is null) { throw new ArgumentNullException(nameof(response)); }
-#endif
-            
-#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(runner);
 #else
+        if (response is null) { throw new ArgumentNullException(nameof(response)); }
         if (runner is null) { throw new ArgumentNullException(nameof(runner)); }
 #endif
 
