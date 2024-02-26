@@ -46,10 +46,12 @@ namespace RockLib.HealthChecks.System
             {
                 throw new ArgumentNullException(nameof(driveName));
             }
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(builder);
+#else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+            
             if (warnGigabytes < 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(warnGigabytes), "Must not be less than zero.");
@@ -84,10 +86,12 @@ namespace RockLib.HealthChecks.System
             string componentName = "process", string measurementName = "uptime",
             string componentType = "system", string? componentId = null)
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(builder);
+#else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+            
             return builder.AddHealthCheck(serviceProvider =>
                 new ProcessUptimeHealthCheck(componentName, measurementName, componentType, componentId));
         }
@@ -113,10 +117,12 @@ namespace RockLib.HealthChecks.System
             string componentName = "system", string measurementName = "uptime",
             string componentType = "system", string? componentId = null)
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(builder);
+#else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+            
             return builder.AddHealthCheck(serviceProvider =>
                 new SystemUptimeHealthCheck(componentName, measurementName, componentType, componentId));
         }

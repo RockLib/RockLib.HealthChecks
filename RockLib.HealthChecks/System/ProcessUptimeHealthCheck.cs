@@ -14,7 +14,7 @@ namespace RockLib.HealthChecks.System
         private readonly DateTime _currentProcessStartTime;
 
         /// <summary>
-        /// Initalizes a new instance of the <see cref="ProcessUptimeHealthCheck"/> class.
+        /// Initializes a new instance of the <see cref="ProcessUptimeHealthCheck"/> class.
         /// </summary>
         /// <param name="componentName">
         /// The name of the logical downstream dependency or sub-component of a service. Defaults to 'process'.
@@ -45,10 +45,11 @@ namespace RockLib.HealthChecks.System
         /// <inheritdoc/>
         protected override Task CheckAsync(HealthCheckResult result, CancellationToken cancellationToken)
         {
-            if (result is null)
-            {
-                throw new ArgumentNullException(nameof(result));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(result);
+#else
+        if (result is null) { throw new ArgumentNullException(nameof(result)); }
+#endif
 
             SetResult(result);
             return Task.CompletedTask;

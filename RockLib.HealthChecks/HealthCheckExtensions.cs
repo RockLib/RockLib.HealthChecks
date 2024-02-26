@@ -17,10 +17,11 @@ namespace RockLib.HealthChecks
         /// <returns>An instance of <see cref="HealthCheckResult"/>.</returns>
         public static HealthCheckResult CreateHealthCheckResult(this IHealthCheck healthCheck)
         {
-            if (healthCheck is null)
-            {
-                throw new ArgumentNullException(nameof(healthCheck));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(healthCheck);
+#else
+        if (healthCheck is null) { throw new ArgumentNullException(nameof(healthCheck)); }
+#endif
 
             var result = new HealthCheckResult
             {
@@ -52,14 +53,13 @@ namespace RockLib.HealthChecks
         /// <returns>An instance of <see cref="HealthResponse"/>.</returns>
         public static HealthResponse CreateHealthResponse(this IHealthCheckRunner runner, IEnumerable<HealthCheckResult> results)
         {
-            if (runner is null)
-            {
-                throw new ArgumentNullException(nameof(runner));
-            }
-            if (results is null)
-            {
-                throw new ArgumentNullException(nameof(results));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(runner);
+            ArgumentNullException.ThrowIfNull(results);
+#else
+        if (runner is null) { throw new ArgumentNullException(nameof(runner)); }
+        if (results is null) { throw new ArgumentNullException(nameof(results)); }
+#endif
 
             return new HealthResponse(results)
             {
@@ -82,27 +82,20 @@ namespace RockLib.HealthChecks
         /// <returns>The same <see cref="HealthResponse"/> object.</returns>
         public static HealthResponse SetStatusCode(this HealthResponse response, IHealthCheckRunner runner)
         {
-            if (response is null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-            if (runner is null)
-            {
-                throw new ArgumentNullException(nameof(runner));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(response);
+            ArgumentNullException.ThrowIfNull(runner);
+#else
+        if (response is null) { throw new ArgumentNullException(nameof(response)); }
+        if (runner is null) { throw new ArgumentNullException(nameof(runner)); }
+#endif
 
-            switch (response.Status)
-            {
-                case HealthStatus.Pass:
-                    response.StatusCode = runner.PassStatusCode;
-                    break;
-                case HealthStatus.Warn:
-                    response.StatusCode = runner.WarnStatusCode;
-                    break;
-                case HealthStatus.Fail:
-                    response.StatusCode = runner.FailStatusCode;
-                    break;
-            }
+            response.StatusCode = response.Status switch {
+                HealthStatus.Pass => runner.PassStatusCode,
+                HealthStatus.Warn => runner.WarnStatusCode,
+                HealthStatus.Fail => runner.FailStatusCode,
+                _ => response.StatusCode
+            };
 
             return response;
         }

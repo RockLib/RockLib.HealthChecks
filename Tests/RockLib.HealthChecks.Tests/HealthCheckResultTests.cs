@@ -10,9 +10,9 @@ namespace RockLib.HealthChecks.Tests
         [Fact]
         public void SetComponentNameDoesNotChangeDictionary()
         {
-            var result = new HealthCheckResult();
-
-            result.ComponentName = "foo";
+            var result = new HealthCheckResult {
+                ComponentName = "foo"
+            };
 
             result.Should().BeEmpty();
         }
@@ -30,9 +30,9 @@ namespace RockLib.HealthChecks.Tests
         [Fact]
         public void SetMeasurementNameDoesNotChangeDictionary()
         {
-            var result = new HealthCheckResult();
-
-            result.MeasurementName = "bar";
+            var result = new HealthCheckResult {
+                MeasurementName = "bar"
+            };
 
             result.Should().BeEmpty();
         }
@@ -110,7 +110,7 @@ namespace RockLib.HealthChecks.Tests
             result.ObservedValue.Should().Be("FakeObservedValue");
             result.ObservedUnit.Should().Be("FakeObservedUnit");
             result.Status.Should().Be(HealthStatus.Warn);
-            result.AffectedEndpoints.Should().BeEquivalentTo(new[] { "FakeAffectedEndpoint" });
+            result.AffectedEndpoints.Should().BeEquivalentTo(["FakeAffectedEndpoint"]);
             result.Time.Should().Be(now);
             result.Output.Should().Be("FakeOutput");
             result.Links.Should().BeEquivalentTo(new Dictionary<string, string> { { "foo", "bar" }, { "baz", "qux" } });

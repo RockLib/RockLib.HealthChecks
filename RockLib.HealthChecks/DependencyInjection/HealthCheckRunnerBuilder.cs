@@ -66,10 +66,11 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <returns>An instance of <see cref="HealthCheckRunner"/>.</returns>
         public HealthCheckRunner Build(IServiceProvider serviceProvider)
         {
-            if (serviceProvider is null)
-            {
-                throw new ArgumentNullException(nameof(serviceProvider));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(serviceProvider);
+#else
+        if (serviceProvider is null) { throw new ArgumentNullException(nameof(serviceProvider)); }
+#endif
 
             var optionsMonitor = serviceProvider.GetRequiredService<IOptionsMonitor<HealthCheckRunnerOptions>>();
 
