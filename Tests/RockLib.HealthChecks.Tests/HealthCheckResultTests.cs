@@ -164,7 +164,7 @@ namespace RockLib.HealthChecks.Tests
             result["observedValue"].Should().Be("FakeObservedValue");
             result["observedUnit"].Should().Be("FakeObservedUnit");
             result["status"].Should().Be(HealthStatus.Warn);
-            result["affectedEndpoints"].Should().BeEquivalentTo(new List<string> { "FakeAffectedEndpoint" });
+            result["affectedEndpoints"].Should().BeEquivalentTo(new[] { "FakeAffectedEndpoint" });
             result["time"].Should().Be(now);
             result["output"].Should().Be("FakeOutput");
             result["links"].Should().BeEquivalentTo(new Dictionary<string, string> { { "foo", "bar" }, { "baz", "qux" } });
