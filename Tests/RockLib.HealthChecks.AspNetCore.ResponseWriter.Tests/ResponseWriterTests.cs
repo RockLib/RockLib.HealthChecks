@@ -24,10 +24,10 @@ public static class ResponseWriterTests
         var httpContext = CreateHttpContext();
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -46,10 +46,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideExceptions = false;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -68,10 +68,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideExceptions = true;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -89,10 +89,10 @@ public static class ResponseWriterTests
         var httpContext = CreateHttpContext();
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -111,10 +111,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideOutputs = false;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -133,10 +133,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideOutputs = true;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(true);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(true);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -145,22 +145,18 @@ public static class ResponseWriterTests
             .BeFalse();
     }
 
-    private static IEnumerable<JToken> GetHealthCheckEntries(string jsonBody)
-    {
-        return JObject.Parse(jsonBody)!
+    private static IEnumerable<JToken> GetHealthCheckEntries(string jsonBody) => 
+        JObject.Parse(jsonBody)!
             .SelectToken("checks")!
             .Children()
             .SelectMany(x => x.First!);
-    }
 
     private static async Task<string> GetJsonBody(DefaultHttpContext httpContext)
     {
         httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
 
         using var reader = new StreamReader(httpContext.Response.Body);
-        var bodyStr = await reader.ReadToEndAsync().ConfigureAwait(false);
-
-        return bodyStr;
+        return await reader.ReadToEndAsync().ConfigureAwait(false);
     }
 
     private static DefaultHttpContext CreateHttpContext()

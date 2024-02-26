@@ -9,7 +9,7 @@
 		<LangVersion>latest</LangVersion>
 		<Nullable>enable</Nullable>
 		<TargetFrameworks>net6.0;net8.0;net48</TargetFrameworks>
-		<NoWarn>NU1603,NU1701</NoWarn>
+		<NoWarn>NU1603,NU1701,CA2007</NoWarn>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 	</PropertyGroup>
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net48'">
