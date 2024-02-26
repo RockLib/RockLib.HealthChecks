@@ -245,7 +245,7 @@ namespace RockLib.HealthChecks
                 result.Status = UncaughtExceptionStatus;
             }
 
-            return new[] { result };
+            return [result];
         }
     }
 }

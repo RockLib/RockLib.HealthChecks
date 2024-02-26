@@ -10,10 +10,10 @@
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks/CHANGELOG.md.</PackageReleaseNotes>
 		<PackageTags>rocklib health checks</PackageTags>
-		<PackageVersion>2.0.1</PackageVersion>
+		<PackageVersion>3.0.0-alpha.1</PackageVersion>
 		<PackageIcon>icon.png</PackageIcon>
 		<PublishRepositoryUrl>True</PublishRepositoryUrl>
-		<Version>2.0.1</Version>
+		<Version>3.0.0-alpha.1</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
@@ -26,11 +26,12 @@
 		<None Include="..\icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="RockLib.Configuration" Version="3.0.0" />
-		<PackageReference Include="RockLib.Configuration.ObjectFactory" Version="2.0.2" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="RockLib.Configuration" Version="4.0.0" />
+		<PackageReference Include="RockLib.Configuration.ObjectFactory" Version="3.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
+		<PackageReference Include="RockLib.Immutable" Version="2.0.0" />
 	</ItemGroup>
 </Project>

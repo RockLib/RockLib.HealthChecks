@@ -32,11 +32,13 @@ namespace RockLib.HealthChecks.Tests
             result[0]["fake"].Should().Be(true);
         }
 
-        private class TestHealthCheck : SingleResultHealthCheck
+        private sealed class TestHealthCheck(
+            string? componentName = null,
+            string? measurementName = null,
+            string? componentType = null,
+            string? componentId = null)
+            : SingleResultHealthCheck(componentName, measurementName, componentType, componentId)
         {
-            public TestHealthCheck(string? componentName = null, string? measurementName = null, string? componentType = null, string? componentId = null)
-                : base(componentName, measurementName, componentType, componentId) { }
-
             protected override Task CheckAsync(HealthCheckResult result, CancellationToken cancellationToken)
             {
                 result["fake"] = true;

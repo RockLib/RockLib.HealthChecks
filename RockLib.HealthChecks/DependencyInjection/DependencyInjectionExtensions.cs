@@ -62,14 +62,17 @@ namespace RockLib.HealthChecks.DependencyInjection
             string name, Action<IHealthCheckRunnerOptions>? configureOptions = null,
             ServiceLifetime lifetime = _defaultLifetime)
         {
-            if (services is null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-            if (name is null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(services);
+#else
+        if (services is null) { throw new ArgumentNullException(nameof(services)); }
+#endif
+            
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(name);
+#else
+        if (name is null) { throw new ArgumentNullException(nameof(name)); }
+#endif
 
             var builder = new HealthCheckRunnerBuilder(name, services, configureOptions);
 
@@ -86,14 +89,17 @@ namespace RockLib.HealthChecks.DependencyInjection
         /// <returns>The <see cref="IHealthCheckRunnerBuilder"/>.</returns>
         public static IHealthCheckRunnerBuilder AddHealthCheck(this IHealthCheckRunnerBuilder builder, IHealthCheck healthCheck)
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
-            if (healthCheck is null)
-            {
-                throw new ArgumentNullException(nameof(healthCheck));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(builder);
+#else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+            
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(healthCheck);
+#else
+        if (healthCheck is null) { throw new ArgumentNullException(nameof(healthCheck)); }
+#endif
 
             return builder.AddHealthCheck(_ => healthCheck);
         }
@@ -108,10 +114,11 @@ namespace RockLib.HealthChecks.DependencyInjection
         public static IHealthCheckRunnerBuilder AddHealthCheck<THealthCheck>(this IHealthCheckRunnerBuilder builder, params object[] parameters)
             where THealthCheck : class, IHealthCheck
         {
-            if (builder is null)
-            {
-                throw new ArgumentNullException(nameof(builder));
-            }
+#if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(builder);
+#else
+        if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
 
             return builder.AddHealthCheck(serviceProvider => ActivatorUtilities.CreateInstance<THealthCheck>(serviceProvider, parameters));
         }

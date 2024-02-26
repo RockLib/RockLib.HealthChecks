@@ -13,7 +13,7 @@ namespace RockLib.HealthChecks.System
     public class DiskDriveHealthCheck : IHealthCheck
     {
         /// <summary>
-        /// Initalizes a new instance of the <see cref="DiskDriveHealthCheck"/> class.
+        /// Initializes a new instance of the <see cref="DiskDriveHealthCheck"/> class.
         /// </summary>
         /// <param name="warnGigabytes">
         /// The the lowest allowable level of available free space in gigabytes, below which results in a <see cref="HealthStatus.Warn"/> status.
@@ -121,7 +121,7 @@ namespace RockLib.HealthChecks.System
             {
                 var drive = DriveInfo.GetDrives()
                     .FirstOrDefault(d => string.Equals(d.Name, DriveName, StringComparison.OrdinalIgnoreCase));
-                return new List<HealthCheckResult>() { GetResult(drive) };
+                return [GetResult(drive)];
             }
         }
 
