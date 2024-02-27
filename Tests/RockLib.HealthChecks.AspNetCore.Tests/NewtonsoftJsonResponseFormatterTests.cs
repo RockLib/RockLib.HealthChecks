@@ -34,7 +34,7 @@ public static class NewtonsoftJsonResponseFormatterTests
         var formatter = new NewtonsoftJsonResponseFormatter(Formatting.Indented);
         var result = formatter.Format(new HealthResponse());
 
-        Assert.Equal("{\r\n  \"status\": \"pass\"\r\n}", result);
+        Assert.Equal("{\n  \"status\": \"pass\"\n}", result);
     }
 
     [Fact]
