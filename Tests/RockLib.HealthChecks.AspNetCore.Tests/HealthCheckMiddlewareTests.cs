@@ -36,7 +36,7 @@ public static class HealthCheckMiddlewareTests
         context.SetupGet(_ => _.RequestAborted).Returns(new CancellationToken());
 
         var middleware = new HealthCheckMiddleware(new RequestDelegate(context => Task.CompletedTask), runner.Object);
-        await middleware.InvokeAsync(context.Object).ConfigureAwait(false);
+        await middleware.InvokeAsync(context.Object);
 
         Assert.Equal(200, statusCode); 
         Assert.Equal("Custom", contentType);
@@ -51,5 +51,5 @@ public static class HealthCheckMiddlewareTests
     public static async Task InvokeAsyncWithNullContext() => 
         await Assert.ThrowsAsync<ArgumentNullException>(
             async () => await new HealthCheckMiddleware(new RequestDelegate(context => Task.CompletedTask), Mock.Of<IHealthCheckRunner>())
-                .InvokeAsync(null!).ConfigureAwait(false)).ConfigureAwait(false);
+                .InvokeAsync(null!));
 }
