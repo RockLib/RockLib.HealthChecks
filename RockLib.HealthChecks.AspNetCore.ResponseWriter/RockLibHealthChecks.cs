@@ -88,14 +88,15 @@ public static class RockLibHealthChecks
         await httpContext.Response.WriteAsync(response.Serialize(Indent)).ConfigureAwait(false);
     }
 
-    private static HealthStatus MapStatus(MSHealthStatus status) => 
-        status switch
-        {
+    private static HealthStatus MapStatus(MSHealthStatus status)
+    {
+        return status switch {
             MSHealthStatus.Unhealthy => HealthStatus.Fail,
             MSHealthStatus.Degraded => HealthStatus.Warn,
             MSHealthStatus.Healthy => HealthStatus.Pass,
             _ => throw new ArgumentOutOfRangeException(nameof(status)),
         };
+    }
 
     private static string? GetComponentName(string key)
     {

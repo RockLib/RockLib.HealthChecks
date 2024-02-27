@@ -12,7 +12,7 @@ using Xunit;
 namespace RockLib.HealthChecks.AspNetCore.ResponseWriter.Tests;
 
 // Since we're testing static members on a static class,
-// we shouldn't run them in paralle.
+// we shouldn't run them in parallel.
 public static class ResponseWriterTests
 {
     [Theory]
@@ -24,10 +24,10 @@ public static class ResponseWriterTests
         var httpContext = CreateHttpContext();
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -46,10 +46,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideExceptions = false;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -68,10 +68,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideExceptions = true;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -89,10 +89,10 @@ public static class ResponseWriterTests
         var httpContext = CreateHttpContext();
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -111,10 +111,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideOutputs = false;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -133,10 +133,10 @@ public static class ResponseWriterTests
         RockLibHealthChecks.HideOutputs = true;
 
         // Act
-        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport).ConfigureAwait(false);
+        await RockLibHealthChecks.ResponseWriter(httpContext, healthReport);
 
         // Assert
-        var jsonBody = await GetJsonBody(httpContext).ConfigureAwait(false);
+        var jsonBody = await GetJsonBody(httpContext);
         var healthCheckEntries = GetHealthCheckEntries(jsonBody);
 
         healthCheckEntries
@@ -155,19 +155,17 @@ public static class ResponseWriterTests
     {
         httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
 
-        string bodyStr;
-        using (var reader = new StreamReader(httpContext.Response.Body))
-        {
-            bodyStr = await reader.ReadToEndAsync().ConfigureAwait(false);
-        }
-
-        return bodyStr;
+        using var reader = new StreamReader(httpContext.Response.Body);
+        return await reader.ReadToEndAsync().ConfigureAwait(false);
     }
 
     private static DefaultHttpContext CreateHttpContext()
     {
-        var httpContext = new DefaultHttpContext();
-        httpContext.Response.Body = new MemoryStream();
+        var httpContext = new DefaultHttpContext {
+            Response = {
+                Body = new MemoryStream()
+            }
+        };
         return httpContext;
     }
 }
