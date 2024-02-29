@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 3.0.0-alpha.1 - 2024-02-29
+
+#### Changed
+- Removed netcoreapp3.1 from supported targets from test project.
+- Added net8.0 to supported targets to test project.
+- Updated package references in test project.
+
 ## 2.0.0-alpha.2 - 2023-03-02
 
 #### Changed
