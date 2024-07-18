@@ -11,14 +11,14 @@
 		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.HealthChecks/blob/main/RockLib.HealthChecks.HttpModule/CHANGELOG.md.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>rocklib health checks httpmodule</PackageTags>
-		<PackageVersion>2.0.0</PackageVersion>
+		<PackageVersion>2.0.1</PackageVersion>
 		<PublishRepositoryUrl>True</PublishRepositoryUrl>
 		<!--
 		IHttpModule is only for .NET Framework, so there is no need to target any other frameworks.
 		https://learn.microsoft.com/en-us/dotnet/api/system.web.ihttpmodule?view=netframework-4.8
 		-->
 		<TargetFramework>net48</TargetFramework>
-		<Version>2.0.0</Version>
+		<Version>2.0.1</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
@@ -28,7 +28,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-		<PackageReference Include="RockLib.HealthChecks" Version="2.0.1" />
+		<PackageReference Include="RockLib.HealthChecks" Version="3.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="..\LICENSE.md" Pack="true" PackagePath="" />
