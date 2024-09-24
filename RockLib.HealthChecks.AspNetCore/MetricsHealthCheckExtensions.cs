@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RockLib.HealthChecks.Collector;
+using RockLib.HealthChecks.AspNetCore.Collector;
 
-namespace RockLib.HealthChecks.System;
+namespace RockLib.HealthChecks.AspNetCore;
 
 /// <summary>
 /// 

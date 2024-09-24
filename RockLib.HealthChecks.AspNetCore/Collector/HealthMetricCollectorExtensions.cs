@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace RockLib.HealthChecks.Collector;
+namespace RockLib.HealthChecks.AspNetCore.Collector;
 
 /// <summary>
 /// 

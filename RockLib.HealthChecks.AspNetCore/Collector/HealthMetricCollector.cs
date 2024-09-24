@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace RockLib.HealthChecks.Collector;
+namespace RockLib.HealthChecks.AspNetCore.Collector;
 
 /// <summary>
 /// 

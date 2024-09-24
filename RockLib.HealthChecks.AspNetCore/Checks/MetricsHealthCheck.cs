@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using RockLib.HealthChecks.Collector;
+using RockLib.HealthChecks.AspNetCore.Collector;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RockLib.HealthChecks.System;
+namespace RockLib.HealthChecks.AspNetCore.Checks;
 
 /// <summary>
 /// 

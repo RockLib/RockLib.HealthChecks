@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace RockLib.HealthChecks.Collector;
+namespace RockLib.HealthChecks.AspNetCore.Collector;
 
 /// <summary>
 /// 
@@ -30,7 +30,9 @@ public class HttpResponseCollector : DelegatingHandler
     protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        ArgumentNullException.ThrowIfNull(request);
+        #if NET6_0_OR_GREATER
+            ArgumentNullException.ThrowIfNull(request);
+        #endif
         var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         _factory.LeaseCollector(request.RequestUri?.Host).Collect((int)response.StatusCode);
         return response;
