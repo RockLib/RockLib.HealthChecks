@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Hosting;
+using RockLib.Configuration;
 using System;
+using System.Linq;
 
 namespace RockLib.HealthChecks.AspNetCore;
 
@@ -38,5 +41,32 @@ public static class HealthCheckMiddlewareExtensions
 
         return builder.Map(path, appBuilder =>
             appBuilder.UseMiddleware<HealthCheckMiddleware>(healthCheckRunnerName, formatter ?? NewtonsoftJsonResponseFormatter.DefaultInstance));
+    }
+    
+    /// <summary>
+    /// Exposes a means for health check dependencies to be integrated into the application.
+    /// </summary>
+    /// <param name="builder">the application builder</param>
+    /// <returns>The application builder.</returns>
+    public static IHostApplicationBuilder ConfigureRockLibHealthChecks(this IHostApplicationBuilder builder)
+    {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(builder);
+#else
+            if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+
+        var config = builder.Configuration.GetCompositeSection("RockLib_HealthChecks", "RockLib.HealthChecks");
+        var checks = config.GetSection("healthChecks").GetChildren().ToArray();
+        foreach (var checkCfg in checks)
+        {
+            var typeStr = checkCfg["type"];
+            if (string.IsNullOrWhiteSpace(typeStr)) continue;
+
+            Type.GetType(typeStr)?.GetMethod("Configure")?.Invoke(null, [builder]);
+            Console.WriteLine($"Configured health check: {typeStr}");
+        }
+
+        return builder;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using RockLib.HealthChecks.AspNetCore.Collector;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace RockLib.HealthChecks.AspNetCore.Checks;
 
 /// <summary>
-/// 
+/// Reports HealthCheckMetrics as health check outcomes.
 /// </summary>
 public class MetricsHealthCheck : IHealthCheck
 {
@@ -18,7 +19,7 @@ public class MetricsHealthCheck : IHealthCheck
     private readonly CollectorOptions[] _collectors;
 
     /// <summary>
-    /// 
+    /// Creates a new instance of <see cref="MetricsHealthCheck"/>.
     /// </summary>
     /// <param name="serviceProvider"></param>
     /// <param name="warningThreshold"></param>
@@ -40,14 +41,16 @@ public class MetricsHealthCheck : IHealthCheck
     }
 
     /// <summary>
-    /// 
+    /// Collates the collected metrics and computes overall health status for each collector.
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
+    /// <remarks>This is opinionated towards http response codes and could be refactored into a delegate.</remarks>
     public async Task<IReadOnlyList<HealthCheckResult>> CheckAsync(CancellationToken cancellationToken = default)
     {
         var results = new List<HealthCheckResult>();
 
+        // ReSharper disable once UseDeconstruction - not supported in older runtimes
         foreach (var kvPair in _collectorFactory.GetCollectors())
         {
             var name = kvPair.Key;
@@ -80,6 +83,11 @@ public class MetricsHealthCheck : IHealthCheck
         return await Task.FromResult(results).ConfigureAwait(false);
     }
 
+    /// <summary>
+    /// Returns the warn and error thresholds for the given collector.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns></returns>
     private (double, double) GetThresholds(string name)
     {
         var options = Array.Find(_collectors, opts =>
@@ -90,22 +98,46 @@ public class MetricsHealthCheck : IHealthCheck
     }
 
     /// <summary>
-    /// 
+    /// This Health check reports at the machine name level since most apps run multiple instances behind a load balancer.
     /// </summary>
     public string? ComponentName { get; } = Environment.MachineName;
 
     /// <summary>
-    /// 
+    /// unused
     /// </summary>
     public string? MeasurementName { get; } = string.Empty;
 
     /// <summary>
-    /// 
+    /// unused
     /// </summary>
     public string? ComponentType { get; } = string.Empty;
 
     /// <summary>
-    /// 
+    /// unused
     /// </summary>
     public string? ComponentId { get; } = string.Empty;
+
+    /// <summary>
+    /// Injects a request delegate into the http stack to collect metrics.  Adds a <see cref="IHealthMetricCollectorFactory"/> to hold said metrics.
+    /// </summary>
+    /// <param name="builder"></param>
+    public static void Configure(IHostApplicationBuilder builder)
+    {
+#if NET6_0_OR_GREATER
+        ArgumentNullException.ThrowIfNull(builder);
+#else
+            if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
+#endif
+
+        builder.Services.AddSingleton<IHealthMetricCollectorFactory, HealthMetricCollectorFactory>();
+
+        builder.Services.ConfigureHttpClientDefaults(clientBuilder =>
+        {
+            clientBuilder.ConfigureAdditionalHttpMessageHandlers((handlers, sp) =>
+            {
+                var factory = sp.GetRequiredService<IHealthMetricCollectorFactory>();
+                handlers.Add(new HttpResponseCollector(factory));
+            });
+        });
+    }
 }
