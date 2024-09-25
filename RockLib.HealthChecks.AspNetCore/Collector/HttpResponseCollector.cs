@@ -30,9 +30,11 @@ public class HttpResponseCollector : DelegatingHandler
     protected async override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken)
     {
-        #if NET6_0_OR_GREATER
+#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(request);
-        #endif
+#else
+            if (request is null) { throw new ArgumentNullException(nameof(request)); }
+#endif
         var response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
         _factory.LeaseCollector(request.RequestUri?.Host).Collect((int)response.StatusCode);
         return response;
