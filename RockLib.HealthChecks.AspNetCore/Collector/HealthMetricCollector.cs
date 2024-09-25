@@ -4,18 +4,19 @@ using System.Linq;
 namespace RockLib.HealthChecks.AspNetCore.Collector;
 
 /// <summary>
-/// 
+/// Interface definition for a health metric collectors.  "health metrics" not to be confused with "application metrics" (e.g. OTEL/Dynatrace).
 /// </summary>
+/// <!-- This should be moved to a separate file when additional implementations are added. -->
 public interface IHealthMetricCollector
 {
     /// <summary>
-    /// 
+    /// Add a new metric to the collector.
     /// </summary>
     /// <param name="outcome"></param>
     void Collect(int outcome);
 
     /// <summary>
-    /// 
+    /// Retrieve the metrics from the collector.
     /// </summary>
     /// <param name="predicate"></param>
     /// <returns></returns>
@@ -23,7 +24,8 @@ public interface IHealthMetricCollector
 }
 
 /// <summary>
-/// 
+/// A simple implementation of <see cref="IHealthMetricCollector"/> that stores metrics in a fixed-size array.
+/// The fixed-size array is used as a circular buffer - "only store the N most-recent metrics".
 /// </summary>
 public class HealthMetricCollector : IHealthMetricCollector
 {
@@ -32,9 +34,9 @@ public class HealthMetricCollector : IHealthMetricCollector
     private readonly int _size;
 
     /// <summary>
-    /// 
+    /// Implementation of <see cref="IHealthMetricCollector"/> that stores integer metrics in a fixed-size array.
     /// </summary>
-    /// <param name="size"></param>
+    /// <param name="size">how large to make the array</param>
     public HealthMetricCollector(int size)
     {
         _metrics = new int[size];
@@ -42,9 +44,9 @@ public class HealthMetricCollector : IHealthMetricCollector
     }
 
     /// <summary>
-    /// 
+    /// see <see cref="IHealthMetricCollector.Collect(int)"/>
     /// </summary>
-    /// <param name="outcome"></param>
+    /// <param name="outcome">the integer outcome to put into the array.</param>
     public void Collect(int outcome)
     {
         _metrics[_index++] = outcome;
@@ -52,10 +54,10 @@ public class HealthMetricCollector : IHealthMetricCollector
     }
 
     /// <summary>
-    /// 
+    /// see <see cref="IHealthMetricCollector.GetMetrics(Func{int, bool}?)"/>
     /// </summary>
-    /// <param name="predicate"></param>
-    /// <returns></returns>
+    /// <param name="predicate">Func used to collate matching entries</param>
+    /// <returns>an int[] of entries matching the predicate</returns>
     public int[] GetMetrics(Func<int, bool>? predicate = null)
     {
         return _metrics.Where(predicate ?? (x => x != 0)).ToArray();
