@@ -14,7 +14,7 @@ public interface IHealthMetricCollectorFactory
     /// </summary>
     /// <param name="name"></param>
     /// <param name="samples"></param>
-    internal void ConfigureCollector(string name, int? samples);
+    internal void ConfigureCollector(string name, int? samples = null);
 
     /// <summary>
     /// Returns a handle to a collector by name
@@ -76,7 +76,7 @@ public class HealthMetricCollectorFactory : IHealthMetricCollectorFactory
     /// </summary>
     /// <param name="name"></param>
     /// <param name="samples"></param>
-    public void ConfigureCollector(string name, int? samples)
+    public void ConfigureCollector(string name, int? samples = null)
     {
         _collectors[name] = new HealthMetricCollector(samples ?? DefaultSamples);
     }
