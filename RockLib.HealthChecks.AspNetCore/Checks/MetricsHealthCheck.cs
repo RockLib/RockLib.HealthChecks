@@ -72,7 +72,7 @@ public class MetricsHealthCheck : IHealthCheck
 
             // compute the outcome
             var (warnThreshold, errorThreshold) = GetThresholds(name);
-            var rate = total > 0 ? (successCnt + redirectCnt) / total : 1;
+            var rate = total > 0 ?  (double)(successCnt + redirectCnt) / total : 1;
             HealthStatus? status = rate > warnThreshold ? HealthStatus.Pass : null;
             status ??= rate > errorThreshold ? HealthStatus.Warn : HealthStatus.Fail;
             result.Status = status;
