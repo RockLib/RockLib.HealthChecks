@@ -56,7 +56,7 @@ public static class HealthCheckMiddlewareExtensions
             if (builder is null) { throw new ArgumentNullException(nameof(builder)); }
 #endif
 
-        var config = builder.Configuration.GetCompositeSection("RockLib_HealthChecks", "RockLib.HealthChecks");
+        var config = builder.Configuration.GetSection("RockLib.HealthChecks");
         var checks = config.GetSection("healthChecks").GetChildren().ToArray();
         foreach (var checkCfg in checks)
         {
