@@ -51,7 +51,7 @@ public static class HealthCheckMiddlewareExtensionsTests
         {
             { "RockLib.HealthChecks:healthChecks", "[]" },
             { "RockLib.HealthChecks:healthChecks:0:type", "thisIsNotARealType" }, // should be overlooked gracefully
-            { "RockLib.HealthChecks:healthChecks:1:type", "RockLib.HealthChecks.AspNetCore.Checks.MetricsHealthCheck, RockLib.HealthChecks.AspNetCore" }
+            { "RockLib.HealthChecks:healthChecks:1:type", "RockLib.HealthChecks.AspNetCore.Checks.HttpStatsHealthCheck, RockLib.HealthChecks.AspNetCore" }
         };
         IConfiguration config = new ConfigurationBuilder().AddInMemoryCollection(inMemorySettings).Build();
         

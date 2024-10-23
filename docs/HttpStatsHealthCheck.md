@@ -3,7 +3,7 @@ sidebar_position: 2
 sidebar_label: 'Metrics (HTTP) Health Check'
 ---
 
-# MetricsHealthCheck
+# HttpStatsHealthCheck
 
 This health check monitors actual (live) HTTP calls to downstream systems to collect response status codes, and reports their outcomes. If the number of failed calls (StatusCode >= 400) is 
 below `WarnThreshold`, results will have a status of `Warn`. If below `FailThreshold`, results will have a status of `Fail`.

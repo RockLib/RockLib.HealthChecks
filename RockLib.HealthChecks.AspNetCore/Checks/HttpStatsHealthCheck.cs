@@ -11,7 +11,7 @@ namespace RockLib.HealthChecks.AspNetCore.Checks;
 /// <summary>
 /// Reports HealthCheckMetrics as health check outcomes.
 /// </summary>
-public class MetricsHealthCheck : IHealthCheck
+public class HttpStatsHealthCheck : IHealthCheck
 {
     private readonly IHealthMetricCollectorFactory _collectorFactory;
     private readonly double _defaultWarningThreshold;
@@ -19,14 +19,14 @@ public class MetricsHealthCheck : IHealthCheck
     private readonly CollectorOptions[] _collectors;
 
     /// <summary>
-    /// Creates a new instance of <see cref="MetricsHealthCheck"/>.
+    /// Creates a new instance of <see cref="HttpStatsHealthCheck"/>.
     /// </summary>
     /// <param name="serviceProvider"></param>
     /// <param name="warningThreshold"></param>
     /// <param name="errorThreshold"></param>
     /// <param name="samples"></param>
     /// <param name="collectors"></param>
-    public MetricsHealthCheck(IServiceProvider serviceProvider, double? warningThreshold = null,
+    public HttpStatsHealthCheck(IServiceProvider serviceProvider, double? warningThreshold = null,
         double? errorThreshold = null, int? samples = null, CollectorOptions[]? collectors = null)
     {
         _collectorFactory = serviceProvider.GetRequiredService<IHealthMetricCollectorFactory>();

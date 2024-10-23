@@ -7,12 +7,12 @@ using Xunit;
 
 namespace RockLib.HealthChecks.AspNetCore.Tests.Checks;
 
-public class MetricsHealthCheckTests
+public class HttpStatsHealthCheckTests
 {
-    private readonly MetricsHealthCheck _healthCheck;
+    private readonly HttpStatsHealthCheck _healthCheck;
     private readonly HealthMetricCollectorFactory _collectorFactory;
 
-    public MetricsHealthCheckTests()
+    public HttpStatsHealthCheckTests()
     {
         _collectorFactory = new HealthMetricCollectorFactory();
 
@@ -23,24 +23,24 @@ public class MetricsHealthCheckTests
         {
             new CollectorOptions { Name = "test", Samples = 10 }
         };
-        _healthCheck = new MetricsHealthCheck(serviceProvider, .75, .5, 10, collectors);
+        _healthCheck = new HttpStatsHealthCheck(serviceProvider, .75, .5, 10, collectors);
     }
 
     [Fact]
-    public void MetricsHealthCheckThrowsIfMissingDependency()
+    public void HttpStatsHealthCheckThrowsIfMissingDependency()
     {
         var services = new ServiceCollection();
         var serviceProvider = services.BuildServiceProvider();
-        Assert.Throws<InvalidOperationException>(() => new MetricsHealthCheck(serviceProvider));
+        Assert.Throws<InvalidOperationException>(() => new HttpStatsHealthCheck(serviceProvider));
     }
 
     [Fact]
-    public void MetricsHealthCheckInitializesWithDefaultArgs()
+    public void HttpStatsHealthCheckInitializesWithDefaultArgs()
     {
         var services = new ServiceCollection();
         services.AddSingleton<IHealthMetricCollectorFactory, HealthMetricCollectorFactory>();
         var serviceProvider = services.BuildServiceProvider();
-        Assert.NotNull(new MetricsHealthCheck(serviceProvider));
+        Assert.NotNull(new HttpStatsHealthCheck(serviceProvider));
     }
 
     [Fact]
