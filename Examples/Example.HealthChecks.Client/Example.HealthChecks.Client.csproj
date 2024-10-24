@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.HealthChecks.Client" Version="1.0.0-alpha03" />
+    <PackageReference Include="RockLib.HealthChecks.Client" Version="2.0.2" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
