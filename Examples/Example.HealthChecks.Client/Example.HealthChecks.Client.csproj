@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="RockLib.HealthChecks.Client" Version="2.0.2" />
-    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+    <PackageReference Include="System.Net.Http.Json" Version="8.0.1" />
   </ItemGroup>
 
 </Project>
