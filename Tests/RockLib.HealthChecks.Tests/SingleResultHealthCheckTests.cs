@@ -26,7 +26,7 @@ namespace RockLib.HealthChecks.Tests
         {
             var healthCheck = new TestHealthCheck();
 
-            var result = await healthCheck.CheckAsync().ConfigureAwait(false);
+            var result = await healthCheck.CheckAsync().ConfigureAwait(true);
 
             result.Should().HaveCount(1);
             result[0]["fake"].Should().Be(true);
