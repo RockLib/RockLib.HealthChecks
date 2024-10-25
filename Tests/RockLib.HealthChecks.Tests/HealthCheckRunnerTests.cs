@@ -184,7 +184,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync().ConfigureAwait(false);
+            var response = await runner.RunAsync().ConfigureAwait(true);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 
@@ -215,7 +215,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync().ConfigureAwait(false);
+            var response = await runner.RunAsync().ConfigureAwait(true);
 
             response.GetChecks().Should().NotBeEquivalentTo(new[] { result1, result2 });
 
@@ -240,7 +240,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks);
 
-            var response = await runner.RunAsync().ConfigureAwait(false);
+            var response = await runner.RunAsync().ConfigureAwait(true);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 
@@ -272,7 +272,7 @@ namespace RockLib.HealthChecks.Tests
 
             var runner = new HealthCheckRunner(healthChecks, responseCustomizer: responseCustomizer);
 
-            var response = await runner.RunAsync().ConfigureAwait(false);
+            var response = await runner.RunAsync().ConfigureAwait(true);
 
             response.GetChecks().Should().BeEquivalentTo(new[] { result1, result2 });
 
