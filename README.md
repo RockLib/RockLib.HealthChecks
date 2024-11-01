@@ -24,3 +24,6 @@
       - A health check that records the uptime of the current process. Always passes.
     - [SystemUptimeHealthCheck](docs/SystemUptimeHealthCheck.md)
       - A health check that records the uptime of the system. Always passes.
+  - Downstream Services
+    - [HttpStatsHealthCheck](docs/HttpStatsHealthCheck.md)
+      - A health check that monitors HTTP calls to downstream systems and reports on outcomes.

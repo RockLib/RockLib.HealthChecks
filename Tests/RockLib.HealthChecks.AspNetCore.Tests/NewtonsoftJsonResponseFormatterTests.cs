@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using Xunit;
 
 namespace RockLib.HealthChecks.AspNetCore.Tests;
@@ -34,7 +35,7 @@ public static class NewtonsoftJsonResponseFormatterTests
         var formatter = new NewtonsoftJsonResponseFormatter(Formatting.Indented);
         var result = formatter.Format(new HealthResponse());
 
-        Assert.Equal("{\n  \"status\": \"pass\"\n}", result);
+        Assert.Equal($"{{{Environment.NewLine}  \"status\": \"pass\"{Environment.NewLine}}}", result);
     }
 
     [Fact]
