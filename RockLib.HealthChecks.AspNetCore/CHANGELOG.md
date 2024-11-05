@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.1.0 - Unreleased
 - RockLib.HealthChecks.3.0.1 -> RockLib.HealthChecks.3.0.2 to fix vulnerability.
-- `HealthCheckMiddleWareExtensions` now continas a method to configure applications.
+- `HealthCheckMiddleWareExtensions` now contains a method to configure applications.
 - The classes in the `RockLib.HealthChecks.AspNetCore.Collector` namespace are separated from the healthcheck for reuse.
 
 ## 4.1.0-alpha.1 - 2024-11-05
