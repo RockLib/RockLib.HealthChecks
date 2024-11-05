@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `HealthCheckMiddleWareExtensions` now continas a method to configure applications.
 - The classes in the `RockLib.HealthChecks.AspNetCore.Collector` namespace are separated from the healthcheck for reuse.
 
-## 4.1.0-alpha.1 - 2024-11-04
+## 4.1.0-alpha.1 - 2024-11-05
 
 #### Changed
 - `HealthCheckMiddleWareExtensions` now continas a method to configure applications.
