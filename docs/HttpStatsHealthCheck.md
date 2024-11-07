@@ -34,7 +34,7 @@ Example appsettings.json:
   "RockLib.HealthChecks": {
       "healthChecks": [
         {
-          "type": "RockLib.HealthChecks.AspNetCore.Checks.MetricsHealthCheck, RockLib.HealthChecks.AspNetCore",
+          "type": "RockLib.HealthChecks.AspNetCore.Checks.HttpStatsHealthCheck, RockLib.HealthChecks.AspNetCore",
           "value": {
             "warningThreshold": ".90",
             "errorThreshold": ".85",
