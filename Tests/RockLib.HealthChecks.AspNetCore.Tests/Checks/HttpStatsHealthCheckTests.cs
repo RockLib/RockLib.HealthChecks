@@ -23,7 +23,7 @@ public class HttpStatsHealthCheckTests
         {
             new CollectorOptions { Name = "test", Samples = 10 }
         };
-        _healthCheck = new HttpStatsHealthCheck(serviceProvider, .75, .5, 10, collectors);
+        _healthCheck = new HttpStatsHealthCheck(serviceProvider, .75, .5, 10, 0, collectors);
     }
 
     [Fact]

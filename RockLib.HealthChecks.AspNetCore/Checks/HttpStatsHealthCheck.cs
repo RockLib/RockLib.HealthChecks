@@ -16,6 +16,7 @@ public class HttpStatsHealthCheck : IHealthCheck
     private readonly IHealthMetricCollectorFactory _collectorFactory;
     private readonly double _defaultWarningThreshold;
     private readonly double _defaultErrorThreshold;
+    private readonly int _minimumSamples;
     private readonly CollectorOptions[] _collectors;
 
     /// <summary>
@@ -25,14 +26,17 @@ public class HttpStatsHealthCheck : IHealthCheck
     /// <param name="warningThreshold"></param>
     /// <param name="errorThreshold"></param>
     /// <param name="samples"></param>
+    /// <param name="minimumSamples"></param>
     /// <param name="collectors"></param>
     public HttpStatsHealthCheck(IServiceProvider serviceProvider, double? warningThreshold = null,
-        double? errorThreshold = null, int? samples = null, CollectorOptions[]? collectors = null)
+        double? errorThreshold = null, int? samples = null, int? minimumSamples = null,
+        CollectorOptions[]? collectors = null)
     {
         _collectorFactory = serviceProvider.GetRequiredService<IHealthMetricCollectorFactory>();
         _collectorFactory.SetDefaultSampleSize(samples);
         _defaultWarningThreshold = warningThreshold ?? .9;
         _defaultErrorThreshold = errorThreshold ?? .75;
+        _minimumSamples = minimumSamples ?? 1;
 
         _collectors = collectors ?? [];
         foreach (var collector in _collectors)
@@ -72,16 +76,25 @@ public class HttpStatsHealthCheck : IHealthCheck
             result.Add("http_5xx", collector.GetCount(cd => cd > 499));
 
             // compute the outcome
-            var (warnThreshold, errorThreshold) = GetThresholds(name);
-            var rate = total > 0 ?  (double)(successCnt + redirectCnt) / total : 1;
-            HealthStatus? status = rate > warnThreshold ? HealthStatus.Pass : null;
-            status ??= rate > errorThreshold ? HealthStatus.Warn : HealthStatus.Fail;
-            result.Status = status;
+            result.Status = ComputeStatus(successCnt, redirectCnt, total, name);
 
             results.Add(result);
         }
 
         return await Task.FromResult(results).ConfigureAwait(false);
+    }
+
+    private HealthStatus? ComputeStatus(int successCnt, int redirectCnt, int total, string name)
+    {
+        if (total < _minimumSamples)
+            return HealthStatus.Warn;
+
+        var (warnThreshold, errorThreshold) = GetThresholds(name);
+        var rate = total > 0 ? (double)(successCnt + redirectCnt) / total : 1;
+        HealthStatus? status = rate > warnThreshold ? HealthStatus.Pass : null;
+        status ??= rate > errorThreshold ? HealthStatus.Warn : HealthStatus.Fail;
+
+        return status;
     }
 
     /// <summary>
