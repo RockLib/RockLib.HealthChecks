@@ -30,6 +30,7 @@ public class HttpStatsHealthCheck : IHealthCheck
         double? errorThreshold = null, int? samples = null, CollectorOptions[]? collectors = null)
     {
         _collectorFactory = serviceProvider.GetRequiredService<IHealthMetricCollectorFactory>();
+        _collectorFactory.SetDefaultSampleSize(samples);
         _defaultWarningThreshold = warningThreshold ?? .9;
         _defaultErrorThreshold = errorThreshold ?? .75;
 
