@@ -28,6 +28,12 @@ public interface IHealthMetricCollectorFactory
     /// </summary>
     /// <returns></returns>
     public Dictionary<string, IHealthMetricCollector> GetCollectors();
+
+    /// <summary>
+    /// Override the default sample size for new collectors
+    /// </summary>
+    /// <param name="samples"></param>
+    public void SetDefaultSampleSize(int? samples);
 }
 
 /// <summary>
@@ -36,7 +42,7 @@ public interface IHealthMetricCollectorFactory
 public class HealthMetricCollectorFactory : IHealthMetricCollectorFactory
 {
     private readonly Dictionary<string, IHealthMetricCollector> _collectors;
-    private const int DefaultSamples = 100;
+    private int _defaultSamples = 100;
 
     /// <summary>
     /// Default constructor - typically used by the DI container
@@ -57,7 +63,7 @@ public class HealthMetricCollectorFactory : IHealthMetricCollectorFactory
         name ??= string.Empty;
         if (_collectors.TryGetValue(name, out var value)) return value;
 
-        value = new HealthMetricCollector(DefaultSamples);
+        value = new HealthMetricCollector(_defaultSamples);
         _collectors[name] = value;
         return value;
     }
@@ -72,12 +78,21 @@ public class HealthMetricCollectorFactory : IHealthMetricCollectorFactory
     }
 
     /// <summary>
+    /// Set the default sample size for all collectors (w/o explicit size).
+    /// </summary>
+    /// <param name="samples"></param>
+    public void SetDefaultSampleSize(int? samples)
+    {
+        _defaultSamples = samples ?? _defaultSamples;
+    }
+
+    /// <summary>
     /// Configure a collector by name with the given sample size.
     /// </summary>
     /// <param name="name"></param>
     /// <param name="samples"></param>
     public void ConfigureCollector(string name, int? samples = null)
     {
-        _collectors[name] = new HealthMetricCollector(samples ?? DefaultSamples);
+        _collectors[name] = new HealthMetricCollector(samples ?? _defaultSamples);
     }
 }

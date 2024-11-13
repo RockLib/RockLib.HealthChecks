@@ -31,6 +31,26 @@ public class HealthMetricCollectorFactoryTests
     }
 
     [Fact]
+    public void LeaseCollectorSupportsSizeOverride()
+    {
+        var factory = new HealthMetricCollectorFactory();
+        factory.SetDefaultSampleSize(50);
+        var collector = factory.LeaseCollector(null!);
+        Assert.NotNull(collector);
+        Assert.Equal(50, collector.GetMetrics(_ => true).Length);
+    }
+
+    [Fact]
+    public void LeaseCollectorSupportsSizeFallback()
+    {
+        var factory = new HealthMetricCollectorFactory();
+        factory.SetDefaultSampleSize(null);
+        var collector = factory.LeaseCollector(null!);
+        Assert.NotNull(collector);
+        Assert.Equal(100, collector.GetMetrics(_ => true).Length);
+    }
+
+    [Fact]
     public void LeaseCollectorReturnsTheSameInstanceByName()
     {
         var factory = new HealthMetricCollectorFactory();
