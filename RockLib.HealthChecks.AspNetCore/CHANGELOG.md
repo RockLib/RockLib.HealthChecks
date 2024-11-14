@@ -5,15 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.1.0 - 2024-11-14
+- RockLib.HealthChecks.3.0.1 -> RockLib.HealthChecks.3.0.2 to fix vulnerability.
+- `HealthCheckMiddleWareExtensions` now contains a method to configure applications.
+- The classes in the `RockLib.HealthChecks.AspNetCore.Collector` namespace are separated from the healthcheck for reuse.
+- Support "minimum sample size" in HttpStatsHealthCheck.
+- Fix configuring the default sample size in HttpStatsHealthCheck.
+
 ## 4.1.0-alpha.2 - 2024-11-13
 - Correct example appsettings in markdown.
 - Support "minimum sample size" in HttpStatsHealthCheck.
 - Fix configuring the default sample size in HttpStatsHealthCheck.
-
-## 4.1.0 - Unreleased
-- RockLib.HealthChecks.3.0.1 -> RockLib.HealthChecks.3.0.2 to fix vulnerability.
-- `HealthCheckMiddleWareExtensions` now contains a method to configure applications.
-- The classes in the `RockLib.HealthChecks.AspNetCore.Collector` namespace are separated from the healthcheck for reuse.
 
 ## 4.1.0-alpha.1 - 2024-11-05
 
