@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 
 namespace RockLib.HealthChecks.AspNetCore.Collector;
 
@@ -21,6 +22,11 @@ public interface IHealthMetricCollector
     /// <param name="predicate"></param>
     /// <returns></returns>
     int[] GetMetrics(Func<int, bool>? predicate = null);
+    
+    ///<summary>
+    /// Retrieve the number of impressions from the collector.
+    /// </summary>
+    long GetImpressionCount();
 }
 
 /// <summary>
@@ -29,7 +35,7 @@ public interface IHealthMetricCollector
 /// </summary>
 public class HealthMetricCollector : IHealthMetricCollector
 {
-    private int _index;
+    private long _impressionCount;
     private readonly int[] _metrics;
     private readonly int _size;
 
@@ -49,8 +55,8 @@ public class HealthMetricCollector : IHealthMetricCollector
     /// <param name="outcome">the integer outcome to put into the array.</param>
     public void Collect(int outcome)
     {
-        _metrics[_index++] = outcome;
-        if (_index == _size) _index = 0;
+        var idx = Interlocked.Increment(ref _impressionCount) % _size;
+        _metrics[idx] = outcome;
     }
 
     /// <summary>
@@ -61,5 +67,14 @@ public class HealthMetricCollector : IHealthMetricCollector
     public int[] GetMetrics(Func<int, bool>? predicate = null)
     {
         return _metrics.Where(predicate ?? (x => x != 0)).ToArray();
+    }
+
+    /// <summary>
+    /// see <see cref="IHealthMetricCollector.GetImpressionCount"/>
+    /// </summary>
+    /// <returns></returns>
+    public long GetImpressionCount()
+    {
+        return _impressionCount;
     }
 }
