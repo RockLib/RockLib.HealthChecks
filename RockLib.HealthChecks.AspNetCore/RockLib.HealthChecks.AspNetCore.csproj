@@ -28,6 +28,7 @@
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
 		<PackageReference Include="RockLib.HealthChecks" Version="3.0.2" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<!--Remove this direct dependency with new framework updates-->
 		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
 	</ItemGroup>
 	<ItemGroup>
