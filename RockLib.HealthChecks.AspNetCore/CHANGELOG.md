@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 4.1.2 - 2024-12-27
+
+#### Added
+- Direct dependency on System.Text.Encodings.Web 6.0.0 to resolve a security issue for .NET 6 and .NET 8.
+
 ## 4.1.1 - 2024-12-20
 
 #### Changed
