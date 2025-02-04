@@ -1,5 +1,4 @@
-﻿using RockLib.Immutable;
-using System;
+﻿using System;
 using System.Linq;
 using IReadOnlyListOfIHealthCheckRunner = System.Collections.Generic.IReadOnlyList<RockLib.HealthChecks.IHealthCheckRunner>;
 using RockLib.Configuration;
@@ -14,7 +13,8 @@ namespace RockLib.HealthChecks
     /// </summary>
     public static class HealthCheck
     {
-        private static readonly Semimutable<IReadOnlyListOfIHealthCheckRunner> _runners = new(GetDefaultRunners);
+        private static bool _isRunnersLoaded;
+        private static IReadOnlyListOfIHealthCheckRunner? _runners;
 
         /// <summary>
         /// Gets or sets a collection of <see cref="IHealthCheckRunner"/> objects to be used by an
@@ -22,8 +22,27 @@ namespace RockLib.HealthChecks
         /// </summary>
         public static IReadOnlyListOfIHealthCheckRunner Runners
         {
-            get => _runners.Value!;
-            set => _runners.Value = value ?? throw new ArgumentNullException(nameof(value));
+            get
+            {
+                if (!_isRunnersLoaded)
+                {
+                    _runners = GetDefaultRunners();
+                    _isRunnersLoaded = true;
+                }
+
+                return _runners!;
+            }
+
+            set
+            {
+                if (_isRunnersLoaded)
+                {
+                    throw new InvalidOperationException("The Runners property has already been accessed.");
+                }
+
+                _isRunnersLoaded = true;
+                _runners = value ?? throw new ArgumentNullException(nameof(value));
+            }
         }
 
         /// <summary>
@@ -36,7 +55,7 @@ namespace RockLib.HealthChecks
         /// to be the value of the <see cref="Runners"/> property.
         /// </param>
         public static void SetRunners(Func<IReadOnlyListOfIHealthCheckRunner> getRunners) =>
-            _runners.SetValue(getRunners ?? throw new ArgumentNullException(nameof(getRunners)));
+            Runners = getRunners?.Invoke() ?? throw new ArgumentNullException(nameof(getRunners));
 
         /// <summary>
         /// Gets the <see cref="IHealthCheckRunner"/> from the <see cref="Runners"/> property by name.
