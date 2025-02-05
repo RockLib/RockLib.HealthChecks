@@ -4,6 +4,6 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="AspNetCore.HealthChecks.System" Version="8.0.1" />
-		<PackageReference Include="RockLib.HealthChecks.AspNetCore.ResponseWriter" Version="3.0.1" />
+		<PackageReference Include="RockLib.HealthChecks.AspNetCore.ResponseWriter" Version="4.0.0" />
 	</ItemGroup>
 </Project>
