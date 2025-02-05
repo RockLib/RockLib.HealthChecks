@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 4.0.0-alpha.1 - 2025-02-05
 
 #### Changed
-- RockLib.HealthChecks.3.0.1 -> RockLib.HealthChecks.4.0.0-alpha.1
+- RockLib.HealthChecks.3.0.2 -> RockLib.HealthChecks.4.0.0-alpha.1
 
 ## 3.0.2 - 2024-11-05
 
