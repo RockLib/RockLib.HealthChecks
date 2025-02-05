@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.0.0-alpha.1 - 2025-02-05
+
+#### Changed
+- Removed .NET 6 as a target framework
+- Updated RockLib.HealthChecks to 4.0.0-alpha.1
+- Removed reference to System.Text.Encodings.Web
+
 ## 4.1.2 - 2024-12-27
 
 #### Added
